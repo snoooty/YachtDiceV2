@@ -4,15 +4,74 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/design_default_color_primary"
     tools:context=".MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:id="@+id/gamename_C"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/edge"
+        android:gravity="center"
+        android:text="C"
+        android:textAlignment="center"
+        android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/gamename_YA"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/edge"
+        android:gravity="center"
+        android:text="YA"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/gamename_C"
+        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/gamename_CHT"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/edge"
+        android:gravity="center"
+        android:text="CHT"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/gamename_C"
+        app:layout_constraintLeft_toRightOf="@+id/gamename_YA" />
+
+    <TextView
+        android:id="@+id/gamename_DI"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/edge"
+        android:gravity="center"
+        android:text="DI"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/gamename_C"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/gamename_E"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/edge"
+        android:gravity="center"
+        android:text="E"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/gamename_C"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
