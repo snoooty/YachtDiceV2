@@ -111,7 +111,7 @@ public class Login_Activity extends AppCompatActivity {
 
                             String postData = "inputId=" + inputLogin.getText().toString() + "&" + "inputPassword=" + inputPassword.getText().toString();
 
-                            url = new URL("http://3.35.167.82/login.php/");
+                            url = new URL("http://3.36.58.151/login.php/");
                             HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
                             http.setRequestMethod("POST");      // 전송방식은 POST
@@ -173,7 +173,7 @@ public class Login_Activity extends AppCompatActivity {
 
                                                     String postData = "inputId=" + inputLogin.getText().toString();
 
-                                                    URL url = new URL("http://3.35.167.82/nickname_get.php/");
+                                                    URL url = new URL("http://3.36.58.151/nickname_get.php/");
                                                     HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
                                                     http.setRequestMethod("POST");      // 전송방식은 POST

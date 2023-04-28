@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/design_default_color_primary"
     tools:context=".Select_Activity"
-    android:keepScreenOn="true"
     >
 
     <Space
