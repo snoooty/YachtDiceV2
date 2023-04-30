@@ -56,7 +56,6 @@ public class Login_Activity extends AppCompatActivity {
         SignInButton googleLogin_bt = (SignInButton) findViewById(R.id.google_login);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
-//                requestIdToken(getString(R.string.default_web_client_id)).
                 requestEmail().
                 build();
 
@@ -104,15 +103,17 @@ public class Login_Activity extends AppCompatActivity {
                 Log.e(TAG,"login 클릭되나?");
 
                 new Thread(){
+
                     public void run(){
 
                         URL url = null;
                         try {
-
+                            Log.e(TAG,"Thread 들어가나?");
                             String postData = "inputId=" + inputLogin.getText().toString() + "&" + "inputPassword=" + inputPassword.getText().toString();
 
                             url = new URL("http://3.36.58.151/login.php/");
                             HttpURLConnection http = (HttpURLConnection) url.openConnection();
+
 
                             http.setRequestMethod("POST");      // 전송방식은 POST
                             http.setReadTimeout(5000);
