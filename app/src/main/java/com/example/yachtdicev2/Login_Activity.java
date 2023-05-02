@@ -117,6 +117,7 @@ public class Login_Activity extends AppCompatActivity {
                             HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
                             // 통신 체크하려고 만든겁니당..
+                            // http통신이 되지 않았던 이유는 정책이 바뀌어서 usesCleartextTraffic이것을 추가해주어야 http통신을 사용할 수 있던것이었다.
 //                            httpCheck.httpCheck(url,http);
 
 
