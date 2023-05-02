@@ -31,6 +31,8 @@ import java.net.URL;
 
 public class Login_Activity extends AppCompatActivity {
 
+    HttpCheck httpCheck = new HttpCheck();
+
     String TAG = "Login_Activity";
     String idCheck,loginUserNickname;
 //    GoogleSignInAccount currentUser;
@@ -114,6 +116,9 @@ public class Login_Activity extends AppCompatActivity {
                             url = new URL("http://3.36.58.151/login.php/");
                             HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
+                            // 통신 체크하려고 만든겁니당..
+//                            httpCheck.httpCheck(url,http);
+
 
                             http.setRequestMethod("POST");      // 전송방식은 POST
                             http.setReadTimeout(5000);
@@ -157,6 +162,8 @@ public class Login_Activity extends AppCompatActivity {
                             Log.e(TAG,"php 값 : " + sb.toString());
 
                             idCheck = sb.toString();
+
+                            http.disconnect();
 
                             Login_Activity.this.runOnUiThread(new Runnable() {
                                 @Override
@@ -219,6 +226,8 @@ public class Login_Activity extends AppCompatActivity {
                                                     Log.e(TAG,"php 값 : " + sb.toString());
 
                                                     loginUserNickname = sb.toString();
+
+                                                    http.disconnect();
 
                                                     Intent intent = new Intent(Login_Activity.this, Select_Activity.class);
                                                     intent.putExtra("loginNickname", loginUserNickname);
