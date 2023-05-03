@@ -23,9 +23,11 @@
         <activity
             android:name=".ChatingPage"
             android:exported="false"
+            android:windowSoftInputMode="adjustResize|adjustPan"
             android:theme="@style/Theme.MyDialog" />
         <activity
             android:name=".VsUserInGame"
+            android:windowSoftInputMode="adjustResize|adjustPan"
             android:exported="false" />
         <activity
             android:name=".ScorePage"

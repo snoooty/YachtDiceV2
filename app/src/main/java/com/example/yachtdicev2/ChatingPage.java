@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Gravity;
@@ -25,6 +26,15 @@ public class ChatingPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chating_page);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        if(Build.VERSION.SDK_INT < 30){
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        } else{
+            getWindow().setDecorFitsSystemWindows(true);
+        }
+
 
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         Point point = new Point();
@@ -51,7 +61,7 @@ public class ChatingPage extends AppCompatActivity {
 
         chatActivityDataList = new ArrayList<>();
 
-        chatActivityDataList.add(new user_chat_item("",""));
+        chatActivityDataList.add(new user_chat_item("누티","이거슨 내용입니다"));
 
         adapter.setAdapterChatList(chatActivityDataList);
     }
