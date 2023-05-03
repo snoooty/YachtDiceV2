@@ -2,39 +2,49 @@ package com.example.yachtdicev2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.Socket;
-import java.net.URL;
 
 public class Select_Activity extends AppCompatActivity {
 
     String loginUserNickname;
     String TAG = "Select_Activity";
 
-    Socket sock;
+    MySocketService mss;
+
+    boolean isMSS = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
+//        startService(new Intent(Select_Activity.this, MySocketService.class));
+
+        ServiceConnection sconn = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                Log.e(TAG,"실행되나?");
+                MySocketService.MySocketBind msb = (MySocketService.MySocketBind) service;
+                mss = msb.getService();
+                isMSS = true;
+            }
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                Log.e(TAG,"실행안되나?");
+                isMSS = false;
+            }
+        };
+
+        Intent intent = new Intent(Select_Activity.this, MySocketService.class);
+        bindService(intent, sconn, Context.BIND_AUTO_CREATE);
 
         TextView userNickname = (TextView) findViewById(R.id.User_nickname);
         Button vsUser_bt = (Button) findViewById(R.id.VS_USER);
@@ -64,32 +74,18 @@ public class Select_Activity extends AppCompatActivity {
 
                 new Thread(() -> {
 
-                    try {
+                    if (mss.getSockBind()){
+                        mss.outNickName(loginUserNickname);
+                    }
 
-                        // 집 와이파이 사용할때..
-                        sock = new Socket("172.30.1.17",6000);
-
-                        // 학원 와이파이 사용할때..
-//                    sk = new Socket("172.30.1.12",6000);
-
-                        Log.e(TAG,"서버와 연결되었습니다.");
-                        Log.e(TAG,"소켓 바인딩 체크 : " + sock.isBound());
-
-                        PrintStream out = new PrintStream(sock.getOutputStream());
-                        out.println(loginUserNickname);
-                        out.flush();
-
-                        // 액티비티 전환
-                        if (sock.isBound()) {
-                            Log.e(TAG,"액티비티 옮겨지나?");
-                            Intent intent = new Intent(Select_Activity.this,VsUserInGame.class);
-                            startActivity(intent);
-                        }else {
-                            Log.e(TAG,"서버와 연결이 되지 않았습니다.");
-                        }
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                    // 액티비티 전환
+                    if (mss.getSockBind()) {
+                        Log.e(TAG,"액티비티 옮겨지나?");
+                        Intent intent = new Intent(Select_Activity.this,VsUserInGame.class);
+                        intent.putExtra("loginUserNickName",loginUserNickname);
+                        startActivity(intent);
+                    }else {
+                        Log.e(TAG,"서버와 연결이 되지 않았습니다.");
                     }
 
                 }).start();

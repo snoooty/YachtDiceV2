@@ -20,15 +20,20 @@
         android:theme="@style/Theme.YachtDiceV2"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <service
+            android:name=".MySocketService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".ChatingPage"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize|adjustPan"
-            android:theme="@style/Theme.MyDialog" />
+            android:theme="@style/Theme.MyDialog"
+            android:windowSoftInputMode="adjustResize|adjustPan" />
         <activity
             android:name=".VsUserInGame"
-            android:windowSoftInputMode="adjustResize|adjustPan"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|adjustPan" />
         <activity
             android:name=".ScorePage"
             android:exported="false"
