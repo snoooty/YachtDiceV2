@@ -80,13 +80,16 @@ public class ChatingPage extends AppCompatActivity {
                         Log.e(TAG,"텍스트 입력값 : " + editText.getText().toString());
                         if (editText.getText().toString().length() != 0){
                             chatActivityDataList.add(new user_chat_item(loginUserNickName,editText.getText().toString()));
+                            editText.setText(null);
                             adapter.notifyDataSetChanged();
+                            break;
+//                            hideKeyboard();
                         }else {
-                            hideKeyboard();
+//                            hideKeyboard();
                         }
                         break;
                 }
-                return true;
+                return false;
             }
         });
 
