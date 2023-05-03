@@ -17,9 +17,7 @@ public class Select_Activity extends AppCompatActivity {
 
     String loginUserNickname;
     String TAG = "Select_Activity";
-
     MySocketService mss;
-
     boolean isMSS = false;
 
     @Override

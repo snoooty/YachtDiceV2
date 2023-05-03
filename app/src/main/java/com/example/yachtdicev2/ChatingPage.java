@@ -5,22 +5,29 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
 public class ChatingPage extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-
     private chatingAdapter adapter;
-
     private ArrayList<user_chat_item> chatActivityDataList;
+    String loginUserNickName;
+    EditText editText;
+    String TAG = "ChatingPage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +41,6 @@ public class ChatingPage extends AppCompatActivity {
         } else{
             getWindow().setDecorFitsSystemWindows(true);
         }
-
 
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         Point point = new Point();
@@ -50,6 +56,10 @@ public class ChatingPage extends AppCompatActivity {
         getWindow().getAttributes().height = height; // 세로 크기
         getWindow().getAttributes().gravity = Gravity.LEFT; // 위치 설정
 
+        Intent intentNick = getIntent();
+        loginUserNickName = intentNick.getStringExtra("loginUserNickName");
+
+        editText = findViewById(R.id.inputText);
 
         recyclerView = findViewById(R.id.chat_recyclerview);
 
@@ -61,8 +71,32 @@ public class ChatingPage extends AppCompatActivity {
 
         chatActivityDataList = new ArrayList<>();
 
-        chatActivityDataList.add(new user_chat_item("누티","이거슨 내용입니다"));
+        editText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                switch (keyCode){
+                    case KeyEvent.KEYCODE_ENTER:
+                        Log.e(TAG,"키보드 엔터 클릭되나?");
+                        Log.e(TAG,"텍스트 입력값 : " + editText.getText().toString());
+                        if (editText.getText().toString().length() != 0){
+                            chatActivityDataList.add(new user_chat_item(loginUserNickName,editText.getText().toString()));
+                            adapter.notifyDataSetChanged();
+                        }else {
+                            hideKeyboard();
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
 
         adapter.setAdapterChatList(chatActivityDataList);
+    }
+
+    // 키보드 내리기
+    void hideKeyboard()
+    {
+        InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }
