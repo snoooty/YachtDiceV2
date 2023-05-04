@@ -34,6 +34,7 @@ public class VsUserInGame extends AppCompatActivity {
                 MySocketService.MySocketBind msb = (MySocketService.MySocketBind) service;
                 mss = msb.getService();
                 isMSS = true;
+                Log.e(TAG,"sockBindCheck : " + mss.getSockBind());
             }
             @Override
             public void onServiceDisconnected(ComponentName name) {

@@ -73,6 +73,7 @@ public class Select_Activity extends AppCompatActivity {
                 new Thread(() -> {
 
                     if (mss.getSockBind()){
+                        Log.e(TAG,"닉네임 보내기 : " + loginUserNickname);
                         mss.outNickName(loginUserNickname);
                     }
 

@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -28,6 +31,8 @@ public class ChatingPage extends AppCompatActivity {
     String loginUserNickName;
     EditText editText;
     String TAG = "ChatingPage";
+    MySocketService mss;
+    boolean isMSS = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,26 @@ public class ChatingPage extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.chat_recyclerview);
 
+        ServiceConnection sconn = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                Log.e(TAG,"실행되나?");
+                MySocketService.MySocketBind msb = (MySocketService.MySocketBind) service;
+                mss = msb.getService();
+                isMSS = true;
+                Log.e(TAG,"sockBindCheck : " + mss.getSockBind());
+                Log.e(TAG,"Server알림 : " + mss.serverNickData());
+            }
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                Log.e(TAG,"실행안되나?");
+                isMSS = false;
+            }
+        };
+
+        Intent intent = new Intent(ChatingPage.this, MySocketService.class);
+        bindService(intent, sconn, Context.BIND_AUTO_CREATE);
+
         adapter = new chatingAdapter();
 
         recyclerView.setAdapter(adapter);
@@ -70,6 +95,9 @@ public class ChatingPage extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
         chatActivityDataList = new ArrayList<>();
+
+
+//        chatActivityDataList.add(new user_chat_item("Server알림",mss.serverNickData()));
 
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
