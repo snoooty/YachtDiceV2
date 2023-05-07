@@ -33,6 +33,7 @@ public class ChatingPage extends AppCompatActivity {
     String TAG = "ChatingPage";
     MySocketService mss;
     boolean isMSS = false;
+    String ms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,8 @@ public class ChatingPage extends AppCompatActivity {
                 mss = msb.getService();
                 isMSS = true;
                 Log.e(TAG,"sockBindCheck : " + mss.getSockBind());
-                Log.e(TAG,"Server알림 : " + mss.serverNickData());
+                mss.receiveMessage(chatActivityDataList);
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onServiceDisconnected(ComponentName name) {
@@ -96,9 +98,6 @@ public class ChatingPage extends AppCompatActivity {
 
         chatActivityDataList = new ArrayList<>();
 
-
-//        chatActivityDataList.add(new user_chat_item("Server알림",mss.serverNickData()));
-
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -108,8 +107,12 @@ public class ChatingPage extends AppCompatActivity {
                         Log.e(TAG,"텍스트 입력값 : " + editText.getText().toString());
                         if (editText.getText().toString().length() != 0){
                             chatActivityDataList.add(new user_chat_item(loginUserNickName,editText.getText().toString()));
-                            editText.setText(null);
                             adapter.notifyDataSetChanged();
+                            if (editText.getText().toString() != null) {
+                                Log.e(TAG,"넘기기전 데이터 : " + editText.getText().toString());
+                                mss.sendMessage(editText.getText().toString());
+                            }
+                            editText.setText(null);
                             break;
 //                            hideKeyboard();
                         }else {
@@ -129,5 +132,30 @@ public class ChatingPage extends AppCompatActivity {
     {
         InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG,"여기는 onResume");
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(TAG,"여기는 onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG,"여기는 onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG,"여기는 onDestroy");
     }
 }
