@@ -3,7 +3,6 @@ package com.example.yachtdicev2;
 public class user_chat_item {
 
     String user_name;
-
     String user_content;
 
     public user_chat_item(String user_name, String user_content){

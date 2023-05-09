@@ -90,7 +90,7 @@ public class ChatingPage extends AppCompatActivity {
         Intent intent = new Intent(ChatingPage.this, MySocketService.class);
         bindService(intent, sconn, Context.BIND_AUTO_CREATE);
 
-        adapter = new chatingAdapter();
+        adapter = new chatingAdapter(loginUserNickName);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
