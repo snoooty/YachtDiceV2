@@ -106,6 +106,7 @@ public class ChatingPage extends AppCompatActivity {
                         Log.e(TAG,"키보드 엔터 클릭되나?");
                         Log.e(TAG,"텍스트 입력값 : " + editText.getText().toString());
                         if (editText.getText().toString().length() != 0){
+                            Log.e(TAG,chatActivityDataList.get(chatActivityDataList.size() - 1).getUser_name());
                             chatActivityDataList.add(new user_chat_item(loginUserNickName,editText.getText().toString()));
                             adapter.notifyDataSetChanged();
                             if (editText.getText().toString() != null) {

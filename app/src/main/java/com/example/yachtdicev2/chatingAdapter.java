@@ -22,8 +22,9 @@ public class chatingAdapter extends RecyclerView.Adapter<chatingAdapter.UserView
     }
 
     // 리스트 아이템을 가져와줌
-    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+    public chatingAdapter.UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         Log.e(TAG,"현재유저이름 : " + login_user);
+        Log.e(TAG,"getViewSrc : " + getViewSrc(viewType));
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(getViewSrc(viewType), parent, false);
@@ -33,7 +34,7 @@ public class chatingAdapter extends RecyclerView.Adapter<chatingAdapter.UserView
 
     // 받아온 데이터 바인딩
     @Override
-    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull chatingAdapter.UserViewHolder holder, int position) {
         holder.onBind(adapterChatList.get(position));
         Log.e(TAG,"onBindViewHolder");
     }
@@ -47,7 +48,7 @@ public class chatingAdapter extends RecyclerView.Adapter<chatingAdapter.UserView
 
     public void setAdapterChatList(ArrayList<user_chat_item> serverDataList){
         Log.e(TAG,"setAdapterChatList");
-        this.adapterChatList = serverDataList;
+        adapterChatList = serverDataList;
         notifyDataSetChanged();
     }
 
@@ -107,16 +108,19 @@ public class chatingAdapter extends RecyclerView.Adapter<chatingAdapter.UserView
         } else if(viewType == TYPE_SENT_MESSAGE){
             Log.e(TAG,"타입 a 연결");
             return R.layout.my_chat_item;
-        } else if (viewType == TYPE_SERVER_NTF) {
+        } else {
             Log.e(TAG,"타입 b 연결");
             return R.layout.server_notification;
         }
-        return 0;
     }
 
     @Override
     public int getItemViewType(int position) {
         Log.e(TAG,"Type 받기전 닉네임 : " + login_user);
+        Log.e(TAG,"boolean login_user : " + adapterChatList.get(adapterChatList.size() - 1).getUser_name().equals(login_user));
+        Log.e(TAG,"boolean Server 알림 : " + adapterChatList.get(adapterChatList.size() - 1).getUser_name().equals("Server 알림"));
+        Log.e(TAG,"ArrayList name : " + adapterChatList.get(adapterChatList.size() - 1).getUser_name());
+        Log.e(TAG,"position : " + position);
         if (adapterChatList.get(position).getUser_name().equals(login_user)){
             Log.e(TAG,"타입 a");
             return TYPE_SENT_MESSAGE;
