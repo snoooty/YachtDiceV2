@@ -124,7 +124,7 @@ public class chatingAdapter extends RecyclerView.Adapter<chatingAdapter.UserView
         if (adapterChatList.get(position).getUser_name().equals(login_user)){
             Log.e(TAG,"타입 a");
             return TYPE_SENT_MESSAGE;
-        } else if (adapterChatList.get(position).getUser_name().equals("Server 알림")){
+        } else if (adapterChatList.get(position).getUser_name().equals("Server알림")){
             Log.e(TAG,"타입 b");
             return TYPE_SERVER_NTF;
         }else {

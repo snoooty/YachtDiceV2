@@ -29,7 +29,9 @@
             android:name=".ChatingPage"
             android:exported="false"
             android:theme="@style/Theme.MyDialog"
-            android:windowSoftInputMode="adjustResize|adjustPan" />
+            android:windowSoftInputMode="adjustResize|adjustPan"
+            android:launchMode="singleTop"
+            />
         <activity
             android:name=".VsUserInGame"
             android:exported="false"

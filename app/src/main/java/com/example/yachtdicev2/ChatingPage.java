@@ -28,7 +28,7 @@ public class ChatingPage extends AppCompatActivity {
     private RecyclerView recyclerView;
     private chatingAdapter adapter;
     private ArrayList<user_chat_item> chatActivityDataList;
-    String loginUserNickName;
+    String loginUserNickName,sm;
     EditText editText;
     String TAG = "ChatingPage";
     MySocketService mss;
@@ -56,7 +56,7 @@ public class ChatingPage extends AppCompatActivity {
         int pointHeight = point.y; // 세로
 
         int width = (int) (pointWidth * 0.7); // Display 가로 사이즈
-        int height = (int) (pointHeight * 0.9);  // Display 높이 사이즈
+        int height = (int) (pointHeight * 0.6);  // Display 높이 사이즈
 
         getWindow().getAttributes().width = width; // 가로 크기
         getWindow().getAttributes().height = height; // 세로 크기
@@ -77,7 +77,7 @@ public class ChatingPage extends AppCompatActivity {
                 mss = msb.getService();
                 isMSS = true;
                 Log.e(TAG,"sockBindCheck : " + mss.getSockBind());
-                mss.receiveMessage(chatActivityDataList);
+                mss.receiveMessage(chatActivityDataList,loginUserNickName);
                 adapter.notifyDataSetChanged();
             }
             @Override
@@ -106,12 +106,12 @@ public class ChatingPage extends AppCompatActivity {
                         Log.e(TAG,"키보드 엔터 클릭되나?");
                         Log.e(TAG,"텍스트 입력값 : " + editText.getText().toString());
                         if (editText.getText().toString().length() != 0){
-                            Log.e(TAG,chatActivityDataList.get(chatActivityDataList.size() - 1).getUser_name());
                             chatActivityDataList.add(new user_chat_item(loginUserNickName,editText.getText().toString()));
                             adapter.notifyDataSetChanged();
                             if (editText.getText().toString() != null) {
-                                Log.e(TAG,"넘기기전 데이터 : " + editText.getText().toString());
-                                mss.sendMessage(editText.getText().toString());
+                                sm = loginUserNickName + "//" + editText.getText().toString();
+                                Log.e(TAG,"넘기기전 데이터 : " + sm);
+                                mss.sendMessage(sm);
                             }
                             editText.setText(null);
                             break;

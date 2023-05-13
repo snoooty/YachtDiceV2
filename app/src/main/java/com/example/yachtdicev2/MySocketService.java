@@ -23,8 +23,9 @@ public class MySocketService extends Service {
     private Socket sock;
     private String TAG = "MySocketService";
     IBinder mbinder =  new MySocketBind();
-    String user_name;
-    String ms;
+    String vs_user_name;
+    String rm,sm;
+    String[] splitMS;
     BufferedReader in = null;
     PrintWriter out = null;
     private ArrayList<user_chat_item> serverDataList;
@@ -41,7 +42,10 @@ public class MySocketService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        ms = "";
+        rm = "";
+        sm = "";
+        vs_user_name = "";
+
         new Thread(() -> {
             try {
                 // 집 와이파이 사용할때..
@@ -50,10 +54,10 @@ public class MySocketService extends Service {
                 // 학원 와이파이 사용할때..
 //                sock    = new Socket("172.30.1.12",6000);
 //                sock = new Socket("172.30.1.100",6000);
-                sock = new Socket("172.30.1.98",6000);
+//                sock = new Socket("172.30.1.98",6000);
 
                 // 예빈이네 와이파이 사용할때...
-//                sock = new Socket("192.168.35.179",6000);
+                sock = new Socket("192.168.35.179",6000);
 
                 Log.e(TAG,"서버와 연결되었습니다.");
                 Log.e(TAG,"소켓 바인딩 체크 : " + sock.isBound());
@@ -70,21 +74,11 @@ public class MySocketService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
-
-        try {
-            in.close();
-            out.close();
-            sock.close();
-            Log.e(TAG,"종료되나?");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         Log.e(TAG,"Service Destroy");
         super.onDestroy();
     }
@@ -129,18 +123,25 @@ public class MySocketService extends Service {
     }
 
 
-    public void receiveMessage(ArrayList<user_chat_item> serverDataList){
+    public void receiveMessage(ArrayList<user_chat_item> serverDataList, String login_user_name){
         Log.e(TAG,"서버에서 메세지 받기");
 
         new Thread(() -> {
             this.serverDataList = serverDataList;
             try {
                 in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-                while (ms != null) {
-                    ms = in.readLine();
-                    if (ms == null) break;
-                    serverDataList.add(new user_chat_item("Server 알림",ms));
-                    Log.e(TAG,"null이 아니면 : " + ms);
+                while (rm != null) {
+                    rm = in.readLine();
+                    Log.e(TAG,"받은 메세지 : " + rm);
+                    if (rm == null) break;
+                    splitMS = rm.split("//");//받은 메세지 자르고
+                    vs_user_name = splitMS[0];// 자르고 나온 유저의 이름
+                    Log.e(TAG,"받은 유저 아이디 : " + vs_user_name);
+                    Log.e(TAG,"현재 유저 아이디 : " + login_user_name);
+                    if (vs_user_name.equals(login_user_name)) break;
+                    sm = splitMS[1];// 자르고 나온 유저의 메세지
+                    serverDataList.add(new user_chat_item(vs_user_name,sm));
+                    Log.e(TAG,"null이 아니면 : " + sm);
                 }
                 Log.e(TAG,"수신 끊겼나?");
             } catch (IOException e) {
