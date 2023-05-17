@@ -49,7 +49,7 @@ public class MySocketService extends Service {
         new Thread(() -> {
             try {
                 // 집 와이파이 사용할때..
-//              sock = new Socket("172.30.1.17",6000);
+              sock = new Socket("172.30.1.17",6000);
 
                 // 학원 와이파이 사용할때..
 //                sock    = new Socket("172.30.1.12",6000);
@@ -57,7 +57,7 @@ public class MySocketService extends Service {
 //                sock = new Socket("172.30.1.98",6000);
 
                 // 예빈이네 와이파이 사용할때...
-                sock = new Socket("192.168.35.179",6000);
+//                sock = new Socket("192.168.35.179",6000);
 
                 Log.e(TAG,"서버와 연결되었습니다.");
                 Log.e(TAG,"소켓 바인딩 체크 : " + sock.isBound());
@@ -130,18 +130,23 @@ public class MySocketService extends Service {
             this.serverDataList = serverDataList;
             try {
                 in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-                while (rm != null) {
+                while (true) {
                     rm = in.readLine();
-                    Log.e(TAG,"받은 메세지 : " + rm);
-                    if (rm == null) break;
-                    splitMS = rm.split("//");//받은 메세지 자르고
-                    vs_user_name = splitMS[0];// 자르고 나온 유저의 이름
-                    Log.e(TAG,"받은 유저 아이디 : " + vs_user_name);
-                    Log.e(TAG,"현재 유저 아이디 : " + login_user_name);
-                    if (vs_user_name.equals(login_user_name)) break;
-                    sm = splitMS[1];// 자르고 나온 유저의 메세지
-                    serverDataList.add(new user_chat_item(vs_user_name,sm));
-                    Log.e(TAG,"null이 아니면 : " + sm);
+                    if (rm != null) {
+                        Log.e(TAG,"받은 메세지 : " + rm);
+                        if (rm == null) break;
+                        splitMS = rm.split("//");//받은 메세지 자르고
+                        vs_user_name = splitMS[0];// 자르고 나온 유저의 이름
+                        Log.e(TAG,"받은 유저 아이디 : " + vs_user_name);
+                        Log.e(TAG,"현재 유저 아이디 : " + login_user_name);
+                        if (vs_user_name.equals(login_user_name)) {
+                            Log.e(TAG,"내메세지는 안받아");
+                        }else {
+                            sm = splitMS[1];// 자르고 나온 유저의 메세지
+                            serverDataList.add(new user_chat_item(vs_user_name,sm));
+                            Log.e(TAG,"null이 아니면 : " + sm);
+                        }
+                    }
                 }
                 Log.e(TAG,"수신 끊겼나?");
             } catch (IOException e) {
