@@ -3,7 +3,10 @@ package com.example.yachtdicev2;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -29,6 +32,7 @@ public class MySocketService extends Service {
     BufferedReader in = null;
     PrintWriter out = null;
     private ArrayList<user_chat_item> serverDataList;
+    Handler handler;
 
     class MySocketBind extends Binder {
         MySocketService getService(){
@@ -45,7 +49,6 @@ public class MySocketService extends Service {
         rm = "";
         sm = "";
         vs_user_name = "";
-
         new Thread(() -> {
             try {
                 // 집 와이파이 사용할때..
@@ -55,6 +58,7 @@ public class MySocketService extends Service {
 //                sock    = new Socket("172.30.1.12",6000);
 //                sock = new Socket("172.30.1.100",6000);
 //                sock = new Socket("172.30.1.98",6000);
+//                sock = new Socket("172.30.1.54",6000);
 
                 // 예빈이네 와이파이 사용할때...
 //                sock = new Socket("192.168.35.179",6000);
@@ -123,11 +127,12 @@ public class MySocketService extends Service {
     }
 
 
-    public void receiveMessage(ArrayList<user_chat_item> serverDataList, String login_user_name){
+    public void receiveMessage(ArrayList<user_chat_item> serverDataList, String login_user_name, chatingAdapter adapter){
         Log.e(TAG,"서버에서 메세지 받기");
 
         new Thread(() -> {
             this.serverDataList = serverDataList;
+            handler = new Handler(Looper.getMainLooper());
             try {
                 in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
                 while (true) {
@@ -145,6 +150,13 @@ public class MySocketService extends Service {
                             sm = splitMS[1];// 자르고 나온 유저의 메세지
                             serverDataList.add(new user_chat_item(vs_user_name,sm));
                             Log.e(TAG,"null이 아니면 : " + sm);
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+                            Thread.sleep(500);
                         }
                     }
                 }
@@ -152,6 +164,8 @@ public class MySocketService extends Service {
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }).start();
     }

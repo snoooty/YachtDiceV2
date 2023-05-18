@@ -1,6 +1,7 @@
 package com.example.yachtdicev2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,7 +12,9 @@ import android.content.ServiceConnection;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -27,7 +30,7 @@ public class ChatingPage extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private chatingAdapter adapter;
-    private ArrayList<user_chat_item> chatActivityDataList;
+    private ArrayList<user_chat_item> chatActivityDataList,currentChatList;
     String loginUserNickName,sm;
     EditText editText;
     String TAG = "ChatingPage";
@@ -77,9 +80,11 @@ public class ChatingPage extends AppCompatActivity {
                 mss = msb.getService();
                 isMSS = true;
                 Log.e(TAG,"sockBindCheck : " + mss.getSockBind());
-                mss.receiveMessage(chatActivityDataList,loginUserNickName);
-                adapter.notifyDataSetChanged();
+                mss.receiveMessage(chatActivityDataList,loginUserNickName,adapter);
+//                adapter.submitList(chatActivityDataList);
+//                adapter.notifyDataSetChanged();
             }
+
             @Override
             public void onServiceDisconnected(ComponentName name) {
                 Log.e(TAG,"실행안되나?");
@@ -92,11 +97,13 @@ public class ChatingPage extends AppCompatActivity {
 
         adapter = new chatingAdapter(loginUserNickName);
 
-        recyclerView.setAdapter(adapter);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        recyclerView.setAdapter(adapter);
 
         chatActivityDataList = new ArrayList<>();
+        currentChatList = new ArrayList<>();
 
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -108,6 +115,7 @@ public class ChatingPage extends AppCompatActivity {
                         if (editText.getText().toString().length() != 0){
                             chatActivityDataList.add(new user_chat_item(loginUserNickName,editText.getText().toString()));
                             adapter.notifyDataSetChanged();
+//                            adapter.submitList(chatActivityDataList);
                             if (editText.getText().toString() != null) {
                                 sm = loginUserNickName + "//" + editText.getText().toString();
                                 Log.e(TAG,"넘기기전 데이터 : " + sm);
@@ -124,9 +132,17 @@ public class ChatingPage extends AppCompatActivity {
                 return false;
             }
         });
-
         adapter.setAdapterChatList(chatActivityDataList);
     }
+
+//    Handler handler = new Handler(){
+//        @Override
+//        public void handleMessage(Message msg){
+//            if (msg.what == 1) {
+//                adapter.notifyDataSetChanged();
+//            }
+//        }
+//    };
 
     // 키보드 내리기
     void hideKeyboard()
@@ -159,4 +175,5 @@ public class ChatingPage extends AppCompatActivity {
         super.onDestroy();
         Log.e(TAG,"여기는 onDestroy");
     }
+
 }

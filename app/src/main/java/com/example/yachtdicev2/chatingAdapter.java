@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -17,7 +19,10 @@ public class chatingAdapter extends RecyclerView.Adapter<chatingAdapter.UserView
     private  String TAG = "Adapter";
     String login_user;
 
-    public chatingAdapter (String login_user){
+    public chatingAdapter(){
+
+    }
+    public chatingAdapter(String login_user) {
         this.login_user = login_user;
     }
 
@@ -33,13 +38,14 @@ public class chatingAdapter extends RecyclerView.Adapter<chatingAdapter.UserView
     }
 
     // 받아온 데이터 바인딩
+    @NonNull
     @Override
     public void onBindViewHolder(@NonNull chatingAdapter.UserViewHolder holder, int position) {
         holder.onBind(adapterChatList.get(position));
         Log.e(TAG,"onBindViewHolder");
     }
 
-    // 리사이클러뷰 리스트 사이즈를 불러옴
+//     리사이클러뷰 리스트 사이즈를 불러옴
     @Override
     public int getItemCount(){
         Log.e(TAG,"getItemCount : " + adapterChatList.size());
