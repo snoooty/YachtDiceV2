@@ -23,7 +23,10 @@ public class VsUserInGame extends AppCompatActivity {
     String loginUserNickName;
     MySocketService mss;
     boolean isMSS = false;
+    boolean vs_p1_rollTurn,vs_p2_rollTurn;
+    int vs_p1_roll;
     View vsPlayer1View,vsPlayer2View;
+    int vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight;
     ImageView vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5;
     ImageView vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5;
     Button vsGetScore,vsRollDice;
@@ -102,6 +105,25 @@ public class VsUserInGame extends AppCompatActivity {
         loginUserNickName = intentNick.getStringExtra("loginUserNickName");
         Log.e(TAG,"loginUserNickName : " + loginUserNickName);
 
+        // 주사위 굴리기
+        vsRollDice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG,"roll클릭되나?");
+                if (!vs_p1_rollTurn) {// 주사위 굴릴 수 있을지 없을지
+
+//                    vs_p1_roll += 1;
+//                    Log.e(TAG, "p1_roll : " + vs_p1_roll);
+//
+//                    if (vs_p1_roll >= 3) {// 주사위 세번 굴리면 못굴리게
+//                        vs_p1_rollTurn = true;
+//                        Log.e(TAG, "p1_rollturn : " + vs_p1_rollTurn);
+//                    }
+
+                }
+            }
+        });
+
         chat_bt = findViewById(R.id.chat_bt);
 
         chat_bt.setOnClickListener(new View.OnClickListener() {
@@ -114,5 +136,25 @@ public class VsUserInGame extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        Log.e(TAG,"P1 view Display top 값 : " + vsPlayer1View.getTop());
+        Log.e(TAG,"P1 view Display bottom 값 : " + vsPlayer1View.getBottom());
+        Log.e(TAG,"P1 view Display left 값 : " + vsPlayer1View.getLeft());
+        Log.e(TAG,"P1 view Display right 값 : " + vsPlayer1View.getRight());
+        // Player1 의 view 좌표 구하기
+        vsP1ViewTop = vsPlayer1View.getTop();
+        vsP1ViewBottom = vsPlayer1View.getBottom();
+        vsP1ViewLeft = vsPlayer1View.getLeft();
+        vsP1ViewRight = vsPlayer1View.getRight();
     }
 }

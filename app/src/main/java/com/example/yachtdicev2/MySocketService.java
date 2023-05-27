@@ -52,13 +52,13 @@ public class MySocketService extends Service {
         new Thread(() -> {
             try {
                 // 집 와이파이 사용할때..
-              sock = new Socket("172.30.1.17",6000);
+//              sock = new Socket("172.30.1.17",6000);
 
                 // 학원 와이파이 사용할때..
 //                sock = new Socket("172.30.1.56",6000);
 
                 // 예빈이네 와이파이 사용할때...
-//                sock = new Socket("192.168.35.179",6000);
+                sock = new Socket("192.168.35.179",6000);
 
                 // 수원역 hollys 와이파이
 //                sock = new Socket("192.168.50.118",6000);
