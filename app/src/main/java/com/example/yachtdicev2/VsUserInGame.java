@@ -22,7 +22,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Random;
+
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.EventLoop;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
 
 public class VsUserInGame extends AppCompatActivity {
 
@@ -49,12 +67,24 @@ public class VsUserInGame extends AppCompatActivity {
     AnimationDrawable vsRolldice_1,vsRolldice_2,vsRolldice_3,vsRolldice_4,vsRolldice_5;
     boolean dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move;
     int dice1eye,dice2eye,dice3eye,dice4eye,dice5eye;
+    String diceSum;
+    Socket gameSock;
+    PrintWriter out = null;
+    useJson useJson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vs_user_in_game);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        // 닉네임 가져오기
+        Intent intentNick = getIntent();
+        loginUserNickName = intentNick.getStringExtra("loginUserNickName");
+        Log.e(TAG,"loginUserNickName : " + loginUserNickName);
+
+        useJson = new useJson();
+
 
         ServiceConnection sconn = new ServiceConnection() {
             @Override
@@ -71,6 +101,17 @@ public class VsUserInGame extends AppCompatActivity {
                 isMSS = false;
             }
         };
+
+        new Thread(() -> {
+            try {
+                gameSock = new Socket("172.30.1.17",9000);
+            } catch (SocketException e){
+                Log.e(TAG,"서버와 연결이 끊어졌습니다.");
+                e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
 
         vsPlayer1View = findViewById(R.id.vs_player1_view);
         vsPlayer2View = findViewById(R.id.vs_player2_view);
@@ -114,11 +155,6 @@ public class VsUserInGame extends AppCompatActivity {
         Intent intent = new Intent(VsUserInGame.this, MySocketService.class);
         bindService(intent, sconn, Context.BIND_AUTO_CREATE);
 
-        // 닉네임 가져오기
-        Intent intentNick = getIntent();
-        loginUserNickName = intentNick.getStringExtra("loginUserNickName");
-        Log.e(TAG,"loginUserNickName : " + loginUserNickName);
-
         // 주사위 굴리기
         vsRollDice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,16 +162,20 @@ public class VsUserInGame extends AppCompatActivity {
                 Log.e(TAG,"roll클릭되나?");
                 if (!vs_p1_rollTurn) {// 주사위 굴릴 수 있을지 없을지
 
-//                    vs_p1_roll += 1;
-//                    Log.e(TAG, "p1_roll : " + vs_p1_roll);
-//
-//                    if (vs_p1_roll >= 3) {// 주사위 세번 굴리면 못굴리게
-//                        vs_p1_rollTurn = true;
-//                        Log.e(TAG, "p1_rollturn : " + vs_p1_rollTurn);
-//                    }
+                    vs_p1_roll += 1;
+                    Log.e(TAG, "p1_roll : " + vs_p1_roll);
 
+                    if (vs_p1_roll >= 3) {// 주사위 세번 굴리면 못굴리게
+                        vs_p1_rollTurn = true;
+                        Log.e(TAG, "p1_rollturn : " + vs_p1_rollTurn);
+                    }
+
+                    sendMessage(useJson.diceRollClick("DiceRollClick",loginUserNickName,vs_p1_roll));
+
+                    // 주사위 좌표구하기
                     rollDice.rollDice(vsP1ViewTop,vsP1ViewLeft,vsP1ViewBottom,vsP1ViewRight,diceSize);
 
+                    // 주사위 애니메이션 효과
                     diceAnimation();
                 }
 //                else if (vs_p1_rollTurn) {
@@ -489,10 +529,26 @@ public class VsUserInGame extends AppCompatActivity {
                             break;
                     }
                 }
+                Log.e(TAG, "dice sum : " + dice1eye + dice2eye + dice3eye + dice4eye + dice5eye);
+                diceSum = String.valueOf(dice1eye) + String.valueOf(dice2eye) + String.valueOf(dice3eye)
+                        + String.valueOf(dice4eye) + String.valueOf(dice5eye);
+                Log.e(TAG,"diceSum : " + diceSum);
             }
         });
         vsAnimatorSet.start();
+    }
 
-        Log.e(TAG, "dice sum : " + dice1eye + dice2eye + dice3eye + dice4eye + dice5eye);
+    public void sendMessage(String s) {
+
+        Log.e(TAG, "서버로 메세지 보내기");
+        new Thread(() -> {
+            try {
+                out = new PrintWriter(new OutputStreamWriter(gameSock.getOutputStream()));
+                out.println(s);
+                out.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 }
