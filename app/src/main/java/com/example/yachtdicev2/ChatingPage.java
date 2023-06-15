@@ -81,8 +81,6 @@ public class ChatingPage extends AppCompatActivity {
                 isMSS = true;
                 Log.e(TAG,"sockBindCheck : " + mss.getSockBind());
                 mss.receiveMessage(chatActivityDataList,loginUserNickName,adapter);
-//                adapter.submitList(chatActivityDataList);
-//                adapter.notifyDataSetChanged();
             }
 
             @Override

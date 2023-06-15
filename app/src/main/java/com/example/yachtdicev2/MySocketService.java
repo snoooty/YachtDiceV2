@@ -6,16 +6,13 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
@@ -59,10 +56,10 @@ public class MySocketService extends Service {
                 Log.e(TAG,"ip주소2 : " + getIp.getIp2());
 
                 // 집 와이파이 사용할때..
-              sock = new Socket("172.30.1.17",6000);
+//              sock = new Socket("172.30.1.17",6000);
 
                 // 학원 와이파이 사용할때..
-//                sock = new Socket("172.30.1.78",6000);
+                sock = new Socket("172.30.1.43",6000);
 
                 // 예빈이네 와이파이 사용할때...
 //                sock = new Socket("192.168.35.179",6000);
