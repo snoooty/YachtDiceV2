@@ -55,17 +55,8 @@ public class MySocketService extends Service {
                 Log.e(TAG,"ip주소 : " + getIp.getIp());
                 Log.e(TAG,"ip주소2 : " + getIp.getIp2());
 
-                // 집 와이파이 사용할때..
-//              sock = new Socket("172.30.1.17",6000);
 
-                // 학원 와이파이 사용할때..
-                sock = new Socket("172.30.1.43",6000);
-
-                // 예빈이네 와이파이 사용할때...
-//                sock = new Socket("192.168.35.179",6000);
-
-                // 수원역 hollys 와이파이
-//                sock = new Socket("192.168.50.118",6000);
+                sock = new Socket(getIp.homeWifi,6000);
 
                 Log.e(TAG,"서버와 연결되었습니다.");
                 Log.e(TAG,"소켓 바인딩 체크 : " + sock.isBound());

@@ -52,6 +52,8 @@ public class VsUserInGame extends AppCompatActivity {
     MySocketService mss;
     boolean isMSS = false;
     boolean vs_p1_rollTurn,vs_p2_rollTurn;
+    boolean userTurn = true;
+    boolean start = true;
     int vs_p1_roll;
     View vsPlayer1View,vsPlayer2View;
     int vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight;
@@ -73,6 +75,8 @@ public class VsUserInGame extends AppCompatActivity {
     Socket gameSock;
     PrintWriter out = null;
     useJson useJson;
+    GetIP getIP = new GetIP();
+    ReceiveMessage receiveMessage;
 
 
     @Override
@@ -128,6 +132,8 @@ public class VsUserInGame extends AppCompatActivity {
         useJson = new useJson();
 
 
+
+
         ServiceConnection sconn = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
@@ -152,30 +158,38 @@ public class VsUserInGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e(TAG,"roll클릭되나?");
-                if (!vs_p1_rollTurn) {// 주사위 굴릴 수 있을지 없을지
+                Log.e(TAG,"userTurn : " + receiveMessage.userTurn);
 
-                    vs_p1_roll += 1;
-                    Log.e(TAG, "p1_roll : " + vs_p1_roll);
+                if(receiveMessage.userTurn){
+                    if (!vs_p1_rollTurn) {// 주사위 굴릴 수 있을지 없을지
 
-                    if (vs_p1_roll >= 3) {// 주사위 세번 굴리면 못굴리게
-                        vs_p1_rollTurn = true;
-                        Log.e(TAG, "p1_rollturn : " + vs_p1_rollTurn);
+                        vs_p1_roll += 1;
+                        Log.e(TAG, "p1_roll : " + vs_p1_roll);
+
+                        if (vs_p1_roll >= 3) {// 주사위 세번 굴리면 못굴리게
+                            vs_p1_rollTurn = true;
+                            Log.e(TAG, "p1_rollturn : " + vs_p1_rollTurn);
+                        }
+
+                        sendMessage(useJson.diceRollClick("DiceRollClick",loginUserNickName,vs_p1_roll));
+
                     }
+                    else if (vs_p1_rollTurn) {
 
-                    // 주사위 좌표구하기
-//                    rollDice.rollDice(vsP1ViewTop,vsP1ViewLeft,vsP1ViewBottom,vsP1ViewRight,diceSize);
+                        Log.e(TAG,"P1의 주사위 굴리기가 끝났습니다.");
 
-                    sendMessage(useJson.diceRollClick("DiceRollClick",loginUserNickName,vs_p1_roll));
+                        AlertDialog.Builder builder = new AlertDialog.Builder(VsUserInGame.this);
+                        builder.setTitle("주사위 굴리기가 끝났습니다.");
+                        builder.setMessage("점수를 넣어주세요");
+                        builder.show();
 
-
+                    }
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(VsUserInGame.this);
+                    builder.setTitle("차례가 아닙니다.");
+                    builder.show();
                 }
-//                else if (vs_p1_rollTurn) {
-//                    Log.e(TAG,"P1의 턴이 끝났습니다.");
-//
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(VsUserInGame.this);
-//                    builder.setTitle("주사위 굴리기가 끝났습니다.");
-//                    builder.show();
-//                }
+
             }
         });
 
@@ -226,24 +240,52 @@ public class VsUserInGame extends AppCompatActivity {
 
         diceSize = diceBottom - diceTop;
 
-        new Thread(() -> {
-            try {
-                gameSock = new Socket("172.30.1.43",9000);
+        if (start){
+            new Thread(() -> {
+                try {
+                    gameSock = new Socket(getIP.homeWifi,9000);
 
-                ReceiveMessage receiveMessage = new ReceiveMessage(rollDice,vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5
-                        ,dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move,vsRolldice_1
-                        ,vsRolldice_2,vsRolldice_3,vsRolldice_4,vsRolldice_5,vs_rolldice_1xml,vs_rolldice_2xml
-                        ,vs_rolldice_3xml,vs_rolldice_4xml,vs_rolldice_5xml,vs_dice_1,vs_dice_2,vs_dice_3,vs_dice_4
-                        ,vs_dice_5,vs_dice_6,vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight,diceSize);
+                    receiveMessage = new ReceiveMessage(rollDice,vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5
+                            ,dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move,vsRolldice_1
+                            ,vsRolldice_2,vsRolldice_3,vsRolldice_4,vsRolldice_5,vs_rolldice_1xml,vs_rolldice_2xml
+                            ,vs_rolldice_3xml,vs_rolldice_4xml,vs_rolldice_5xml,vs_dice_1,vs_dice_2,vs_dice_3,vs_dice_4
+                            ,vs_dice_5,vs_dice_6,vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight,diceSize,userTurn);
 
-                receiveMessage.receiveMsg(gameSock);
-            } catch (SocketException e){
-                Log.e(TAG,"서버와 연결이 끊어졌습니다.");
-                e.printStackTrace();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+                    receiveMessage.receiveMsg(gameSock);
+                    sendMessage(useJson.startUser(loginUserNickName));
+
+                    Handler handler = new Handler(Looper.getMainLooper());
+
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (receiveMessage.userTurn) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(VsUserInGame.this);
+                                builder.setTitle("선입니다.");
+                                builder.show();
+                            }else if (!receiveMessage.userTurn){
+                                AlertDialog.Builder builder = new AlertDialog.Builder(VsUserInGame.this);
+                                builder.setTitle("후입니다.");
+                                builder.show();
+                            }
+                        }
+                    });
+                    Thread.sleep(500);
+
+
+                } catch (SocketException e){
+                    Log.e(TAG,"서버와 연결이 끊어졌습니다.");
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+
+            start = false;
+        }
+
     }
 
     public void sendMessage(String s) {

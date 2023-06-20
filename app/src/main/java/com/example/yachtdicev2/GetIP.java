@@ -13,6 +13,22 @@ import java.util.Enumeration;
 
 public class GetIP {
 
+    // 집 와이파이 사용할때..
+
+    String homeWifi = "172.30.1.17";
+
+    // 예빈이네 와이파이 사용할때..
+
+    String yeppiWifi = "192.168.35.179";
+
+    // 학원 와이파이 사용할때..
+
+    String academyWifi = "172.30.1.43";
+
+    // 기타 와이파이 사용할때..
+
+    String etcWifi = "192.168.50.118";
+
     public GetIP(){
 
     }

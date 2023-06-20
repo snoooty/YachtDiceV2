@@ -8,10 +8,10 @@ public class useJson {
 
     JSONObject jsonObject = new JSONObject();
 
-    public String diceRollClick(String clicName,String userName,int count){
+    public String diceRollClick(String clickName,String userName,int count){
 
         try {
-            jsonObject.put("clickName",clicName);
+            jsonObject.put("clickName",clickName);
             jsonObject.put("userName",userName);
             jsonObject.put("count",count);
         } catch (JSONException e) {
@@ -30,6 +30,7 @@ public class useJson {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+
         return jsonObject.toString();
     }
 
@@ -42,6 +43,19 @@ public class useJson {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+
+        return jsonObject.toString();
+    }
+
+    public String startUser(String userName){
+
+        try{
+            jsonObject.put("clickName","currentUser");
+            jsonObject.put("userName",userName);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
         return jsonObject.toString();
     }
 }

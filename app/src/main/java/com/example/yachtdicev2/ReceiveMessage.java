@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,6 +41,7 @@ public class ReceiveMessage {
     Drawable vs_dice_1,vs_dice_2,vs_dice_3,vs_dice_4,vs_dice_5,vs_dice_6;
     Drawable vs_rolldice_1xml,vs_rolldice_2xml,vs_rolldice_3xml,vs_rolldice_4xml,vs_rolldice_5xml;
     boolean dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move;
+    boolean userTurn;
     int dice1eye,dice2eye,dice3eye,dice4eye,dice5eye;
     String diceSum;
 
@@ -48,7 +51,7 @@ public class ReceiveMessage {
     ,AnimationDrawable vsRolldice_4,AnimationDrawable vsRolldice_5,Drawable vs_rolldice_1xml,Drawable vs_rolldice_2xml
     ,Drawable vs_rolldice_3xml,Drawable vs_rolldice_4xml,Drawable vs_rolldice_5xml,Drawable vs_dice_1
     ,Drawable vs_dice_2,Drawable vs_dice_3,Drawable vs_dice_4,Drawable vs_dice_5,Drawable vs_dice_6,int vsP1ViewTop
-    ,int vsP1ViewBottom,int vsP1ViewLeft,int vsP1ViewRight,int diceSize){
+    ,int vsP1ViewBottom,int vsP1ViewLeft,int vsP1ViewRight,int diceSize,boolean userTurn){
 
         this.rollDice = rollDice;
         this.vs_dice1 = vs_dice1;
@@ -82,6 +85,7 @@ public class ReceiveMessage {
         this.vsP1ViewRight = vsP1ViewRight;
         this.vsP1ViewBottom = vsP1ViewBottom;
         this.diceSize = diceSize;
+        this.userTurn = userTurn;
 
     }
 
@@ -99,6 +103,18 @@ public class ReceiveMessage {
                     Log.e(TAG,"받은 메세지 : " + jsonObject.toString());
                     String receiveName = (String) jsonObject.get("clickName");
 
+                    // 처음에 유저의 턴 배분
+                    if (receiveName.equals("current")){
+
+                        userTurn = true;
+
+                    }else if (receiveName.equals("wait")){
+
+                        userTurn = false;
+
+                    }
+
+                    // 주사위 굴리기
                     if(receiveName.equals("diceRollClick")){
                         dice1 = (Integer) jsonObject.get("dice1");
                         dice2 = (Integer) jsonObject.get("dice2");
