@@ -1,4 +1,4 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.netty;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

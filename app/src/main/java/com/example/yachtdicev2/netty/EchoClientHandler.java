@@ -1,4 +1,4 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.netty;
 
 import android.util.Log;
 

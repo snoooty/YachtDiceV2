@@ -1,4 +1,4 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.yachtdicev2.service.MySocketService;
+import com.example.yachtdicev2.R;
 
 public class Select_Activity extends AppCompatActivity {
 
@@ -60,7 +63,7 @@ public class Select_Activity extends AppCompatActivity {
         userNickname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Select_Activity.this,Mypage_Activity.class);
+                Intent intent = new Intent(Select_Activity.this, Mypage_Activity.class);
                 startActivityForResult(intent, 1);
             }
         });
@@ -80,7 +83,7 @@ public class Select_Activity extends AppCompatActivity {
                     // 액티비티 전환
                     if (mss.getSockBind()) {
                         Log.e(TAG,"액티비티 옮겨지나?");
-                        Intent intent = new Intent(Select_Activity.this,VsUserInGame.class);
+                        Intent intent = new Intent(Select_Activity.this, VsUserInGame.class);
                         intent.putExtra("loginUserNickName",loginUserNickname);
                         startActivity(intent);
                     }else {
@@ -95,7 +98,7 @@ public class Select_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(Select_Activity.this,Ingame_Activity.class);
+                Intent intent = new Intent(Select_Activity.this, Ingame_Activity.class);
                 intent.putExtra("loginUserNickName",loginUserNickname);
                 startActivity(intent);
             }

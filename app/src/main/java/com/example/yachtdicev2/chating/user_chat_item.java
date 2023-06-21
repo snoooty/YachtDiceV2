@@ -1,4 +1,4 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.chating;
 
 import java.util.Objects;
 

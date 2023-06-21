@@ -1,4 +1,4 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.activity;
 
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.RED;
@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.yachtdicev2.R;
 
 public class ScorePage extends AppCompatActivity {
 

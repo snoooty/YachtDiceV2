@@ -1,4 +1,4 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,18 +13,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.yachtdicev2.R;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.Buffer;
-import java.nio.charset.StandardCharsets;
 
 public class SignUp_Activity extends AppCompatActivity {
 
@@ -451,7 +449,7 @@ public class SignUp_Activity extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 dialogInterface.dismiss();
-                                                Intent intent = new Intent(SignUp_Activity.this,Login_Activity.class);
+                                                Intent intent = new Intent(SignUp_Activity.this, Login_Activity.class);
                                                 startActivity(intent);
                                                 finish();
                                             }

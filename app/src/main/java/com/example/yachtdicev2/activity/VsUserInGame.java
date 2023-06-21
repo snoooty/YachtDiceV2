@@ -1,12 +1,9 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -24,25 +21,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.yachtdicev2.R;
+import com.example.yachtdicev2.gameLogic.ReceiveMessage;
+import com.example.yachtdicev2.gameLogic.RollDice;
+import com.example.yachtdicev2.chating.ChatingPage;
+import com.example.yachtdicev2.ip.GetIP;
+import com.example.yachtdicev2.service.MySocketService;
+import com.example.yachtdicev2.useJson;
+
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.util.Random;
-
-import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoop;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
 
 public class VsUserInGame extends AppCompatActivity {
 
@@ -69,12 +60,12 @@ public class VsUserInGame extends AppCompatActivity {
     RollDice rollDice = new RollDice();
     AnimatorSet vsAnimatorSet;
     AnimationDrawable vsRolldice_1,vsRolldice_2,vsRolldice_3,vsRolldice_4,vsRolldice_5;
-    boolean dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move;
+    boolean dice1Keep_move = true,dice2Keep_move = true,dice3Keep_move = true,dice4Keep_move = true,dice5Keep_move = true;
     int dice1eye,dice2eye,dice3eye,dice4eye,dice5eye;
     String diceSum;
     Socket gameSock;
     PrintWriter out = null;
-    useJson useJson;
+    com.example.yachtdicev2.useJson useJson;
     GetIP getIP = new GetIP();
     ReceiveMessage receiveMessage;
 
@@ -171,7 +162,8 @@ public class VsUserInGame extends AppCompatActivity {
                             Log.e(TAG, "p1_rollturn : " + vs_p1_rollTurn);
                         }
 
-                        sendMessage(useJson.diceRollClick("DiceRollClick",loginUserNickName,vs_p1_roll));
+                        sendMessage(useJson.diceRollClick("DiceRollClick",loginUserNickName,vs_p1_roll
+                                ,dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move));
 
                     }
                     else if (vs_p1_rollTurn) {
@@ -193,6 +185,82 @@ public class VsUserInGame extends AppCompatActivity {
             }
         });
 
+        vs_dice1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG,"dice1 클릭되나요?");
+
+//                if (dice1Keep_move){
+//                    dice1Keep_move = false;
+//                }else if (!dice1Keep_move){
+//                    dice1Keep_move = true;
+//                }
+
+                sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,1,dice1Keep_move));
+
+            }
+        });
+
+        vs_dice2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (dice2Keep_move){
+                    dice2Keep_move = false;
+                }else if (!dice2Keep_move){
+                    dice2Keep_move = true;
+                }
+
+                sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,1,dice2Keep_move));
+
+            }
+        });
+
+        vs_dice3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (dice3Keep_move){
+                    dice3Keep_move = false;
+                }else if (!dice3Keep_move){
+                    dice3Keep_move = true;
+                }
+
+                sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,1,dice3Keep_move));
+
+            }
+        });
+
+        vs_dice4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (dice4Keep_move){
+                    dice4Keep_move = false;
+                }else if (!dice4Keep_move){
+                    dice4Keep_move = true;
+                }
+
+                sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,1,dice4Keep_move));
+
+            }
+        });
+
+        vs_dice5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (dice5Keep_move){
+                    dice5Keep_move = false;
+                }else if (!dice5Keep_move){
+                    dice5Keep_move = true;
+                }
+
+                sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,1,dice5Keep_move));
+
+            }
+        });
+
         chat_bt = findViewById(R.id.chat_bt);
 
         chat_bt.setOnClickListener(new View.OnClickListener() {
@@ -200,7 +268,18 @@ public class VsUserInGame extends AppCompatActivity {
             public void onClick(View v) {
                 Log.e(TAG,"채팅 클릭되나?");
 
-                Intent intent = new Intent(VsUserInGame.this,ChatingPage.class);
+                Intent intent = new Intent(VsUserInGame.this, ChatingPage.class);
+                intent.putExtra("loginUserNickName",loginUserNickName);
+                startActivity(intent);
+            }
+        });
+
+        vsGetScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG,"점수 클릭되나?");
+
+                Intent intent = new Intent(VsUserInGame.this, ScorePage.class);
                 intent.putExtra("loginUserNickName",loginUserNickName);
                 startActivity(intent);
             }
@@ -249,7 +328,8 @@ public class VsUserInGame extends AppCompatActivity {
                             ,dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move,vsRolldice_1
                             ,vsRolldice_2,vsRolldice_3,vsRolldice_4,vsRolldice_5,vs_rolldice_1xml,vs_rolldice_2xml
                             ,vs_rolldice_3xml,vs_rolldice_4xml,vs_rolldice_5xml,vs_dice_1,vs_dice_2,vs_dice_3,vs_dice_4
-                            ,vs_dice_5,vs_dice_6,vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight,diceSize,userTurn);
+                            ,vs_dice_5,vs_dice_6,vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight,diceSize,userTurn
+                            ,vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5);
 
                     receiveMessage.receiveMsg(gameSock);
                     sendMessage(useJson.startUser(loginUserNickName));

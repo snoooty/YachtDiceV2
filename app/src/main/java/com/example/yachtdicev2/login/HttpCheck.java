@@ -1,4 +1,4 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.login;
 
 import android.os.StrictMode;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -8,6 +8,10 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 
+
+import com.example.yachtdicev2.chating.chatingAdapter;
+import com.example.yachtdicev2.ip.GetIP;
+import com.example.yachtdicev2.chating.user_chat_item;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +26,7 @@ public class MySocketService extends Service {
 
     private Socket sock;
     private String TAG = "MySocketService";
-    IBinder mbinder =  new MySocketBind();
+    public IBinder mbinder =  new MySocketBind();
     String vs_user_name;
     String rm,sm;
     String[] splitMS;
@@ -32,8 +36,8 @@ public class MySocketService extends Service {
     Handler handler;
     GetIP getIp;
 
-    class MySocketBind extends Binder {
-        MySocketService getService(){
+    public class MySocketBind extends Binder {
+        public MySocketService getService(){
             return MySocketService.this;
         }
     }

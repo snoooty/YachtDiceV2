@@ -1,8 +1,10 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.yachtdicev2.R;
 
 public class Ranking_Activity extends AppCompatActivity {
 

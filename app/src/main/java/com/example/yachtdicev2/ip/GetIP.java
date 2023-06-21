@@ -1,4 +1,4 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.ip;
 
 
 import android.net.wifi.WifiInfo;
@@ -15,19 +15,19 @@ public class GetIP {
 
     // 집 와이파이 사용할때..
 
-    String homeWifi = "172.30.1.17";
+    public String homeWifi = "172.30.1.17";
 
     // 예빈이네 와이파이 사용할때..
 
-    String yeppiWifi = "192.168.35.179";
+    public String yeppiWifi = "192.168.35.179";
 
     // 학원 와이파이 사용할때..
 
-    String academyWifi = "172.30.1.43";
+    public String academyWifi = "172.30.1.43";
 
     // 기타 와이파이 사용할때..
 
-    String etcWifi = "192.168.50.118";
+    public String etcWifi = "192.168.50.118";
 
     public GetIP(){
 

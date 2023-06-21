@@ -21,46 +21,46 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <service
-            android:name=".MySocketService"
+            android:name=".service.MySocketService"
             android:enabled="true"
             android:exported="true"></service>
 
         <activity
-            android:name=".ChatingPage"
+            android:name=".chating.ChatingPage"
             android:exported="false"
             android:theme="@style/Theme.MyDialog"
             android:windowSoftInputMode="adjustResize|adjustPan"
             android:launchMode="singleTop"
             />
         <activity
-            android:name=".VsUserInGame"
+            android:name=".activity.VsUserInGame"
             android:exported="false"
             android:windowSoftInputMode="adjustResize|adjustPan" />
         <activity
-            android:name=".ScorePage"
+            android:name=".activity.ScorePage"
             android:exported="false"
             android:theme="@style/Theme.MyDialog" />
         <activity
-            android:name=".Mypage_Activity"
+            android:name=".activity.Mypage_Activity"
             android:exported="false"
             android:theme="@style/Theme.MyDialog" />
         <activity
-            android:name=".Ranking_Activity"
+            android:name=".activity.Ranking_Activity"
             android:exported="false" />
         <activity
-            android:name=".Ingame_Activity"
+            android:name=".activity.Ingame_Activity"
             android:exported="false" />
         <activity
-            android:name=".Select_Activity"
+            android:name=".activity.Select_Activity"
             android:exported="false" />
         <activity
-            android:name=".SignUp_Activity"
+            android:name=".activity.SignUp_Activity"
             android:exported="false" />
         <activity
-            android:name=".Login_Activity"
+            android:name=".activity.Login_Activity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

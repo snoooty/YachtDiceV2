@@ -1,4 +1,4 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -14,12 +14,13 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.yachtdicev2.R;
 
 import java.util.Random;
 
@@ -817,7 +818,7 @@ public class Ingame_Activity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if(!p1_turnEnd){
-                    Intent intent = new Intent(Ingame_Activity.this,ScorePage.class);
+                    Intent intent = new Intent(Ingame_Activity.this, ScorePage.class);
                     intent.putExtra("dice1eye",dice1eye);
                     intent.putExtra("dice2eye",dice2eye);
                     intent.putExtra("dice3eye",dice3eye);

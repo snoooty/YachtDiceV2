@@ -1,10 +1,10 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.etc;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 
-import java.util.ArrayList;
+import com.example.yachtdicev2.chating.user_chat_item;
 
 public class MyDiffUtil extends DiffUtil.ItemCallback<user_chat_item>{
 

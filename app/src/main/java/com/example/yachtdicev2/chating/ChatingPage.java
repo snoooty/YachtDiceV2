@@ -1,7 +1,6 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.chating;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,9 +11,7 @@ import android.content.ServiceConnection;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -23,6 +20,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import com.example.yachtdicev2.R;
+import com.example.yachtdicev2.service.MySocketService;
 
 import java.util.ArrayList;
 

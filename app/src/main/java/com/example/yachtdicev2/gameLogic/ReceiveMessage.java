@@ -1,4 +1,4 @@
-package com.example.yachtdicev2;
+package com.example.yachtdicev2.gameLogic;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -12,8 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AlertDialog;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Random;
 
 public class ReceiveMessage {
 
@@ -32,16 +31,16 @@ public class ReceiveMessage {
     String TAG = "ReceiveMsg";
     JSONObject jsonObject;
     int dice1,dice2,dice3,dice4,dice5;
-
     int vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight,diceSize;
     ImageView vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5;
+    ImageView vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5;
     RollDice rollDice;
     AnimatorSet vsAnimatorSet;
     AnimationDrawable vsRolldice_1,vsRolldice_2,vsRolldice_3,vsRolldice_4,vsRolldice_5;
     Drawable vs_dice_1,vs_dice_2,vs_dice_3,vs_dice_4,vs_dice_5,vs_dice_6;
     Drawable vs_rolldice_1xml,vs_rolldice_2xml,vs_rolldice_3xml,vs_rolldice_4xml,vs_rolldice_5xml;
-    boolean dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move;
-    boolean userTurn;
+    public boolean dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move;
+    public boolean userTurn;
     int dice1eye,dice2eye,dice3eye,dice4eye,dice5eye;
     String diceSum;
 
@@ -51,7 +50,8 @@ public class ReceiveMessage {
     ,AnimationDrawable vsRolldice_4,AnimationDrawable vsRolldice_5,Drawable vs_rolldice_1xml,Drawable vs_rolldice_2xml
     ,Drawable vs_rolldice_3xml,Drawable vs_rolldice_4xml,Drawable vs_rolldice_5xml,Drawable vs_dice_1
     ,Drawable vs_dice_2,Drawable vs_dice_3,Drawable vs_dice_4,Drawable vs_dice_5,Drawable vs_dice_6,int vsP1ViewTop
-    ,int vsP1ViewBottom,int vsP1ViewLeft,int vsP1ViewRight,int diceSize,boolean userTurn){
+    ,int vsP1ViewBottom,int vsP1ViewLeft,int vsP1ViewRight,int diceSize,boolean userTurn,ImageView vsP1KeepDice1
+    ,ImageView vsP1KeepDice2,ImageView vsP1KeepDice3,ImageView vsP1KeepDice4,ImageView vsP1KeepDice5){
 
         this.rollDice = rollDice;
         this.vs_dice1 = vs_dice1;
@@ -86,6 +86,11 @@ public class ReceiveMessage {
         this.vsP1ViewBottom = vsP1ViewBottom;
         this.diceSize = diceSize;
         this.userTurn = userTurn;
+        this.vsP1KeepDice1 = vsP1KeepDice1;
+        this.vsP1KeepDice2 = vsP1KeepDice2;
+        this.vsP1KeepDice3 = vsP1KeepDice3;
+        this.vsP1KeepDice4 = vsP1KeepDice4;
+        this.vsP1KeepDice5 = vsP1KeepDice5;
 
     }
 
@@ -136,6 +141,49 @@ public class ReceiveMessage {
                         });
                         Thread.sleep(500);
                     }
+
+                    if (receiveName.equals("DiceKeepClick")){
+
+                        dice1Keep_move = (boolean) jsonObject.get("dice1Keep");
+                        dice2Keep_move = (boolean) jsonObject.get("dice1Keep");
+                        dice3Keep_move = (boolean) jsonObject.get("dice1Keep");
+                        dice4Keep_move = (boolean) jsonObject.get("dice1Keep");
+                        dice5Keep_move = (boolean) jsonObject.get("dice1Keep");
+                        Log.e(TAG,"각 boolean 값 : " + dice1Keep_move + " | " + dice2Keep_move + " | " + dice3Keep_move
+                                + " | " + dice4Keep_move + " | " + dice5Keep_move);
+
+                        if (jsonObject.get("dice1Keep").equals(true)
+                        || jsonObject.get("dice1Keep").equals(false)){
+
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dice1KeepAnimation();
+                                }
+                            });
+                            Thread.sleep(500);
+
+                        }
+                        if (jsonObject.get("dice2Keep").equals(true)
+                                || jsonObject.get("dice2Keep").equals(false)){
+
+                        }
+                        if (jsonObject.get("dice3Keep").equals(true)
+                                || jsonObject.get("dice3Keep").equals(false)){
+
+                        }
+                        if (jsonObject.get("dice4Keep").equals(true)
+                                || jsonObject.get("dice4Keep").equals(false)){
+
+                        }
+                        if (jsonObject.get("dice5Keep").equals(true)
+                                || jsonObject.get("dice5Keep").equals(false)){
+
+                        }
+
+                    }
+
+
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -178,7 +226,7 @@ public class ReceiveMessage {
 
         vsAnimatorSet = new AnimatorSet();
 
-        if (!dice1Keep_move) {
+        if (dice1Keep_move) {
             // dice1 생성
             vs_dice1.setImageResource(0);
             vs_dice1.setImageDrawable(vs_rolldice_1xml);
@@ -196,7 +244,7 @@ public class ReceiveMessage {
             vsAnimatorSet.play(animaY_dice1);
         }
 
-        if (!dice2Keep_move) {
+        if (dice2Keep_move) {
             // dice2 생성
             vs_dice2.setImageResource(0);
             vs_dice2.setImageDrawable(vs_rolldice_2xml);
@@ -214,7 +262,7 @@ public class ReceiveMessage {
             vsAnimatorSet.play(animaY_dice2);
         }
 
-        if (!dice3Keep_move) {
+        if (dice3Keep_move) {
             // dice3 생성
             vs_dice3.setImageResource(0);
             vs_dice3.setImageDrawable(vs_rolldice_3xml);
@@ -232,7 +280,7 @@ public class ReceiveMessage {
             vsAnimatorSet.play(animaY_dice3);
         }
 
-        if (!dice4Keep_move) {
+        if (dice4Keep_move) {
             // dice4 생성
             vs_dice4.setImageResource(0);
             vs_dice4.setImageDrawable(vs_rolldice_4xml);
@@ -250,7 +298,7 @@ public class ReceiveMessage {
             vsAnimatorSet.play(animaY_dice4);
         }
 
-        if (!dice5Keep_move) {
+        if (dice5Keep_move) {
             // dice5 생성
             vs_dice5.setImageResource(0);
             vs_dice5.setImageDrawable(vs_rolldice_5xml);
@@ -273,7 +321,7 @@ public class ReceiveMessage {
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
 
-                if (!dice1Keep_move) {
+                if (dice1Keep_move) {
                     switch (dice1) {
                         case 1:
                             vs_dice1.setImageDrawable(vs_dice_1);
@@ -302,7 +350,7 @@ public class ReceiveMessage {
                     }
                 }
 
-                if (!dice2Keep_move) {
+                if (dice2Keep_move) {
                     switch (dice2) {
                         case 1:
                             vs_dice2.setImageDrawable(vs_dice_1);
@@ -331,7 +379,7 @@ public class ReceiveMessage {
                     }
                 }
 
-                if (!dice3Keep_move) {
+                if (dice3Keep_move) {
                     switch (dice3) {
                         case 1:
                             vs_dice3.setImageDrawable(vs_dice_1);
@@ -360,7 +408,7 @@ public class ReceiveMessage {
                     }
                 }
 
-                if (!dice4Keep_move) {
+                if (dice4Keep_move) {
                     switch (dice4) {
                         case 1:
                             vs_dice4.setImageDrawable(vs_dice_1);
@@ -389,7 +437,7 @@ public class ReceiveMessage {
                     }
                 }
 
-                if (!dice5Keep_move) {
+                if (dice5Keep_move) {
                     switch (dice5) {
                         case 1:
                             vs_dice5.setImageDrawable(vs_dice_1);
@@ -424,5 +472,40 @@ public class ReceiveMessage {
             }
         });
         vsAnimatorSet.start();
+    }
+
+    public void dice1KeepAnimation(){
+
+        Log.e(TAG,"dice1 킵되나요?");
+
+        vsAnimatorSet = new AnimatorSet();
+
+        if(dice1Keep_move){
+            ObjectAnimator animaX_dice1 = ObjectAnimator.ofFloat(dice1,"translationX",vsP1KeepDice1.getLeft());
+            ObjectAnimator animaY_dice1 = ObjectAnimator.ofFloat(dice1,"translationY",vsP1KeepDice1.getTop());
+            animaX_dice1.setDuration(600);
+            animaY_dice1.setDuration(600);
+
+            vsAnimatorSet.play(animaX_dice1);
+            vsAnimatorSet.play(animaY_dice1);
+
+            vsAnimatorSet.start();
+
+        }else if(!dice1Keep_move){
+
+            rollDice.rollDice1(vsP1ViewTop,vsP1ViewLeft,vsP1ViewBottom,vsP1ViewRight,diceSize);
+
+            ObjectAnimator animaX_dice1 = ObjectAnimator.ofFloat(dice1,"translationX",rollDice.dice1Left);
+            ObjectAnimator animaY_dice1 = ObjectAnimator.ofFloat(dice1,"translationY",rollDice.dice1Top);
+            animaX_dice1.setDuration(600);
+            animaY_dice1.setDuration(600);
+
+            vsAnimatorSet.play(animaX_dice1);
+            vsAnimatorSet.play(animaY_dice1);
+
+            vsAnimatorSet.start();
+
+        }
+
     }
 }
