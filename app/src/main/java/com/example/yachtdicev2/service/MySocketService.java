@@ -60,7 +60,7 @@ public class MySocketService extends Service {
                 Log.e(TAG,"ip주소2 : " + getIp.getIp2());
 
 
-                sock = new Socket(getIp.homeWifi,6000);
+                sock = new Socket(getIp.currentIP(),6000);
 
                 Log.e(TAG,"서버와 연결되었습니다.");
                 Log.e(TAG,"소켓 바인딩 체크 : " + sock.isBound());

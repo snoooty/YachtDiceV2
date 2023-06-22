@@ -11,6 +11,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +35,7 @@ public class ReceiveMessage {
     int vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight,diceSize;
     ImageView vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5;
     ImageView vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5;
+    TextView user1,user2;
     RollDice rollDice;
     AnimatorSet vsAnimatorSet;
     AnimationDrawable vsRolldice_1,vsRolldice_2,vsRolldice_3,vsRolldice_4,vsRolldice_5;
@@ -43,15 +45,17 @@ public class ReceiveMessage {
     public boolean userTurn;
     int dice1eye,dice2eye,dice3eye,dice4eye,dice5eye;
     String diceSum;
+    public String myStatus;
 
-    public ReceiveMessage(RollDice rollDice,ImageView vs_dice1,ImageView vs_dice2,ImageView vs_dice3,ImageView vs_dice4
-    ,ImageView vs_dice5,boolean dice1Keep_move,boolean dice2Keep_move,boolean dice3Keep_move,boolean dice4Keep_move
-    ,boolean dice5Keep_move,AnimationDrawable vsRolldice_1,AnimationDrawable vsRolldice_2,AnimationDrawable vsRolldice_3
-    ,AnimationDrawable vsRolldice_4,AnimationDrawable vsRolldice_5,Drawable vs_rolldice_1xml,Drawable vs_rolldice_2xml
-    ,Drawable vs_rolldice_3xml,Drawable vs_rolldice_4xml,Drawable vs_rolldice_5xml,Drawable vs_dice_1
-    ,Drawable vs_dice_2,Drawable vs_dice_3,Drawable vs_dice_4,Drawable vs_dice_5,Drawable vs_dice_6,int vsP1ViewTop
-    ,int vsP1ViewBottom,int vsP1ViewLeft,int vsP1ViewRight,int diceSize,boolean userTurn,ImageView vsP1KeepDice1
-    ,ImageView vsP1KeepDice2,ImageView vsP1KeepDice3,ImageView vsP1KeepDice4,ImageView vsP1KeepDice5){
+    public ReceiveMessage(RollDice rollDice, ImageView vs_dice1, ImageView vs_dice2, ImageView vs_dice3, ImageView vs_dice4
+    , ImageView vs_dice5, boolean dice1Keep_move, boolean dice2Keep_move, boolean dice3Keep_move, boolean dice4Keep_move
+    , boolean dice5Keep_move, AnimationDrawable vsRolldice_1, AnimationDrawable vsRolldice_2, AnimationDrawable vsRolldice_3
+    , AnimationDrawable vsRolldice_4, AnimationDrawable vsRolldice_5, Drawable vs_rolldice_1xml, Drawable vs_rolldice_2xml
+    , Drawable vs_rolldice_3xml, Drawable vs_rolldice_4xml, Drawable vs_rolldice_5xml, Drawable vs_dice_1
+    , Drawable vs_dice_2, Drawable vs_dice_3, Drawable vs_dice_4, Drawable vs_dice_5, Drawable vs_dice_6, int vsP1ViewTop
+    , int vsP1ViewBottom, int vsP1ViewLeft, int vsP1ViewRight, int diceSize, boolean userTurn, ImageView vsP1KeepDice1
+    , ImageView vsP1KeepDice2, ImageView vsP1KeepDice3, ImageView vsP1KeepDice4, ImageView vsP1KeepDice5, TextView user1
+    , TextView user2){
 
         this.rollDice = rollDice;
         this.vs_dice1 = vs_dice1;
@@ -91,6 +95,8 @@ public class ReceiveMessage {
         this.vsP1KeepDice3 = vsP1KeepDice3;
         this.vsP1KeepDice4 = vsP1KeepDice4;
         this.vsP1KeepDice5 = vsP1KeepDice5;
+        this.user1 = user1;
+        this.user2 = user2;
 
     }
 
@@ -110,13 +116,26 @@ public class ReceiveMessage {
 
                     // 처음에 유저의 턴 배분
                     if (receiveName.equals("current")){
-
                         userTurn = true;
+                        myStatus = "player1";
 
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                user1.setText((String) jsonObject.optString("player1","대기중"));
+                                user2.setText((String) jsonObject.optString("player2","대기중"));
+                            }
+                        });
                     }else if (receiveName.equals("wait")){
-
                         userTurn = false;
-
+                        myStatus = "player2";
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                user1.setText((String) jsonObject.optString("player1","대기중"));
+                                user2.setText((String) jsonObject.optString("player2","대기중"));
+                            }
+                        });
                     }
 
                     // 주사위 굴리기
@@ -144,46 +163,90 @@ public class ReceiveMessage {
 
                     if (receiveName.equals("DiceKeepClick")){
 
-                        dice1Keep_move = (boolean) jsonObject.get("dice1Keep");
-                        dice2Keep_move = (boolean) jsonObject.get("dice1Keep");
-                        dice3Keep_move = (boolean) jsonObject.get("dice1Keep");
-                        dice4Keep_move = (boolean) jsonObject.get("dice1Keep");
-                        dice5Keep_move = (boolean) jsonObject.get("dice1Keep");
+                        String diceClick = (String) jsonObject.get("diceClick");
+
                         Log.e(TAG,"각 boolean 값 : " + dice1Keep_move + " | " + dice2Keep_move + " | " + dice3Keep_move
                                 + " | " + dice4Keep_move + " | " + dice5Keep_move);
 
-                        if (jsonObject.get("dice1Keep").equals(true)
-                        || jsonObject.get("dice1Keep").equals(false)){
+                        if (diceClick.equals("dice1")){
+                            dice1Keep_move = (boolean) jsonObject.get("dice1Keep");
+                            if (jsonObject.get("dice1Keep").equals(true)
+                                    || jsonObject.get("dice1Keep").equals(false)){
+                                Log.e(TAG,"dice1 의 상태가 true 이거나 false 일때 실행");
 
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    dice1KeepAnimation();
-                                }
-                            });
-                            Thread.sleep(500);
-
-                        }
-                        if (jsonObject.get("dice2Keep").equals(true)
-                                || jsonObject.get("dice2Keep").equals(false)){
-
-                        }
-                        if (jsonObject.get("dice3Keep").equals(true)
-                                || jsonObject.get("dice3Keep").equals(false)){
-
-                        }
-                        if (jsonObject.get("dice4Keep").equals(true)
-                                || jsonObject.get("dice4Keep").equals(false)){
-
-                        }
-                        if (jsonObject.get("dice5Keep").equals(true)
-                                || jsonObject.get("dice5Keep").equals(false)){
-
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dice1KeepAnimation();
+                                    }
+                                });
+                                Thread.sleep(500);
+                            }
                         }
 
+                        if (diceClick.equals("dice2")){
+                            dice2Keep_move = (boolean) jsonObject.get("dice2Keep");
+                            if (jsonObject.get("dice2Keep").equals(true)
+                                    || jsonObject.get("dice2Keep").equals(false)){
+
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dice2KeepAnimation();
+                                    }
+                                });
+                                Thread.sleep(500);
+
+                            }
+                        }
+
+                        if (diceClick.equals("dice3")){
+                            dice3Keep_move = (boolean) jsonObject.get("dice3Keep");
+                            if (jsonObject.get("dice3Keep").equals(true)
+                                    || jsonObject.get("dice3Keep").equals(false)){
+
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dice3KeepAnimation();
+                                    }
+                                });
+                                Thread.sleep(500);
+
+                            }
+                        }
+
+                        if (diceClick.equals("dice4")){
+                            dice4Keep_move = (boolean) jsonObject.get("dice4Keep");
+                            if (jsonObject.get("dice4Keep").equals(true)
+                                    || jsonObject.get("dice4Keep").equals(false)){
+
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dice4KeepAnimation();
+                                    }
+                                });
+                                Thread.sleep(500);
+
+                            }
+                        }
+
+                        if (diceClick.equals("dice5")){
+                            dice5Keep_move = (boolean) jsonObject.get("dice5Keep");
+                            if (jsonObject.get("dice5Keep").equals(true)
+                                    || jsonObject.get("dice5Keep").equals(false)){
+
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dice5KeepAnimation();
+                                    }
+                                });
+                                Thread.sleep(500);
+                            }
+                        }
                     }
-
-
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -477,35 +540,176 @@ public class ReceiveMessage {
     public void dice1KeepAnimation(){
 
         Log.e(TAG,"dice1 킵되나요?");
+        Log.e(TAG,"Keep status : " + dice1Keep_move);
+        Log.e(TAG,"KeepDice1 Left : " + vsP1KeepDice1.getLeft());
+        Log.e(TAG,"KeepDice1 Top : " + vsP1KeepDice1.getTop());
 
         vsAnimatorSet = new AnimatorSet();
 
-        if(dice1Keep_move){
-            ObjectAnimator animaX_dice1 = ObjectAnimator.ofFloat(dice1,"translationX",vsP1KeepDice1.getLeft());
-            ObjectAnimator animaY_dice1 = ObjectAnimator.ofFloat(dice1,"translationY",vsP1KeepDice1.getTop());
-            animaX_dice1.setDuration(600);
-            animaY_dice1.setDuration(600);
+        if(!dice1Keep_move){
 
-            vsAnimatorSet.play(animaX_dice1);
-            vsAnimatorSet.play(animaY_dice1);
+            Log.e(TAG,"dice1 상태가 true일 때 ");
+            ObjectAnimator animaX_dice = ObjectAnimator.ofFloat(vs_dice1,"translationX",vsP1KeepDice1.getLeft());
+            ObjectAnimator animaY_dice = ObjectAnimator.ofFloat(vs_dice1,"translationY",vsP1KeepDice1.getTop());
+            animaX_dice.setDuration(600);
+            animaY_dice.setDuration(600);
+
+            vsAnimatorSet.play(animaX_dice);
+            vsAnimatorSet.play(animaY_dice);
 
             vsAnimatorSet.start();
 
-        }else if(!dice1Keep_move){
+        }else if(dice1Keep_move){
 
+            Log.e(TAG,"dice1 상태가 false일 때 ");
             rollDice.rollDice1(vsP1ViewTop,vsP1ViewLeft,vsP1ViewBottom,vsP1ViewRight,diceSize);
 
-            ObjectAnimator animaX_dice1 = ObjectAnimator.ofFloat(dice1,"translationX",rollDice.dice1Left);
-            ObjectAnimator animaY_dice1 = ObjectAnimator.ofFloat(dice1,"translationY",rollDice.dice1Top);
-            animaX_dice1.setDuration(600);
-            animaY_dice1.setDuration(600);
+            ObjectAnimator animaX_dice = ObjectAnimator.ofFloat(vs_dice1,"translationX",rollDice.dice1Left);
+            ObjectAnimator animaY_dice = ObjectAnimator.ofFloat(vs_dice1,"translationY",rollDice.dice1Top);
+            animaX_dice.setDuration(600);
+            animaY_dice.setDuration(600);
 
-            vsAnimatorSet.play(animaX_dice1);
-            vsAnimatorSet.play(animaY_dice1);
+            vsAnimatorSet.play(animaX_dice);
+            vsAnimatorSet.play(animaY_dice);
 
             vsAnimatorSet.start();
 
         }
+    }
 
+    public void dice2KeepAnimation() {
+
+        vsAnimatorSet = new AnimatorSet();
+
+        if (!dice2Keep_move) {
+
+            Log.e(TAG, "dice2 상태가 true일 때 ");
+            ObjectAnimator animaX_dice = ObjectAnimator.ofFloat(vs_dice2, "translationX", vsP1KeepDice2.getLeft());
+            ObjectAnimator animaY_dice = ObjectAnimator.ofFloat(vs_dice2, "translationY", vsP1KeepDice2.getTop());
+            animaX_dice.setDuration(600);
+            animaY_dice.setDuration(600);
+
+            vsAnimatorSet.play(animaX_dice);
+            vsAnimatorSet.play(animaY_dice);
+
+            vsAnimatorSet.start();
+
+        } else if (dice2Keep_move) {
+
+            Log.e(TAG, "dice2 상태가 false일 때 ");
+            rollDice.rollDice2(vsP1ViewTop, vsP1ViewLeft, vsP1ViewBottom, vsP1ViewRight, diceSize);
+
+            ObjectAnimator animaX_dice = ObjectAnimator.ofFloat(vs_dice2, "translationX", rollDice.dice2Left);
+            ObjectAnimator animaY_dice = ObjectAnimator.ofFloat(vs_dice2, "translationY", rollDice.dice2Top);
+            animaX_dice.setDuration(600);
+            animaY_dice.setDuration(600);
+
+            vsAnimatorSet.play(animaX_dice);
+            vsAnimatorSet.play(animaY_dice);
+
+            vsAnimatorSet.start();
+        }
+    }
+
+    public void dice3KeepAnimation(){
+
+        vsAnimatorSet = new AnimatorSet();
+
+        if (!dice3Keep_move) {
+
+            Log.e(TAG, "dice3 상태가 true일 때 ");
+            ObjectAnimator animaX_dice = ObjectAnimator.ofFloat(vs_dice3, "translationX", vsP1KeepDice3.getLeft());
+            ObjectAnimator animaY_dice = ObjectAnimator.ofFloat(vs_dice3, "translationY", vsP1KeepDice3.getTop());
+            animaX_dice.setDuration(600);
+            animaY_dice.setDuration(600);
+
+            vsAnimatorSet.play(animaX_dice);
+            vsAnimatorSet.play(animaY_dice);
+
+            vsAnimatorSet.start();
+
+        } else if (dice3Keep_move) {
+
+            Log.e(TAG, "dice3 상태가 false일 때 ");
+            rollDice.rollDice3(vsP1ViewTop, vsP1ViewLeft, vsP1ViewBottom, vsP1ViewRight, diceSize);
+
+            ObjectAnimator animaX_dice = ObjectAnimator.ofFloat(vs_dice3, "translationX", rollDice.dice3Left);
+            ObjectAnimator animaY_dice = ObjectAnimator.ofFloat(vs_dice3, "translationY", rollDice.dice3Top);
+            animaX_dice.setDuration(600);
+            animaY_dice.setDuration(600);
+
+            vsAnimatorSet.play(animaX_dice);
+            vsAnimatorSet.play(animaY_dice);
+
+            vsAnimatorSet.start();
+        }
+    }
+
+    public void dice4KeepAnimation(){
+
+        vsAnimatorSet = new AnimatorSet();
+
+        if (!dice4Keep_move) {
+
+            Log.e(TAG, "dice4 상태가 true일 때 ");
+            ObjectAnimator animaX_dice = ObjectAnimator.ofFloat(vs_dice4, "translationX", vsP1KeepDice4.getLeft());
+            ObjectAnimator animaY_dice = ObjectAnimator.ofFloat(vs_dice4, "translationY", vsP1KeepDice4.getTop());
+            animaX_dice.setDuration(600);
+            animaY_dice.setDuration(600);
+
+            vsAnimatorSet.play(animaX_dice);
+            vsAnimatorSet.play(animaY_dice);
+
+            vsAnimatorSet.start();
+
+        } else if (dice4Keep_move) {
+
+            Log.e(TAG, "dice4 상태가 false일 때 ");
+            rollDice.rollDice4(vsP1ViewTop, vsP1ViewLeft, vsP1ViewBottom, vsP1ViewRight, diceSize);
+
+            ObjectAnimator animaX_dice = ObjectAnimator.ofFloat(vs_dice4, "translationX", rollDice.dice4Left);
+            ObjectAnimator animaY_dice = ObjectAnimator.ofFloat(vs_dice4, "translationY", rollDice.dice4Top);
+            animaX_dice.setDuration(600);
+            animaY_dice.setDuration(600);
+
+            vsAnimatorSet.play(animaX_dice);
+            vsAnimatorSet.play(animaY_dice);
+
+            vsAnimatorSet.start();
+        }
+    }
+
+    public void dice5KeepAnimation(){
+
+        vsAnimatorSet = new AnimatorSet();
+
+        if (!dice5Keep_move) {
+
+            Log.e(TAG, "dice5 상태가 true일 때 ");
+            ObjectAnimator animaX_dice = ObjectAnimator.ofFloat(vs_dice5, "translationX", vsP1KeepDice5.getLeft());
+            ObjectAnimator animaY_dice = ObjectAnimator.ofFloat(vs_dice5, "translationY", vsP1KeepDice5.getTop());
+            animaX_dice.setDuration(600);
+            animaY_dice.setDuration(600);
+
+            vsAnimatorSet.play(animaX_dice);
+            vsAnimatorSet.play(animaY_dice);
+
+            vsAnimatorSet.start();
+
+        } else if (dice5Keep_move) {
+
+            Log.e(TAG, "dice5 상태가 false일 때 ");
+            rollDice.rollDice5(vsP1ViewTop, vsP1ViewLeft, vsP1ViewBottom, vsP1ViewRight, diceSize);
+
+            ObjectAnimator animaX_dice = ObjectAnimator.ofFloat(vs_dice5, "translationX", rollDice.dice5Left);
+            ObjectAnimator animaY_dice = ObjectAnimator.ofFloat(vs_dice5, "translationY", rollDice.dice5Top);
+            animaX_dice.setDuration(600);
+            animaY_dice.setDuration(600);
+
+            vsAnimatorSet.play(animaX_dice);
+            vsAnimatorSet.play(animaY_dice);
+
+            vsAnimatorSet.start();
+        }
     }
 }

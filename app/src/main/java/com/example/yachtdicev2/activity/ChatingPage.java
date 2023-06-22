@@ -1,4 +1,4 @@
-package com.example.yachtdicev2.chating;
+package com.example.yachtdicev2.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +22,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.yachtdicev2.R;
+import com.example.yachtdicev2.chating.chatingAdapter;
+import com.example.yachtdicev2.chating.user_chat_item;
 import com.example.yachtdicev2.service.MySocketService;
 
 import java.util.ArrayList;

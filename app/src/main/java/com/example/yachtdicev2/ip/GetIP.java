@@ -13,6 +13,11 @@ import java.util.Enumeration;
 
 public class GetIP {
 
+    public String currentIP(){
+
+        return academyWifi;
+    }
+
     // 집 와이파이 사용할때..
 
     public String homeWifi = "172.30.1.17";
@@ -23,7 +28,7 @@ public class GetIP {
 
     // 학원 와이파이 사용할때..
 
-    public String academyWifi = "172.30.1.43";
+    public String academyWifi = "172.30.1.95";
 
     // 기타 와이파이 사용할때..
 

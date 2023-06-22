@@ -26,7 +26,7 @@
             android:exported="true"></service>
 
         <activity
-            android:name=".chating.ChatingPage"
+            android:name=".activity.ChatingPage"
             android:exported="false"
             android:theme="@style/Theme.MyDialog"
             android:windowSoftInputMode="adjustResize|adjustPan"

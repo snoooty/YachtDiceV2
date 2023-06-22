@@ -8,6 +8,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -24,7 +25,7 @@ import android.widget.TextView;
 import com.example.yachtdicev2.R;
 import com.example.yachtdicev2.gameLogic.ReceiveMessage;
 import com.example.yachtdicev2.gameLogic.RollDice;
-import com.example.yachtdicev2.chating.ChatingPage;
+import com.example.yachtdicev2.gameLogic.gameData;
 import com.example.yachtdicev2.ip.GetIP;
 import com.example.yachtdicev2.service.MySocketService;
 import com.example.yachtdicev2.useJson;
@@ -51,6 +52,7 @@ public class VsUserInGame extends AppCompatActivity {
     int diceTop,diceBottom,diceLeft,diceRight,diceSize;
     ImageView vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5;
     ImageView vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5;
+    TextView user1,user2;
     Button vsGetScore,vsRollDice;
     ImageView vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5;
     ImageView vs_P2Dice1,vs_P2Dice2,vs_P2Dice3,vs_P2Dice4,vs_P2Dice5;
@@ -68,6 +70,8 @@ public class VsUserInGame extends AppCompatActivity {
     com.example.yachtdicev2.useJson useJson;
     GetIP getIP = new GetIP();
     ReceiveMessage receiveMessage;
+    public SharedPreferences sharedPreferences,sharedPreferences2;
+
 
 
     @Override
@@ -113,6 +117,8 @@ public class VsUserInGame extends AppCompatActivity {
         vs_rolldice_3xml = (Drawable) getResources().getDrawable(R.drawable.rolldice_3);
         vs_rolldice_4xml = (Drawable) getResources().getDrawable(R.drawable.rolldice_4);
         vs_rolldice_5xml = (Drawable) getResources().getDrawable(R.drawable.rolldice_5);
+        user1 = findViewById(R.id.vs_PLAYER_1);
+        user2 = findViewById(R.id.vs_PLAYER_2);
 
 
         // 닉네임 가져오기
@@ -122,7 +128,12 @@ public class VsUserInGame extends AppCompatActivity {
 
         useJson = new useJson();
 
+        sharedPreferences = getSharedPreferences("vsP1Score",MODE_PRIVATE);
+        sharedPreferences2 = getSharedPreferences("vsP2Score",MODE_PRIVATE);
 
+        gameData data = new gameData(sharedPreferences,sharedPreferences2);
+        data.player1dataReset();
+        data.player2dataReset();
 
 
         ServiceConnection sconn = new ServiceConnection() {
@@ -190,14 +201,16 @@ public class VsUserInGame extends AppCompatActivity {
             public void onClick(View v) {
                 Log.e(TAG,"dice1 클릭되나요?");
 
-//                if (dice1Keep_move){
-//                    dice1Keep_move = false;
-//                }else if (!dice1Keep_move){
-//                    dice1Keep_move = true;
-//                }
+                if (receiveMessage.userTurn){
 
-                sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,1,dice1Keep_move));
+                    sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,1,receiveMessage.dice1Keep_move,
+                            receiveMessage.dice2Keep_move,receiveMessage.dice3Keep_move,receiveMessage.dice4Keep_move,receiveMessage.dice5Keep_move));
 
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(VsUserInGame.this);
+                    builder.setTitle("차례가 아닙니다.");
+                    builder.show();
+                }
             }
         });
 
@@ -205,13 +218,16 @@ public class VsUserInGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (dice2Keep_move){
-                    dice2Keep_move = false;
-                }else if (!dice2Keep_move){
-                    dice2Keep_move = true;
-                }
+                if (receiveMessage.userTurn){
 
-                sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,1,dice2Keep_move));
+                    sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,2,receiveMessage.dice1Keep_move,
+                            receiveMessage.dice2Keep_move,receiveMessage.dice3Keep_move,receiveMessage.dice4Keep_move,receiveMessage.dice5Keep_move));
+
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(VsUserInGame.this);
+                    builder.setTitle("차례가 아닙니다.");
+                    builder.show();
+                }
 
             }
         });
@@ -220,13 +236,16 @@ public class VsUserInGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (dice3Keep_move){
-                    dice3Keep_move = false;
-                }else if (!dice3Keep_move){
-                    dice3Keep_move = true;
-                }
+                if (receiveMessage.userTurn){
 
-                sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,1,dice3Keep_move));
+                    sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,3,receiveMessage.dice1Keep_move,
+                            receiveMessage.dice2Keep_move,receiveMessage.dice3Keep_move,receiveMessage.dice4Keep_move,receiveMessage.dice5Keep_move));
+
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(VsUserInGame.this);
+                    builder.setTitle("차례가 아닙니다.");
+                    builder.show();
+                }
 
             }
         });
@@ -235,13 +254,16 @@ public class VsUserInGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (dice4Keep_move){
-                    dice4Keep_move = false;
-                }else if (!dice4Keep_move){
-                    dice4Keep_move = true;
-                }
+                if (receiveMessage.userTurn){
 
-                sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,1,dice4Keep_move));
+                    sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,4,receiveMessage.dice1Keep_move,
+                            receiveMessage.dice2Keep_move,receiveMessage.dice3Keep_move,receiveMessage.dice4Keep_move,receiveMessage.dice5Keep_move));
+
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(VsUserInGame.this);
+                    builder.setTitle("차례가 아닙니다.");
+                    builder.show();
+                }
 
             }
         });
@@ -250,13 +272,16 @@ public class VsUserInGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (dice5Keep_move){
-                    dice5Keep_move = false;
-                }else if (!dice5Keep_move){
-                    dice5Keep_move = true;
-                }
+                if (receiveMessage.userTurn){
 
-                sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,1,dice5Keep_move));
+                    sendMessage(useJson.diceKeepClick("DiceKeepClick",loginUserNickName,5,receiveMessage.dice1Keep_move,
+                            receiveMessage.dice2Keep_move,receiveMessage.dice3Keep_move,receiveMessage.dice4Keep_move,receiveMessage.dice5Keep_move));
+
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(VsUserInGame.this);
+                    builder.setTitle("차례가 아닙니다.");
+                    builder.show();
+                }
 
             }
         });
@@ -278,10 +303,11 @@ public class VsUserInGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e(TAG,"점수 클릭되나?");
+                Log.e(TAG,"나의 status : " + receiveMessage.myStatus);
 
-                Intent intent = new Intent(VsUserInGame.this, ScorePage.class);
-                intent.putExtra("loginUserNickName",loginUserNickName);
-                startActivity(intent);
+//                Intent intent = new Intent(VsUserInGame.this, ScorePage.class);
+//                intent.putExtra("loginUserNickName",loginUserNickName);
+//                startActivity(intent);
             }
         });
     }
@@ -322,17 +348,18 @@ public class VsUserInGame extends AppCompatActivity {
         if (start){
             new Thread(() -> {
                 try {
-                    gameSock = new Socket(getIP.homeWifi,9000);
+                    gameSock = new Socket(getIP.currentIP(),9000);
 
                     receiveMessage = new ReceiveMessage(rollDice,vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5
                             ,dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move,vsRolldice_1
                             ,vsRolldice_2,vsRolldice_3,vsRolldice_4,vsRolldice_5,vs_rolldice_1xml,vs_rolldice_2xml
                             ,vs_rolldice_3xml,vs_rolldice_4xml,vs_rolldice_5xml,vs_dice_1,vs_dice_2,vs_dice_3,vs_dice_4
                             ,vs_dice_5,vs_dice_6,vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight,diceSize,userTurn
-                            ,vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5);
+                            ,vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5,user1,user2);
 
                     receiveMessage.receiveMsg(gameSock);
                     sendMessage(useJson.startUser(loginUserNickName));
+                    Thread.sleep(500);
 
                     Handler handler = new Handler(Looper.getMainLooper());
 

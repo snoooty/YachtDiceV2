@@ -29,12 +29,18 @@ public class useJson {
         return jsonObject.toString();
     }
 
-    public String diceKeepClick(String clickName,String userName,int keepDice,boolean booleanKeep){
+    public String diceKeepClick(String clickName,String userName,int keepDice,boolean booleanKeep1,
+                                boolean booleanKeep2,boolean booleanKeep3,boolean booleanKeep4,boolean booleanKeep5){
         try{
             jsonObject.put("clickName",clickName);
             jsonObject.put("userName",userName);
             jsonObject.put("keepDice",keepDice);
-            jsonObject.put("booleanKeep",booleanKeep);
+            jsonObject.put("booleanKeep1",booleanKeep1);
+            jsonObject.put("booleanKeep2",booleanKeep2);
+            jsonObject.put("booleanKeep3",booleanKeep3);
+            jsonObject.put("booleanKeep4",booleanKeep4);
+            jsonObject.put("booleanKeep5",booleanKeep5);
+
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
