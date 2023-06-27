@@ -15,7 +15,8 @@ public class GetIP {
 
     public String currentIP(){
 
-        return academyWifi;
+//        return academyWifi;
+        return homeWifi;
     }
 
     // 집 와이파이 사용할때..

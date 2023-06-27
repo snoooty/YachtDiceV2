@@ -1,9 +1,14 @@
 package com.example.yachtdicev2.activity;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.AnimatorSet;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -43,12 +48,13 @@ public class VsUserInGame extends AppCompatActivity {
     String loginUserNickName;
     MySocketService mss;
     boolean isMSS = false;
-    boolean vs_p1_rollTurn,vs_p2_rollTurn;
+    boolean vs_rollTurn;
     boolean userTurn = true;
     boolean start = true;
-    int vs_p1_roll;
+    int vs_roll;
     View vsPlayer1View,vsPlayer2View;
     int vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight;
+    int vsP2ViewTop,vsP2ViewBottom,vsP2ViewLeft,vsP2ViewRight;
     int diceTop,diceBottom,diceLeft,diceRight,diceSize;
     ImageView vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5;
     ImageView vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5;
@@ -60,7 +66,6 @@ public class VsUserInGame extends AppCompatActivity {
     Drawable vs_rolldice_1xml,vs_rolldice_2xml,vs_rolldice_3xml,vs_rolldice_4xml,vs_rolldice_5xml;
     TextView player1_name,player2_name;
     RollDice rollDice = new RollDice();
-    AnimatorSet vsAnimatorSet;
     AnimationDrawable vsRolldice_1,vsRolldice_2,vsRolldice_3,vsRolldice_4,vsRolldice_5;
     boolean dice1Keep_move = true,dice2Keep_move = true,dice3Keep_move = true,dice4Keep_move = true,dice5Keep_move = true;
     int dice1eye,dice2eye,dice3eye,dice4eye,dice5eye;
@@ -71,7 +76,7 @@ public class VsUserInGame extends AppCompatActivity {
     GetIP getIP = new GetIP();
     ReceiveMessage receiveMessage;
     public SharedPreferences sharedPreferences,sharedPreferences2;
-
+    public ActivityResultLauncher<Intent> getResult;
 
 
     @Override
@@ -120,9 +125,24 @@ public class VsUserInGame extends AppCompatActivity {
         user1 = findViewById(R.id.vs_PLAYER_1);
         user2 = findViewById(R.id.vs_PLAYER_2);
 
+        getResult = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                            if (result.getResultCode() == Activity.RESULT_OK){
+                                Log.e(TAG,"Activity 복귀?");
 
-        // 닉네임 가져오기
-        Intent intentNick = getIntent();
+                                Intent getIntent = getIntent();
+                                Log.e(TAG,"이름 : " + getIntent.getStringExtra("name"));
+                                Log.e(TAG,"score : " + getIntent.getIntExtra("score",0));
+                            }
+                    }
+                });
+
+
+                // 닉네임 가져오기
+                Intent intentNick = getIntent();
         loginUserNickName = intentNick.getStringExtra("loginUserNickName");
         Log.e(TAG,"loginUserNickName : " + loginUserNickName);
 
@@ -163,21 +183,21 @@ public class VsUserInGame extends AppCompatActivity {
                 Log.e(TAG,"userTurn : " + receiveMessage.userTurn);
 
                 if(receiveMessage.userTurn){
-                    if (!vs_p1_rollTurn) {// 주사위 굴릴 수 있을지 없을지
+                    if (!vs_rollTurn) {// 주사위 굴릴 수 있을지 없을지
 
-                        vs_p1_roll += 1;
-                        Log.e(TAG, "p1_roll : " + vs_p1_roll);
+                        vs_roll += 1;
+                        Log.e(TAG, "p1_roll : " + vs_roll);
 
-                        if (vs_p1_roll >= 3) {// 주사위 세번 굴리면 못굴리게
-                            vs_p1_rollTurn = true;
-                            Log.e(TAG, "p1_rollturn : " + vs_p1_rollTurn);
+                        if (vs_roll >= 3) {// 주사위 세번 굴리면 못굴리게
+                            vs_rollTurn = true;
+                            Log.e(TAG, "p1_rollturn : " + vs_rollTurn);
                         }
 
-                        sendMessage(useJson.diceRollClick("DiceRollClick",loginUserNickName,vs_p1_roll
+                        sendMessage(useJson.diceRollClick("DiceRollClick",loginUserNickName,vs_roll
                                 ,dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move));
 
                     }
-                    else if (vs_p1_rollTurn) {
+                    else if (vs_rollTurn) {
 
                         Log.e(TAG,"P1의 주사위 굴리기가 끝났습니다.");
 
@@ -304,10 +324,17 @@ public class VsUserInGame extends AppCompatActivity {
             public void onClick(View v) {
                 Log.e(TAG,"점수 클릭되나?");
                 Log.e(TAG,"나의 status : " + receiveMessage.myStatus);
+                Log.e(TAG,"나의 turn : " + receiveMessage.userTurn);
 
-//                Intent intent = new Intent(VsUserInGame.this, ScorePage.class);
-//                intent.putExtra("loginUserNickName",loginUserNickName);
-//                startActivity(intent);
+                Intent intent = new Intent(VsUserInGame.this, VsScoreActivity.class);
+                intent.putExtra("status",receiveMessage.myStatus);
+                intent.putExtra("userTurn",receiveMessage.userTurn);
+                intent.putExtra("dice1eye",receiveMessage.dice1eye);
+                intent.putExtra("dice2eye",receiveMessage.dice2eye);
+                intent.putExtra("dice3eye",receiveMessage.dice3eye);
+                intent.putExtra("dice4eye",receiveMessage.dice4eye);
+                intent.putExtra("dice5eye",receiveMessage.dice5eye);
+                getResult.launch(intent);
             }
         });
     }
@@ -332,6 +359,12 @@ public class VsUserInGame extends AppCompatActivity {
         vsP1ViewLeft = vsPlayer1View.getLeft();
         vsP1ViewRight = vsPlayer1View.getRight();
 
+        // player2 의 view 좌표 구하기
+        vsP2ViewTop = vsPlayer2View.getTop();
+        vsP2ViewBottom = vsPlayer2View.getBottom();
+        vsP2ViewLeft = vsPlayer2View.getLeft();
+        vsP2ViewRight = vsPlayer2View.getRight();
+
         // 주사위 크기 구하기
         diceTop = vs_dice1.getTop();
         diceBottom = vs_dice1.getBottom();
@@ -355,7 +388,8 @@ public class VsUserInGame extends AppCompatActivity {
                             ,vsRolldice_2,vsRolldice_3,vsRolldice_4,vsRolldice_5,vs_rolldice_1xml,vs_rolldice_2xml
                             ,vs_rolldice_3xml,vs_rolldice_4xml,vs_rolldice_5xml,vs_dice_1,vs_dice_2,vs_dice_3,vs_dice_4
                             ,vs_dice_5,vs_dice_6,vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight,diceSize,userTurn
-                            ,vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5,user1,user2);
+                            ,vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5,user1,user2,vsP2ViewTop
+                            ,vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5);
 
                     receiveMessage.receiveMsg(gameSock);
                     sendMessage(useJson.startUser(loginUserNickName));

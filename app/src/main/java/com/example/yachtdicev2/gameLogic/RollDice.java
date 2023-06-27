@@ -14,7 +14,7 @@ public class RollDice {
 
     }
 
-    public void rollDice(int top, int left, int bottom, int right, int diceSize){
+    public void rollDice(int top, int left, int bottom, int right, int diceSize, int vsTop, boolean userTurn){
 
         Random rollRnd = new Random();
         Log.e(TAG,"넘어온 top : " + top);
@@ -26,6 +26,7 @@ public class RollDice {
         int range1_V = (right - left)/3; // P1 View 윗구역 가로범위
         int range2_V = (right - left)/2; // P1 View 아랫구역 가로범위
         int range_H = (bottom - top)/2; // P1 View 전구역 세로범위
+        int range_vs = vsTop - top;
 
         // dice1 굴릴 1구역의 좌표범위 구하기
         dice1Left = rollRnd.nextInt(range1_V);
@@ -42,6 +43,11 @@ public class RollDice {
                 }
             }
         }
+
+        if (!userTurn){
+            dice1Top = dice1Top + range_vs;
+        }
+
         if(dice1Left > range1_V - diceSize){// 1구역을 넘어서 2구역을 침범하면 주사위 크기만큼 1구역으로 밀어넣기
             dice1Left = dice1Left - diceSize;
         }
@@ -71,6 +77,9 @@ public class RollDice {
                 }
             }
         }
+        if (!userTurn){
+            dice2Top = dice2Top + range_vs;
+        }
         Log.e(TAG,"dice2Top : " + dice2Top);
         Log.e(TAG,"dice2Left : " + dice2Left);
 
@@ -97,6 +106,9 @@ public class RollDice {
                 }
             }
         }
+        if (!userTurn){
+            dice3Top = dice3Top + range_vs;
+        }
         Log.e(TAG,"dice3Top : " + dice3Top);
         Log.e(TAG,"dice3Left : " + dice3Left);
 
@@ -110,6 +122,9 @@ public class RollDice {
             if (dice4Top > bottom - diceSize) {// 넘어가지 않게하기
                 dice4Top = dice4Top - diceSize;
             }
+        }
+        if (!userTurn){
+            dice4Top = dice4Top + range_vs;
         }
 
         if (dice4Left > range2_V - diceSize) {// 넘어가지 않게하기
@@ -136,17 +151,21 @@ public class RollDice {
             if (dice5Top > bottom - diceSize) {// 넘어가지 않게하기
                 dice5Top = dice5Top - diceSize;
             }
+        }
+        if (!userTurn){
+            dice5Top = dice5Top + range_vs;
         }
         Log.e(TAG,"dice5Top : " + dice5Top);
         Log.e(TAG,"dice5Left : " + dice5Left);
     }
 
-    public void rollDice1(int top, int left, int bottom, int right, int diceSize){
+    public void rollDice1(int top, int left, int bottom, int right, int diceSize, int vsTop, boolean userTurn){
 
         Random rollRnd = new Random();
 
         int range1_V = (right - left)/3; // P1 View 윗구역 가로범위
         int range_H = (bottom - top)/2; // P1 View 전구역 세로범위
+        int range_vs = vsTop - top;
 
         // dice1 굴릴 1구역의 좌표범위 구하기
         dice1Left = rollRnd.nextInt(range1_V);
@@ -163,6 +182,9 @@ public class RollDice {
                 }
             }
         }
+        if (!userTurn){
+            dice1Top = dice1Top + range_vs;
+        }
         if(dice1Left > range1_V - diceSize){// 1구역을 넘어서 2구역을 침범하면 주사위 크기만큼 1구역으로 밀어넣기
             dice1Left = dice1Left - diceSize;
         }
@@ -171,12 +193,13 @@ public class RollDice {
 
     }
 
-    public void rollDice2(int top, int left, int bottom, int right, int diceSize){
+    public void rollDice2(int top, int left, int bottom, int right, int diceSize, int vsTop, boolean userTurn){
 
         Random rollRnd = new Random();
 
         int range1_V = (right - left)/3; // P1 View 윗구역 가로범위
         int range_H = (bottom - top)/2; // P1 View 전구역 세로범위
+        int range_vs = vsTop - top;
 
         // dice2 굴릴 2구역의 좌표범위 구하기
         dice2Left = rollRnd.nextInt(range1_V);
@@ -201,17 +224,21 @@ public class RollDice {
                 }
             }
         }
+        if (!userTurn){
+            dice2Top = dice2Top + range_vs;
+        }
         Log.e(TAG,"dice2Top : " + dice2Top);
         Log.e(TAG,"dice2Left : " + dice2Left);
 
     }
 
-    public void rollDice3(int top, int left, int bottom, int right, int diceSize){
+    public void rollDice3(int top, int left, int bottom, int right, int diceSize, int vsTop, boolean userTurn){
 
         Random rollRnd = new Random();
 
         int range1_V = (right - left)/3; // P1 View 윗구역 가로범위
         int range_H = (bottom - top)/2; // P1 View 전구역 세로범위
+        int range_vs = vsTop - top;
 
         // dice3 굴릴 3구역의 좌표범위 구하기
         dice3Left = rollRnd.nextInt(range1_V);
@@ -236,17 +263,21 @@ public class RollDice {
                 }
             }
         }
+        if (!userTurn){
+            dice3Top = dice3Top + range_vs;
+        }
         Log.e(TAG,"dice3Top : " + dice3Top);
         Log.e(TAG,"dice3Left : " + dice3Left);
 
     }
 
-    public void rollDice4(int top, int left, int bottom, int right, int diceSize){
+    public void rollDice4(int top, int left, int bottom, int right, int diceSize, int vsTop, boolean userTurn){
 
         Random rollRnd = new Random();
 
         int range2_V = (right - left)/2; // P1 View 아랫구역 가로범위
         int range_H = (bottom - top)/2; // P1 View 전구역 세로범위
+        int range_vs = vsTop - top;
 
         // dice4 굴릴 4구역의 좌표범위 구하기
         dice4Left = rollRnd.nextInt(range2_V);
@@ -259,6 +290,9 @@ public class RollDice {
                 dice4Top = dice4Top - diceSize;
             }
         }
+        if (!userTurn){
+            dice4Top = dice4Top + range_vs;
+        }
 
         if (dice4Left > range2_V - diceSize) {// 넘어가지 않게하기
             dice4Left = dice4Left - diceSize;
@@ -268,12 +302,13 @@ public class RollDice {
 
     }
 
-    public void rollDice5(int top, int left, int bottom, int right, int diceSize){
+    public void rollDice5(int top, int left, int bottom, int right, int diceSize, int vsTop, boolean userTurn){
 
         Random rollRnd = new Random();
 
         int range2_V = (right - left)/2; // P1 View 아랫구역 가로범위
         int range_H = (bottom - top)/2; // P1 View 전구역 세로범위
+        int range_vs = vsTop - top;
 
         // dice5 굴릴 5구역의 좌표범위 구하기
         dice5Left = rollRnd.nextInt(range2_V);
@@ -293,6 +328,9 @@ public class RollDice {
             if (dice5Top > bottom - diceSize) {// 넘어가지 않게하기
                 dice5Top = dice5Top - diceSize;
             }
+        }
+        if (!userTurn){
+            dice1Top = dice1Top + range_vs;
         }
         Log.e(TAG,"dice5Top : " + dice5Top);
         Log.e(TAG,"dice5Left : " + dice5Left);
