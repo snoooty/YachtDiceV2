@@ -1,5 +1,6 @@
 package com.example.yachtdicev2.activity;
 
+import static android.graphics.Color.BLACK;
 import static android.graphics.Color.RED;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -12,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -39,6 +41,7 @@ public class VsScoreActivity extends AppCompatActivity {
     ScoreCalculation scoreCalc;
     public SharedPreferences sharedPreferences,sharedPreferences2;
     String status;
+    String TAG = "VsScoreActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +108,10 @@ public class VsScoreActivity extends AppCompatActivity {
         dice3eye = getIntent().getIntExtra("dice3eye",0);
         dice4eye = getIntent().getIntExtra("dice4eye",0);
         dice5eye = getIntent().getIntExtra("dice5eye",0);
+        Log.e(TAG,"status : " + status);
+        Log.e(TAG,"userTurn : " + userTurn);
+
+        getScore();
 
         if (status.equals("player1")){
 
@@ -196,20 +203,285 @@ public class VsScoreActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putInt("vsP1Aces", scoreCalc.calcAce(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                editor.commit();
-
                                 Intent intent = new Intent();
-                                intent.putExtra("name","Aces");
+                                intent.putExtra("status",status);
+                                intent.putExtra("name","P1Aces");
                                 intent.putExtra("score",scoreCalc.calcAce(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
                                 setResult(RESULT_OK,intent);
                                 dialog.dismiss();
                                 finish();
+
                             }
-                        });
+                        }).setCancelable(false);
+                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.dismiss();
+                            }
+                        }).setCancelable(false);
+
+                        builder.show();
                     }
                 });
+
+                P1Two.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                        builder.setTitle("Twos 점수").setMessage(String.valueOf(scoreCalc.calcTwo(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent intent = new Intent();
+                                intent.putExtra("status",status);
+                                intent.putExtra("name","P1Twos");
+                                intent.putExtra("score",scoreCalc.calcTwo(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                setResult(RESULT_OK,intent);
+                                dialog.dismiss();
+                                finish();
+
+                            }
+                        }).setCancelable(false);
+                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.dismiss();
+                            }
+                        }).setCancelable(false);
+
+                        builder.show();
+                    }
+                });
+
+                P1Three.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                        builder.setTitle("Threes 점수").setMessage(String.valueOf(scoreCalc.calcThree(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent intent = new Intent();
+                                intent.putExtra("status",status);
+                                intent.putExtra("name","P1Threes");
+                                intent.putExtra("score",scoreCalc.calcThree(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                setResult(RESULT_OK,intent);
+                                dialog.dismiss();
+                                finish();
+
+                            }
+                        }).setCancelable(false);
+                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.dismiss();
+                            }
+                        }).setCancelable(false);
+
+                        builder.show();
+                    }
+                });
+
+                P1Four.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                        builder.setTitle("Fours 점수").setMessage(String.valueOf(scoreCalc.calcFour(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent intent = new Intent();
+                                intent.putExtra("status",status);
+                                intent.putExtra("name","P1Fours");
+                                intent.putExtra("score",scoreCalc.calcFour(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                setResult(RESULT_OK,intent);
+                                dialog.dismiss();
+                                finish();
+
+                            }
+                        }).setCancelable(false);
+                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.dismiss();
+                            }
+                        }).setCancelable(false);
+
+                        builder.show();
+                    }
+                });
+
+                P1Five.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                        builder.setTitle("Fives 점수").setMessage(String.valueOf(scoreCalc.calcFive(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent intent = new Intent();
+                                intent.putExtra("status",status);
+                                intent.putExtra("name","P1Fives");
+                                intent.putExtra("score",scoreCalc.calcFive(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                setResult(RESULT_OK,intent);
+                                dialog.dismiss();
+                                finish();
+
+                            }
+                        }).setCancelable(false);
+                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.dismiss();
+                            }
+                        }).setCancelable(false);
+
+                        builder.show();
+                    }
+                });
+
+                P1Six.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                        builder.setTitle("Sixes 점수").setMessage(String.valueOf(scoreCalc.calcSix(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent intent = new Intent();
+                                intent.putExtra("status",status);
+                                intent.putExtra("name","P1Sixes");
+                                intent.putExtra("score",scoreCalc.calcSix(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                setResult(RESULT_OK,intent);
+                                dialog.dismiss();
+                                finish();
+
+                            }
+                        }).setCancelable(false);
+                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.dismiss();
+                            }
+                        }).setCancelable(false);
+
+                        builder.show();
+                    }
+                });
+
+                P1ThreeOfAKind.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                        builder.setTitle("ThreeOfAKind 점수").setMessage(String.valueOf(scoreCalc.calcThreeOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent intent = new Intent();
+                                intent.putExtra("status",status);
+                                intent.putExtra("name","P1TOAK");
+                                intent.putExtra("score",scoreCalc.calcThreeOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                setResult(RESULT_OK,intent);
+                                dialog.dismiss();
+                                finish();
+
+                            }
+                        }).setCancelable(false);
+                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.dismiss();
+                            }
+                        }).setCancelable(false);
+
+                        builder.show();
+                    }
+                });
+
+                P1FourOfAKind.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                        builder.setTitle("FourOfAKind 점수").setMessage(String.valueOf(scoreCalc.calcFourOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent intent = new Intent();
+                                intent.putExtra("status",status);
+                                intent.putExtra("name","P1FOAK");
+                                intent.putExtra("score",scoreCalc.calcFourOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                setResult(RESULT_OK,intent);
+                                dialog.dismiss();
+                                finish();
+
+                            }
+                        }).setCancelable(false);
+                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.dismiss();
+                            }
+                        }).setCancelable(false);
+
+                        builder.show();
+                    }
+                });
+
+                P1FullHouse.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                        builder.setTitle("FullHouse 점수").setMessage(String.valueOf(scoreCalc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent intent = new Intent();
+                                intent.putExtra("status",status);
+                                intent.putExtra("name","P1FH");
+                                intent.putExtra("score",scoreCalc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                setResult(RESULT_OK,intent);
+                                dialog.dismiss();
+                                finish();
+
+                            }
+                        }).setCancelable(false);
+                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.dismiss();
+                            }
+                        }).setCancelable(false);
+
+                        builder.show();
+                    }
+                });
+
+
             }
         }
 
@@ -220,5 +492,14 @@ public class VsScoreActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void getScore(){
+
+        if (sharedPreferences.getString("P1Aces","") != ""){
+            P1Ace.setText(sharedPreferences.getString("P1Aces",""));
+            P1Ace.setTextColor(BLACK);
+        }
+
     }
 }

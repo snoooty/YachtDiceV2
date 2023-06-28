@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -46,8 +47,11 @@ public class ReceiveMessage {
     public boolean dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move;
     public boolean userTurn;
     public int dice1eye,dice2eye,dice3eye,dice4eye,dice5eye;
+    public int vs_roll;
+    public boolean vs_rollTurn;
     String diceSum;
     public String myStatus;
+    public SharedPreferences sharedPreferences,sharedPreferences2;
 
     public ReceiveMessage(RollDice rollDice, ImageView vs_dice1, ImageView vs_dice2, ImageView vs_dice3, ImageView vs_dice4
     , ImageView vs_dice5, boolean dice1Keep_move, boolean dice2Keep_move, boolean dice3Keep_move, boolean dice4Keep_move
@@ -58,7 +62,8 @@ public class ReceiveMessage {
     , int vsP1ViewBottom, int vsP1ViewLeft, int vsP1ViewRight, int diceSize, boolean userTurn, ImageView vsP1KeepDice1
     , ImageView vsP1KeepDice2, ImageView vsP1KeepDice3, ImageView vsP1KeepDice4, ImageView vsP1KeepDice5, TextView user1
     , TextView user2, int vsP2ViewTop, ImageView vsP2KeepDice1, ImageView vsP2KeepDice2, ImageView vsP2KeepDice3
-    , ImageView vsP2KeepDice4, ImageView vsP2KeepDice5){
+    , ImageView vsP2KeepDice4, ImageView vsP2KeepDice5,int vs_roll, boolean vs_rollTurn, SharedPreferences sharedPreferences
+    , SharedPreferences sharedPreferences2){
 
         this.rollDice = rollDice;
         this.vs_dice1 = vs_dice1;
@@ -106,6 +111,10 @@ public class ReceiveMessage {
         this.vsP2KeepDice3 = vsP2KeepDice3;
         this.vsP2KeepDice4 = vsP2KeepDice4;
         this.vsP2KeepDice5 = vsP2KeepDice5;
+        this.vs_roll = vs_roll;
+        this.vs_rollTurn = vs_rollTurn;
+        this.sharedPreferences = sharedPreferences;
+        this.sharedPreferences2 = sharedPreferences2;
 
     }
 
@@ -255,6 +264,28 @@ public class ReceiveMessage {
                                 Thread.sleep(500);
                             }
                         }
+                    }
+
+                    if (receiveName.equals("ScoreClick")){
+
+                        Log.e(TAG,"받은 점수 추가");
+
+                        String player = (String) jsonObject.get("player");
+                        String scoreName = (String) jsonObject.get("scoreName");
+                        int score = Integer.parseInt(String.valueOf(jsonObject.get("score")));
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(scoreName,String.valueOf(score));
+                        editor.commit();
+
+                        if (myStatus.equals(player)){
+                            userTurn = false;
+                        }else {
+                            userTurn = true;
+                            vs_roll = 0;
+                            vs_rollTurn = false;
+                        }
+
                     }
                 }
             } catch (IOException e) {

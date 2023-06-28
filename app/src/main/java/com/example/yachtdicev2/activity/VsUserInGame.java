@@ -132,10 +132,15 @@ public class VsUserInGame extends AppCompatActivity {
                     public void onActivityResult(ActivityResult result) {
                             if (result.getResultCode() == Activity.RESULT_OK){
                                 Log.e(TAG,"Activity 복귀?");
+                                Log.e(TAG,"status : " + result.getData().getStringExtra("status"));
+                                Log.e(TAG,"이름 : " + result.getData().getStringExtra("name"));
+                                Log.e(TAG,"score : " + result.getData().getIntExtra("score",0));
 
-                                Intent getIntent = getIntent();
-                                Log.e(TAG,"이름 : " + getIntent.getStringExtra("name"));
-                                Log.e(TAG,"score : " + getIntent.getIntExtra("score",0));
+                                String player = result.getData().getStringExtra("status");
+                                String scoreName = result.getData().getStringExtra("name");
+                                int score = result.getData().getIntExtra("score",0);
+
+                                sendMessage(useJson.scoreClick("ScoreClick",player,scoreName,score));
                             }
                     }
                 });
@@ -183,21 +188,21 @@ public class VsUserInGame extends AppCompatActivity {
                 Log.e(TAG,"userTurn : " + receiveMessage.userTurn);
 
                 if(receiveMessage.userTurn){
-                    if (!vs_rollTurn) {// 주사위 굴릴 수 있을지 없을지
+                    if (!receiveMessage.vs_rollTurn) {// 주사위 굴릴 수 있을지 없을지
 
-                        vs_roll += 1;
-                        Log.e(TAG, "p1_roll : " + vs_roll);
+                        receiveMessage.vs_roll += 1;
+                        Log.e(TAG, "roll : " + receiveMessage.vs_roll);
 
-                        if (vs_roll >= 3) {// 주사위 세번 굴리면 못굴리게
-                            vs_rollTurn = true;
-                            Log.e(TAG, "p1_rollturn : " + vs_rollTurn);
+                        if (receiveMessage.vs_roll >= 3) {// 주사위 세번 굴리면 못굴리게
+                            receiveMessage.vs_rollTurn = true;
+                            Log.e(TAG, "rollturn : " + receiveMessage.vs_rollTurn);
                         }
 
                         sendMessage(useJson.diceRollClick("DiceRollClick",loginUserNickName,vs_roll
                                 ,dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move));
 
                     }
-                    else if (vs_rollTurn) {
+                    else if (receiveMessage.vs_rollTurn) {
 
                         Log.e(TAG,"P1의 주사위 굴리기가 끝났습니다.");
 
@@ -389,7 +394,8 @@ public class VsUserInGame extends AppCompatActivity {
                             ,vs_rolldice_3xml,vs_rolldice_4xml,vs_rolldice_5xml,vs_dice_1,vs_dice_2,vs_dice_3,vs_dice_4
                             ,vs_dice_5,vs_dice_6,vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight,diceSize,userTurn
                             ,vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5,user1,user2,vsP2ViewTop
-                            ,vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5);
+                            ,vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5,vs_roll,vs_rollTurn
+                            ,sharedPreferences,sharedPreferences2);
 
                     receiveMessage.receiveMsg(gameSock);
                     sendMessage(useJson.startUser(loginUserNickName));

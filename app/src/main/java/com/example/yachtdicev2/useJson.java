@@ -48,11 +48,11 @@ public class useJson {
         return jsonObject.toString();
     }
 
-    public String socreClick(String clickName,String userName,String scoreName,int score){
+    public String scoreClick(String clickName,String player,String scoreName,int score){
         try {
             jsonObject.put("clickName",clickName);
-            jsonObject.put("userName",userName);
-            jsonObject.put("socreName",scoreName);
+            jsonObject.put("player",player);
+            jsonObject.put("scoreName",scoreName);
             jsonObject.put("score",score);
         } catch (JSONException e) {
             throw new RuntimeException(e);
