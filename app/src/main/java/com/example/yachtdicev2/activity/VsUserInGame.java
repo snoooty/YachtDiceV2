@@ -78,6 +78,8 @@ public class VsUserInGame extends AppCompatActivity {
     public SharedPreferences sharedPreferences,sharedPreferences2;
     public ActivityResultLauncher<Intent> getResult;
 
+    Activity activity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +126,7 @@ public class VsUserInGame extends AppCompatActivity {
         vs_rolldice_5xml = (Drawable) getResources().getDrawable(R.drawable.rolldice_5);
         user1 = findViewById(R.id.vs_PLAYER_1);
         user2 = findViewById(R.id.vs_PLAYER_2);
+        activity = this;
 
         getResult = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -395,7 +398,7 @@ public class VsUserInGame extends AppCompatActivity {
                             ,vs_dice_5,vs_dice_6,vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight,diceSize,userTurn
                             ,vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5,user1,user2,vsP2ViewTop
                             ,vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5,vs_roll,vs_rollTurn
-                            ,sharedPreferences,sharedPreferences2);
+                            ,sharedPreferences,sharedPreferences2,activity);
 
                     receiveMessage.receiveMsg(gameSock);
                     sendMessage(useJson.startUser(loginUserNickName));

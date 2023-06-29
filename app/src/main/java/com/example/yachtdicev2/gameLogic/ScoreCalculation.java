@@ -748,7 +748,7 @@ public class ScoreCalculation {
 
     public boolean boolYACHT(int dice1eye, int dice2eye, int dice3eye, int dice4eye, int dice5eye){
 
-        if(dice1eye == dice2eye && dice2eye == dice3eye && dice3eye == dice4eye && dice4eye == dice5eye){
+        if(dice1eye == dice2eye && dice2eye == dice3eye && dice3eye == dice4eye && dice4eye == dice5eye && dice5eye != 0){
             return true;
         }
 

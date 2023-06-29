@@ -26,7 +26,7 @@ public class gameData {
         editor.remove("P1SS");
         editor.remove("P1LS");
         editor.remove("P1Chance");
-        editor.remove("P1YACHTZEE");
+        editor.remove("P1YACHT");
         editor.remove("P1TOAK_YACHTZEE");
         editor.remove("P1FOAK_YACHTZEE");
         editor.remove("P1FH_YACHTZEE");
@@ -51,7 +51,7 @@ public class gameData {
         editor2.remove("P2SS");
         editor2.remove("P2LS");
         editor2.remove("P2Chance");
-        editor2.remove("P2YACHTZEE");
+        editor2.remove("P2YACHT");
         editor2.remove("P2TOAK_YACHTZEE");
         editor2.remove("P2FOAK_YACHTZEE");
         editor2.remove("P2FH_YACHTZEE");

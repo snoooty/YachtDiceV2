@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
@@ -13,6 +15,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+
+import com.example.yachtdicev2.activity.VsScoreActivity;
+import com.example.yachtdicev2.activity.VsUserInGame;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +60,8 @@ public class ReceiveMessage {
     public String myStatus;
     public SharedPreferences sharedPreferences,sharedPreferences2;
 
+    public VsUserInGame vsUserInGame;
+
     public ReceiveMessage(RollDice rollDice, ImageView vs_dice1, ImageView vs_dice2, ImageView vs_dice3, ImageView vs_dice4
     , ImageView vs_dice5, boolean dice1Keep_move, boolean dice2Keep_move, boolean dice3Keep_move, boolean dice4Keep_move
     , boolean dice5Keep_move, AnimationDrawable vsRolldice_1, AnimationDrawable vsRolldice_2, AnimationDrawable vsRolldice_3
@@ -63,7 +72,7 @@ public class ReceiveMessage {
     , ImageView vsP1KeepDice2, ImageView vsP1KeepDice3, ImageView vsP1KeepDice4, ImageView vsP1KeepDice5, TextView user1
     , TextView user2, int vsP2ViewTop, ImageView vsP2KeepDice1, ImageView vsP2KeepDice2, ImageView vsP2KeepDice3
     , ImageView vsP2KeepDice4, ImageView vsP2KeepDice5,int vs_roll, boolean vs_rollTurn, SharedPreferences sharedPreferences
-    , SharedPreferences sharedPreferences2){
+    , SharedPreferences sharedPreferences2,Activity activity){
 
         this.rollDice = rollDice;
         this.vs_dice1 = vs_dice1;
@@ -115,7 +124,7 @@ public class ReceiveMessage {
         this.vs_rollTurn = vs_rollTurn;
         this.sharedPreferences = sharedPreferences;
         this.sharedPreferences2 = sharedPreferences2;
-
+        this.vsUserInGame = (VsUserInGame) activity;
     }
 
     public void receiveMsg(Socket gameSock){
@@ -274,9 +283,18 @@ public class ReceiveMessage {
                         String scoreName = (String) jsonObject.get("scoreName");
                         int score = Integer.parseInt(String.valueOf(jsonObject.get("score")));
 
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(scoreName,String.valueOf(score));
-                        editor.commit();
+                        if (scoreName.contains("P1")){
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(scoreName,String.valueOf(score));
+                            editor.commit();
+                            Log.e(TAG,"P1 점수 추가됨");
+                        }
+                        if (scoreName.contains("P2")){
+                            SharedPreferences.Editor editor = sharedPreferences2.edit();
+                            editor.putString(scoreName,String.valueOf(score));
+                            editor.commit();
+                            Log.e(TAG,"P2 점수 추가됨");
+                        }
 
                         if (myStatus.equals(player)){
                             userTurn = false;
@@ -284,6 +302,27 @@ public class ReceiveMessage {
                             userTurn = true;
                             vs_roll = 0;
                             vs_rollTurn = false;
+                            dice1eye = 0;
+                            dice2eye = 0;
+                            dice3eye = 0;
+                            dice4eye = 0;
+                            dice5eye = 0;
+
+                            if (userTurn){
+
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
+                                        builder.setTitle("상대가 " + scoreName + "에 점수를 넣었습니다.")
+                                                .setMessage("당신의 턴입니다.");
+                                        builder.show();
+
+                                    }
+                                });
+
+                                Thread.sleep(500);
+                            }
                         }
 
                     }
