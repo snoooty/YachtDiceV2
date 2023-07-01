@@ -197,420 +197,447 @@ public class VsScoreActivity extends AppCompatActivity {
             }
 
             if (userTurn){
-                P1Ace.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("Aces 점수").setMessage(String.valueOf(scoreCalc.calcAce(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P1Aces");
-                                intent.putExtra("score",scoreCalc.calcAce(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-                    }
-                });
-
-                P1Two.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("Twos 점수").setMessage(String.valueOf(scoreCalc.calcTwo(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P1Twos");
-                                intent.putExtra("score",scoreCalc.calcTwo(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-                    }
-                });
-
-                P1Three.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("Threes 점수").setMessage(String.valueOf(scoreCalc.calcThree(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P1Threes");
-                                intent.putExtra("score",scoreCalc.calcThree(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-                    }
-                });
-
-                P1Four.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("Fours 점수").setMessage(String.valueOf(scoreCalc.calcFour(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P1Fours");
-                                intent.putExtra("score",scoreCalc.calcFour(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-                    }
-                });
-
-                P1Five.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("Fives 점수").setMessage(String.valueOf(scoreCalc.calcFive(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P1Fives");
-                                intent.putExtra("score",scoreCalc.calcFive(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-                    }
-                });
-
-                P1Six.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("Sixes 점수").setMessage(String.valueOf(scoreCalc.calcSix(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P1Sixes");
-                                intent.putExtra("score",scoreCalc.calcSix(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-                    }
-                });
-
-                P1ThreeOfAKind.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("ThreeOfAKind 점수").setMessage(String.valueOf(scoreCalc.calcThreeOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P1TOAK");
-                                intent.putExtra("score",scoreCalc.calcThreeOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-                    }
-                });
-
-                P1FourOfAKind.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("FourOfAKind 점수").setMessage(String.valueOf(scoreCalc.calcFourOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P1FOAK");
-                                intent.putExtra("score",scoreCalc.calcFourOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-                    }
-                });
-
-                P1FullHouse.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("FullHouse 점수").setMessage(String.valueOf(scoreCalc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P1FH");
-                                intent.putExtra("score",scoreCalc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-                    }
-                });
-
-                P1SmallStraight.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("SmallStraight 점수").setMessage(String.valueOf(scoreCalc.calcSmallStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P1SS");
-                                intent.putExtra("score",scoreCalc.calcSmallStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-                    }
-                });
-
-                P1LargeStraight.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("LargeStraight 점수").setMessage(String.valueOf(scoreCalc.calcLargeStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P1LS");
-                                intent.putExtra("score",scoreCalc.calcLargeStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-                    }
-                });
-
-                P1Chance.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("Chance 점수").setMessage(String.valueOf(scoreCalc.calcChance(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P1Chance");
-                                intent.putExtra("score",scoreCalc.calcChance(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-                    }
-                });
-
-                P1YACHT.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("YACHT 점수").setMessage(String.valueOf(scoreCalc.calcYACHT(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P1YACHT");
-                                intent.putExtra("score",scoreCalc.calcYACHT(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-                    }
-                });
+
+                if (!P1AceSC){
+                    P1Ace.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("Aces 점수").setMessage(String.valueOf(scoreCalc.calcAce(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P1Aces");
+                                    intent.putExtra("score",scoreCalc.calcAce(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+                        }
+                    });
+                }
+
+                if (!P1TwoSC){
+                    P1Two.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("Twos 점수").setMessage(String.valueOf(scoreCalc.calcTwo(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P1Twos");
+                                    intent.putExtra("score",scoreCalc.calcTwo(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+                        }
+                    });
+                }
+
+                if (!P1ThreeSC){
+                    P1Three.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("Threes 점수").setMessage(String.valueOf(scoreCalc.calcThree(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P1Threes");
+                                    intent.putExtra("score",scoreCalc.calcThree(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+                        }
+                    });
+                }
+
+                if (!P1FourSC){
+                    P1Four.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("Fours 점수").setMessage(String.valueOf(scoreCalc.calcFour(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P1Fours");
+                                    intent.putExtra("score",scoreCalc.calcFour(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+                        }
+                    });
+                }
+
+                if (!P1FiveSC){
+                    P1Five.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("Fives 점수").setMessage(String.valueOf(scoreCalc.calcFive(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P1Fives");
+                                    intent.putExtra("score",scoreCalc.calcFive(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+                        }
+                    });
+                }
+
+                if (!P1SixSC){
+                    P1Six.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("Sixes 점수").setMessage(String.valueOf(scoreCalc.calcSix(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P1Sixes");
+                                    intent.putExtra("score",scoreCalc.calcSix(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+                        }
+                    });
+                }
+
+                if (!P1TOAKSC){
+                    P1ThreeOfAKind.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("ThreeOfAKind 점수").setMessage(String.valueOf(scoreCalc.calcThreeOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P1TOAK");
+                                    intent.putExtra("score",scoreCalc.calcThreeOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+                        }
+                    });
+                }
+
+                if (!P1FOAKSC){
+                    P1FourOfAKind.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("FourOfAKind 점수").setMessage(String.valueOf(scoreCalc.calcFourOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P1FOAK");
+                                    intent.putExtra("score",scoreCalc.calcFourOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+                        }
+                    });
+                }
+
+                if (!P1FHSC){
+                    P1FullHouse.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("FullHouse 점수").setMessage(String.valueOf(scoreCalc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P1FH");
+                                    intent.putExtra("score",scoreCalc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+                        }
+                    });
+                }
+
+                if (!P1SSSC){
+                    P1SmallStraight.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("SmallStraight 점수").setMessage(String.valueOf(scoreCalc.calcSmallStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P1SS");
+                                    intent.putExtra("score",scoreCalc.calcSmallStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+                        }
+                    });
+                }
+
+                if (!P1LSSC){
+                    P1LargeStraight.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("LargeStraight 점수").setMessage(String.valueOf(scoreCalc.calcLargeStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P1LS");
+                                    intent.putExtra("score",scoreCalc.calcLargeStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+                        }
+                    });
+                }
+
+                if (!P1ChanceSC){
+                    P1Chance.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("Chance 점수").setMessage(String.valueOf(scoreCalc.calcChance(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P1Chance");
+                                    intent.putExtra("score",scoreCalc.calcChance(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+                        }
+                    });
+                }
+
+                if (!P1YACHTSC){
+                    P1YACHT.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("YACHT 점수").setMessage(String.valueOf(scoreCalc.calcYACHT(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P1YACHT");
+                                    intent.putExtra("score",scoreCalc.calcYACHT(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+                        }
+                    });
+                }
             }
         }
 
@@ -683,434 +710,460 @@ public class VsScoreActivity extends AppCompatActivity {
 
             if (userTurn){
 
-                P2Ace.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("Aces 점수").setMessage(String.valueOf(scoreCalc.calcAce(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P2Aces");
-                                intent.putExtra("score",scoreCalc.calcAce(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-
-                    }
-                });
-
-                P2Two.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("Twos 점수").setMessage(String.valueOf(scoreCalc.calcTwo(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P2Twos");
-                                intent.putExtra("score",scoreCalc.calcTwo(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-
-                    }
-                });
-
-                P2Three.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("Threes 점수").setMessage(String.valueOf(scoreCalc.calcThree(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P2Threes");
-                                intent.putExtra("score",scoreCalc.calcThree(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-
-                    }
-                });
-
-                P2Four.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("Fours 점수").setMessage(String.valueOf(scoreCalc.calcFour(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P2Fours");
-                                intent.putExtra("score",scoreCalc.calcFour(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-
-                    }
-                });
-
-                P2Five.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("Fives 점수").setMessage(String.valueOf(scoreCalc.calcFive(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P2Fives");
-                                intent.putExtra("score",scoreCalc.calcFive(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-
-                    }
-                });
-
-                P2Six.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("Sixes 점수").setMessage(String.valueOf(scoreCalc.calcSix(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P2Sixes");
-                                intent.putExtra("score",scoreCalc.calcSix(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-
-                    }
-                });
-
-                P2ThreeOfAKind.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("ThreeOfAKind 점수").setMessage(String.valueOf(scoreCalc.calcThreeOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P2TOAK");
-                                intent.putExtra("score",scoreCalc.calcThreeOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-
-                    }
-                });
-
-                P2FourOfAKind.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("FourOfAKind 점수").setMessage(String.valueOf(scoreCalc.calcFourOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P2FOAK");
-                                intent.putExtra("score",scoreCalc.calcFourOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-
-                    }
-                });
-
-                P2FullHouse.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("FullHouse 점수").setMessage(String.valueOf(scoreCalc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P2FH");
-                                intent.putExtra("score",scoreCalc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-
-                    }
-                });
-
-                P2SmallStraight.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("SmallStraight 점수").setMessage(String.valueOf(scoreCalc.calcSmallStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P2SS");
-                                intent.putExtra("score",scoreCalc.calcSmallStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-
-                    }
-                });
-
-                P2LargeStraight.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("LargeStraight 점수").setMessage(String.valueOf(scoreCalc.calcLargeStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P2LS");
-                                intent.putExtra("score",scoreCalc.calcLargeStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-
-                    }
-                });
-
-                P2Chance.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("Chance 점수").setMessage(String.valueOf(scoreCalc.calcChance(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P2Chance");
-                                intent.putExtra("score",scoreCalc.calcChance(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-
-                    }
-                });
-
-                P2YACHT.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
-                        builder.setTitle("YACHT 점수").setMessage(String.valueOf(scoreCalc.calcYACHT(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
-                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent();
-                                intent.putExtra("status",status);
-                                intent.putExtra("name","P2YACHT");
-                                intent.putExtra("score",scoreCalc.calcYACHT(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
-                                setResult(RESULT_OK,intent);
-                                dialog.dismiss();
-                                finish();
-
-                            }
-                        }).setCancelable(false);
-                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        }).setCancelable(false);
-
-                        builder.show();
-
-                    }
-                });
+                if (!P2AceSC){
+                    P2Ace.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("Aces 점수").setMessage(String.valueOf(scoreCalc.calcAce(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P2Aces");
+                                    intent.putExtra("score",scoreCalc.calcAce(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+
+                        }
+                    });
+                }
+
+                if (!P2TwoSC){
+                    P2Two.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("Twos 점수").setMessage(String.valueOf(scoreCalc.calcTwo(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P2Twos");
+                                    intent.putExtra("score",scoreCalc.calcTwo(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+
+                        }
+                    });
+                }
+
+                if (!P2ThreeSC){
+                    P2Three.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("Threes 점수").setMessage(String.valueOf(scoreCalc.calcThree(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P2Threes");
+                                    intent.putExtra("score",scoreCalc.calcThree(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+
+                        }
+                    });
+                }
+
+                if (!P2FourSC){
+                    P2Four.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("Fours 점수").setMessage(String.valueOf(scoreCalc.calcFour(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P2Fours");
+                                    intent.putExtra("score",scoreCalc.calcFour(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+
+                        }
+                    });
+                }
+
+                if (!P2FiveSC){
+                    P2Five.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("Fives 점수").setMessage(String.valueOf(scoreCalc.calcFive(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P2Fives");
+                                    intent.putExtra("score",scoreCalc.calcFive(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+
+                        }
+                    });
+                }
+
+                if (!P2SixSC){
+                    P2Six.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("Sixes 점수").setMessage(String.valueOf(scoreCalc.calcSix(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P2Sixes");
+                                    intent.putExtra("score",scoreCalc.calcSix(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+
+                        }
+                    });
+                }
+
+                if (!P2TOAKSC){
+                    P2ThreeOfAKind.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("ThreeOfAKind 점수").setMessage(String.valueOf(scoreCalc.calcThreeOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P2TOAK");
+                                    intent.putExtra("score",scoreCalc.calcThreeOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+
+                        }
+                    });
+                }
+
+                if (!P2FOAKSC){
+                    P2FourOfAKind.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("FourOfAKind 점수").setMessage(String.valueOf(scoreCalc.calcFourOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P2FOAK");
+                                    intent.putExtra("score",scoreCalc.calcFourOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+
+                        }
+                    });
+                }
+
+                if (!P2FHSC){
+                    P2FullHouse.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("FullHouse 점수").setMessage(String.valueOf(scoreCalc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P2FH");
+                                    intent.putExtra("score",scoreCalc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+
+                        }
+                    });
+                }
+
+                if (!P2SSSC){
+                    P2SmallStraight.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("SmallStraight 점수").setMessage(String.valueOf(scoreCalc.calcSmallStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P2SS");
+                                    intent.putExtra("score",scoreCalc.calcSmallStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+
+                        }
+                    });
+                }
+
+                if (!P2LSSC){
+                    P2LargeStraight.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("LargeStraight 점수").setMessage(String.valueOf(scoreCalc.calcLargeStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P2LS");
+                                    intent.putExtra("score",scoreCalc.calcLargeStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+
+                        }
+                    });
+                }
+
+                if (!P2ChanceSC){
+                    P2Chance.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("Chance 점수").setMessage(String.valueOf(scoreCalc.calcChance(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P2Chance");
+                                    intent.putExtra("score",scoreCalc.calcChance(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+
+                        }
+                    });
+                }
+
+                if (P2YACHTSC){
+                    P2YACHT.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VsScoreActivity.this);
+                            builder.setTitle("YACHT 점수").setMessage(String.valueOf(scoreCalc.calcYACHT(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye)));
+                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("status",status);
+                                    intent.putExtra("name","P2YACHT");
+                                    intent.putExtra("score",scoreCalc.calcYACHT(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    setResult(RESULT_OK,intent);
+                                    dialog.dismiss();
+                                    finish();
+
+                                }
+                            }).setCancelable(false);
+                            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(false);
+
+                            builder.show();
+
+                        }
+                    });
+                }
             }
         }
 
@@ -1179,8 +1232,10 @@ public class VsScoreActivity extends AppCompatActivity {
             }else {
                 bonus = 0;
             }
+            P1Bonus.setText(String.valueOf(bonus));
+            P1Bonus.setTextColor(BLACK);
 
-            P1Sum.setText(sum + bonus);
+            P1Sum.setText(String.valueOf(sum));
             P1Sum.setTextColor(BLACK);
         }
 
@@ -1281,7 +1336,10 @@ public class VsScoreActivity extends AppCompatActivity {
                 bonus = 0;
             }
 
-            P2Sum.setText(String.valueOf(sum + bonus));
+            P2Bonus.setText(String.valueOf(bonus));
+            P2Bonus.setTextColor(BLACK);
+
+            P2Sum.setText(String.valueOf(sum));
             P2Sum.setTextColor(BLACK);
         }
 
