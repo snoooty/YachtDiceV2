@@ -86,7 +86,7 @@ public class VsScoreActivity extends AppCompatActivity {
         P1YACHT = findViewById(R.id.yachtzeeScore_P1_vs);
         P1YACHTBonus = findViewById(R.id.yachtBonusScore_P1_vs);
         P2Ace = findViewById(R.id.acesScore_P2_vs);
-        P2Two = findViewById(R.id.twosScore_P1_vs);
+        P2Two = findViewById(R.id.twosScore_P2_vs);
         P2Three = findViewById(R.id.threesScore_P2_vs);
         P2Four = findViewById(R.id.foursScore_P2_vs);
         P2Five = findViewById(R.id.fivesScore_P2_vs);
@@ -96,7 +96,7 @@ public class VsScoreActivity extends AppCompatActivity {
         P2ThreeOfAKind = findViewById(R.id.threeOfAkindScore_P2_vs);
         P2FourOfAKind = findViewById(R.id.fourOfAkindScore_P2_vs);
         P2FullHouse = findViewById(R.id.fullHouseScore_P2_vs);
-        P2SmallStraight = findViewById(R.id.fullHouseScore_P2_vs);
+        P2SmallStraight = findViewById(R.id.smallStraightScore_P2_vs);
         P2LargeStraight = findViewById(R.id.largeStraightScore_P2_vs);
         P2Chance = findViewById(R.id.chanceScore_P2_vs);
         P2YACHT = findViewById(R.id.yachtzeeScore_P2_vs);
@@ -1161,6 +1161,29 @@ public class VsScoreActivity extends AppCompatActivity {
             P1Six.setTextColor(BLACK);
         }
 
+        if (P1AceSC && P1TwoSC && P1ThreeSC && P1FourSC && P1FiveSC && P1SixSC){
+
+            int ace,two,three,four,five,six,sum,bonus;
+
+            ace = Integer.parseInt(P1Ace.getText().toString());
+            two = Integer.parseInt(P1Two.getText().toString());
+            three = Integer.parseInt(P1Three.getText().toString());
+            four = Integer.parseInt(P1Four.getText().toString());
+            five = Integer.parseInt(P1Five.getText().toString());
+            six = Integer.parseInt(P1Six.getText().toString());
+
+            sum = ace + two + three + four + five + six;
+
+            if (sum >= 63){
+                bonus = 35;
+            }else {
+                bonus = 0;
+            }
+
+            P1Sum.setText(sum + bonus);
+            P1Sum.setTextColor(BLACK);
+        }
+
         if (sharedPreferences.getString("P1TOAK","") != ""){
             P1TOAKSC = true;
             P1ThreeOfAKind.setText(sharedPreferences.getString("P1TOAK",""));
@@ -1237,6 +1260,29 @@ public class VsScoreActivity extends AppCompatActivity {
             P2SixSC = true;
             P2Six.setText(sharedPreferences2.getString("P2Sixes",""));
             P2Six.setTextColor(BLACK);
+        }
+
+        if (P2AceSC && P2TwoSC && P2ThreeSC && P2FourSC && P2FiveSC && P2SixSC){
+
+            int ace,two,three,four,five,six,sum,bonus;
+
+            ace = Integer.parseInt(P2Ace.getText().toString());
+            two = Integer.parseInt(P2Two.getText().toString());
+            three = Integer.parseInt(P2Three.getText().toString());
+            four = Integer.parseInt(P2Four.getText().toString());
+            five = Integer.parseInt(P2Five.getText().toString());
+            six = Integer.parseInt(P2Six.getText().toString());
+
+            sum = ace + two + three + four + five + six;
+
+            if (sum >= 63){
+                bonus = 35;
+            }else {
+                bonus = 0;
+            }
+
+            P2Sum.setText(sum + bonus);
+            P2Sum.setTextColor(BLACK);
         }
 
         if (sharedPreferences2.getString("P2TOAK","") != ""){

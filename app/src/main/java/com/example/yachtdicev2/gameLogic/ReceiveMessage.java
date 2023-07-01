@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
@@ -316,6 +317,12 @@ public class ReceiveMessage {
                                         AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
                                         builder.setTitle("상대가 " + scoreName + "에 점수를 넣었습니다.")
                                                 .setMessage("당신의 턴입니다.");
+                                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.dismiss();
+                                                    }
+                                                }).setCancelable(false);
                                         builder.show();
 
                                     }
