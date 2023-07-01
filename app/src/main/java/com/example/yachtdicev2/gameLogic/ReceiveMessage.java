@@ -299,6 +299,11 @@ public class ReceiveMessage {
 
                         if (myStatus.equals(player)){
                             userTurn = false;
+                            dice1Keep_move = true;
+                            dice2Keep_move = true;
+                            dice3Keep_move = true;
+                            dice4Keep_move = true;
+                            dice5Keep_move = true;
                         }else {
                             userTurn = true;
                             vs_roll = 0;
@@ -308,6 +313,11 @@ public class ReceiveMessage {
                             dice3eye = 0;
                             dice4eye = 0;
                             dice5eye = 0;
+                            dice1Keep_move = true;
+                            dice2Keep_move = true;
+                            dice3Keep_move = true;
+                            dice4Keep_move = true;
+                            dice5Keep_move = true;
 
                             if (userTurn){
 

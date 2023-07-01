@@ -1281,7 +1281,7 @@ public class VsScoreActivity extends AppCompatActivity {
                 bonus = 0;
             }
 
-            P2Sum.setText(sum + bonus);
+            P2Sum.setText(String.valueOf(sum + bonus));
             P2Sum.setTextColor(BLACK);
         }
 
