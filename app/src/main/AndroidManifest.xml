@@ -20,10 +20,15 @@
         android:theme="@style/Theme.YachtDiceV2"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <service
+            android:name=".service.MyGameServerService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".activity.VsScoreActivity"
             android:exported="false"
-            android:theme="@style/Theme.MyDialog"/>
+            android:theme="@style/Theme.MyDialog" />
 
         <service
             android:name=".service.MySocketService"

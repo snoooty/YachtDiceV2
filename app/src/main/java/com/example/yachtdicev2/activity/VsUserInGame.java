@@ -32,6 +32,7 @@ import com.example.yachtdicev2.gameLogic.ReceiveMessage;
 import com.example.yachtdicev2.gameLogic.RollDice;
 import com.example.yachtdicev2.gameLogic.gameData;
 import com.example.yachtdicev2.ip.GetIP;
+import com.example.yachtdicev2.service.MyGameServerService;
 import com.example.yachtdicev2.service.MySocketService;
 import com.example.yachtdicev2.useJson;
 
@@ -77,8 +78,9 @@ public class VsUserInGame extends AppCompatActivity {
     ReceiveMessage receiveMessage;
     public SharedPreferences sharedPreferences,sharedPreferences2;
     public ActivityResultLauncher<Intent> getResult;
-
     Activity activity;
+    MyGameServerService gss;
+    boolean isGSS = false;
 
 
     @Override
@@ -86,6 +88,8 @@ public class VsUserInGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vs_user_in_game);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        Intent serverIntent = new Intent(VsUserInGame.this,MyGameServerService.class);
 
         vsPlayer1View = findViewById(R.id.vs_player1_view);
         vsPlayer2View = findViewById(R.id.vs_player2_view);
@@ -148,6 +152,22 @@ public class VsUserInGame extends AppCompatActivity {
                     }
                 });
 
+        ServiceConnection gsConn = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                Log.e(TAG,"gss 실행되나?");
+                MyGameServerService.GameServerBind gsb = (MyGameServerService.GameServerBind) service;
+                gss = gsb.getService();
+                isGSS = true;
+            }
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                Log.e(TAG,"gss 실행안되나?");
+                isGSS = false;
+            }
+        };
+
+        bindService(serverIntent, gsConn, Context.BIND_AUTO_CREATE);
 
                 // 닉네임 가져오기
                 Intent intentNick = getIntent();
@@ -389,7 +409,7 @@ public class VsUserInGame extends AppCompatActivity {
         if (start){
             new Thread(() -> {
                 try {
-                    gameSock = new Socket(getIP.currentIP(),9000);
+//                    gameSock = new Socket(getIP.currentIP(),9000);
 
                     receiveMessage = new ReceiveMessage(rollDice,vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5
                             ,dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move,vsRolldice_1
@@ -400,7 +420,7 @@ public class VsUserInGame extends AppCompatActivity {
                             ,vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5,vs_roll,vs_rollTurn
                             ,sharedPreferences,sharedPreferences2,activity);
 
-                    receiveMessage.receiveMsg(gameSock);
+                    receiveMessage.receiveMsg(gss.gameSock);
                     sendMessage(useJson.startUser(loginUserNickName));
                     Thread.sleep(500);
 
@@ -423,11 +443,6 @@ public class VsUserInGame extends AppCompatActivity {
                     Thread.sleep(500);
 
 
-                } catch (SocketException e){
-                    Log.e(TAG,"서버와 연결이 끊어졌습니다.");
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
