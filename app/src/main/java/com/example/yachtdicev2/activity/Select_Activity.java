@@ -1,14 +1,19 @@
 package com.example.yachtdicev2.activity;
 
+import static android.text.InputType.TYPE_CLASS_NUMBER;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +23,7 @@ import android.widget.TextView;
 import com.example.yachtdicev2.service.MyGameServerService;
 import com.example.yachtdicev2.service.MySocketService;
 import com.example.yachtdicev2.R;
+import com.example.yachtdicev2.useJson;
 
 public class Select_Activity extends AppCompatActivity {
 
@@ -27,6 +33,7 @@ public class Select_Activity extends AppCompatActivity {
     MyGameServerService gss;
     boolean isMSS = false;
     boolean isGSS = false;
+    useJson useJson = new useJson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,10 +133,52 @@ public class Select_Activity extends AppCompatActivity {
 
                                                  AlertDialog.Builder builder = new AlertDialog.Builder(Select_Activity.this);
                                                  builder.setTitle("방만들기");
-                                                 final EditText roomNum = new EditText(Select_Activity.this);
-                                                 builder.setView(roomNum);
+                                                 builder.setMessage("방번호 입력");
+                                                 EditText roomNum = new EditText(Select_Activity.this);
+                                                 roomNum.setInputType(TYPE_CLASS_NUMBER);
+                                                 roomNum.addTextChangedListener(new TextWatcher() {
+                                                                                    @Override
+                                                                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                                                 gss.sendMessage("s");
+                                                                                    }
+
+                                                                                    @Override
+                                                                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                                                                        if (s.length() > 5){
+                                                                                            roomNum.setText(s.subSequence(0,5));
+                                                                                            roomNum.setSelection(5);
+                                                                                        }
+
+                                                                                    }
+
+                                                                                    @Override
+                                                                                    public void afterTextChanged(Editable s) {
+
+                                                                                    }
+                                                                                });
+                                                         builder.setView(roomNum);
+
+                                                 builder.setPositiveButton("생성", new DialogInterface.OnClickListener() {
+                                                             @Override
+                                                             public void onClick(DialogInterface dialog, int which) {
+
+                                                                 gss.sendMessage(useJson.createRoom(Integer.parseInt(roomNum.getText().toString()),loginUserNickname));
+                                                                 dialog.dismiss();
+
+                                                             }
+                                                         }).setCancelable(false);
+                                                 builder.setNeutralButton("취소", new DialogInterface.OnClickListener() {
+                                                             @Override
+                                                             public void onClick(DialogInterface dialog, int which) {
+
+                                                                 dialog.dismiss();
+
+                                                             }
+                                                         }).setCancelable(false);
+
+                                                         builder.show();
+
+
 
                                              }
                                          });

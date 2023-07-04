@@ -221,7 +221,7 @@ public class VsUserInGame extends AppCompatActivity {
                             Log.e(TAG, "rollturn : " + receiveMessage.vs_rollTurn);
                         }
 
-                        sendMessage(useJson.diceRollClick("DiceRollClick",loginUserNickName,vs_roll
+                        gss.sendMessage(useJson.diceRollClick("DiceRollClick",loginUserNickName,vs_roll
                                 ,dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move));
 
                     }
@@ -421,7 +421,7 @@ public class VsUserInGame extends AppCompatActivity {
                             ,sharedPreferences,sharedPreferences2,activity);
 
                     receiveMessage.receiveMsg(gss.gameSock);
-                    sendMessage(useJson.startUser(loginUserNickName));
+                    gss.sendMessage(useJson.startUser(loginUserNickName));
                     Thread.sleep(500);
 
                     Handler handler = new Handler(Looper.getMainLooper());
@@ -458,7 +458,7 @@ public class VsUserInGame extends AppCompatActivity {
         Log.e(TAG, "서버로 메세지 보내기");
         new Thread(() -> {
             try {
-                out = new PrintWriter(new OutputStreamWriter(gameSock.getOutputStream()));
+                out = new PrintWriter(new OutputStreamWriter(gss.gameSock.getOutputStream()));
                 out.println(s);
                 out.flush();
             } catch (IOException e) {
