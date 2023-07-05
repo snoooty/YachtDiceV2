@@ -1,5 +1,6 @@
 package com.example.yachtdicev2.activity;
 
+import static android.graphics.Color.RED;
 import static android.text.InputType.TYPE_CLASS_NUMBER;
 
 import androidx.appcompat.app.AlertDialog;
@@ -136,6 +137,8 @@ public class Select_Activity extends AppCompatActivity {
                                                  builder.setMessage("방번호 입력");
                                                  EditText roomNum = new EditText(Select_Activity.this);
                                                  roomNum.setInputType(TYPE_CLASS_NUMBER);
+                                                 roomNum.setHint("숫자만 입력가능합니다");
+                                                 roomNum.setHintTextColor(RED);
                                                  roomNum.addTextChangedListener(new TextWatcher() {
                                                                                     @Override
                                                                                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -162,7 +165,13 @@ public class Select_Activity extends AppCompatActivity {
                                                              @Override
                                                              public void onClick(DialogInterface dialog, int which) {
 
+                                                                 if (roomNum.getText() == null){
+                                                                     roomNum.setText(0);
+                                                                 }
+
                                                                  gss.sendMessage(useJson.createRoom(Integer.parseInt(roomNum.getText().toString()),loginUserNickname));
+                                                                 Intent intent = new Intent(Select_Activity.this, VsRoomList.class);
+                                                                 startActivity(intent);
                                                                  dialog.dismiss();
 
                                                              }

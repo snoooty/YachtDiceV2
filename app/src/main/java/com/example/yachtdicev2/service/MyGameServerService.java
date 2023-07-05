@@ -7,6 +7,9 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.example.yachtdicev2.ip.GetIP;
+import com.example.yachtdicev2.room.RoomReceiveMessage;
+import com.example.yachtdicev2.room.roomAdapter;
+import com.example.yachtdicev2.room.room_item;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +17,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 
 public class MyGameServerService extends Service {
 
@@ -23,6 +27,9 @@ public class MyGameServerService extends Service {
     PrintWriter out = null;
     public Socket gameSock;
     IBinder mBinder = new GameServerBind();
+    public ArrayList<room_item> serverList;
+    RoomReceiveMessage RRM = new RoomReceiveMessage();
+    public roomAdapter adapter;
 
     public class GameServerBind extends Binder{
         public MyGameServerService getService(){
@@ -31,6 +38,7 @@ public class MyGameServerService extends Service {
     }
 
     public MyGameServerService() {
+
     }
 
     @Override
@@ -47,11 +55,15 @@ public class MyGameServerService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         getIp = new GetIP();
+        serverList = new ArrayList<>();
+        adapter = new roomAdapter(serverList);
 
         new Thread(() -> {
 
             try {
                 gameSock = new Socket(getIp.currentIP(),9000);
+
+                RRM.RRMsg(gameSock,serverList,adapter);
 
                 Log.e(TAG,"게임서버와 연결되었습니다.");
             }catch (SocketException e){

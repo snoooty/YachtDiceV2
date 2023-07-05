@@ -75,7 +75,7 @@ public class useJson {
 
     public String createRoom(int num,String userName){
         try {
-            jsonObject.put("createRoom","createRoom");
+            jsonObject.put("category","createRoom");
             jsonObject.put("roomNum",num);
             jsonObject.put("userName",userName);
         } catch (JSONException e) {

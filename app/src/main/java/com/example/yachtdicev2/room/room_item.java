@@ -4,10 +4,12 @@ public class room_item {
 
     String user_Name;
     int room_Num;
+    int personnel;
 
-    public room_item(String user_Name,int room_Num){
+    public room_item(String user_Name,int room_Num,int personnel){
         this.room_Num = room_Num;
         this.user_Name = user_Name;
+        this.personnel = personnel;
     }
 
     public String getUser_Name(){
@@ -24,5 +26,13 @@ public class room_item {
 
     public void setRoom_Num(int room_Num){
         this.room_Num = room_Num;
+    }
+
+    public int getPersonnel(){
+        return personnel;
+    }
+
+    public void setPersonnel(int personnel){
+        this.personnel = personnel;
     }
 }
