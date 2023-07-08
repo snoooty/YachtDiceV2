@@ -16,7 +16,9 @@ public class GetIP {
     public String currentIP(){
 
 //        return academyWifi;
-        return homeWifi;
+//        return homeWifi;
+        return yeppiWifi;
+
     }
 
     // 집 와이파이 사용할때..
@@ -29,7 +31,7 @@ public class GetIP {
 
     // 학원 와이파이 사용할때..
 
-    public String academyWifi = "172.30.1.29";
+    public String academyWifi = "172.30.1.68";
 
     // 기타 와이파이 사용할때..
 

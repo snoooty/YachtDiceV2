@@ -29,11 +29,11 @@ public class VsScoreActivity extends AppCompatActivity {
     TextView P1Ace,P1Two,P1Three,P1Four,P1Five,P1Six,P1Sum,P1Bonus;
     TextView P1ThreeOfAKind,P1FourOfAKind,P1FullHouse;
     TextView P1SmallStraight,P1LargeStraight,P1Chance;
-    TextView P1YACHT,P1YACHTBonus;
+    TextView P1YACHT,P1YACHTBonus,P1totalScore;
     TextView P2Ace,P2Two,P2Three,P2Four,P2Five,P2Six,P2Sum,P2Bonus;
     TextView P2ThreeOfAKind,P2FourOfAKind,P2FullHouse;
     TextView P2SmallStraight,P2LargeStraight,P2Chance;
-    TextView P2YACHT,P2YACHTBonus;
+    TextView P2YACHT,P2YACHTBonus,P2totalScore;
     Button closeButton;
 
     int dice1eye,dice2eye,dice3eye,dice4eye,dice5eye;
@@ -85,6 +85,7 @@ public class VsScoreActivity extends AppCompatActivity {
         P1Chance = findViewById(R.id.chanceScore_P1_vs);
         P1YACHT = findViewById(R.id.yachtzeeScore_P1_vs);
         P1YACHTBonus = findViewById(R.id.yachtBonusScore_P1_vs);
+        P1totalScore = findViewById(R.id.totalScore_P1_vs);
         P2Ace = findViewById(R.id.acesScore_P2_vs);
         P2Two = findViewById(R.id.twosScore_P2_vs);
         P2Three = findViewById(R.id.threesScore_P2_vs);
@@ -101,6 +102,7 @@ public class VsScoreActivity extends AppCompatActivity {
         P2Chance = findViewById(R.id.chanceScore_P2_vs);
         P2YACHT = findViewById(R.id.yachtzeeScore_P2_vs);
         P2YACHTBonus = findViewById(R.id.yachtBonusScore_P2_vs);
+        P2totalScore = findViewById(R.id.totalScore_P2_vs);
         closeButton = findViewById(R.id.closeScore_vs);
 
         status = getIntent().getStringExtra("status");
@@ -114,7 +116,7 @@ public class VsScoreActivity extends AppCompatActivity {
         Log.e(TAG,"userTurn : " + userTurn);
 
         getScore();
-        scoreCheck();
+        totalScore();
 
         if (status.equals("player1") && userTurn){
 
@@ -1130,7 +1132,7 @@ public class VsScoreActivity extends AppCompatActivity {
                     });
                 }
 
-                if (P2YACHTSC){
+                if (!P2YACHTSC){
                     P2YACHT.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -1386,8 +1388,104 @@ public class VsScoreActivity extends AppCompatActivity {
         }
 
     }
+    int ace,two,three,four,five,six,bonus,sum,toak,foak,fh,ss,ls,chance,yacht,yachtBonus;
+    int ace_2,two_2,three_2,four_2,five_2,six_2,bonus_2,sum_2,toak_2,foak_2,fh_2,ss_2,ls_2,chance_2,yacht_2,yachtBonus_2;
+    public void totalScore(){
 
-    public void scoreCheck(){
+        if (P1AceSC){
+            ace = Integer.parseInt(P1Ace.getText().toString());
+        }
+        if (P1TwoSC){
+            two = Integer.parseInt(P1Two.getText().toString());
+        }
+        if (P1ThreeSC){
+            three = Integer.parseInt(P1Three.getText().toString());
+        }
+        if (P1FourSC){
+            four = Integer.parseInt(P1Four.getText().toString());
+        }
+        if (P1FiveSC){
+            five = Integer.parseInt(P1Five.getText().toString());
+        }
+        if (P1SixSC){
+            six = Integer.parseInt(P1Six.getText().toString());
+        }
+        if (P1AceSC && P1TwoSC && P1ThreeSC && P1FourSC && P1FiveSC && P1SixSC){
+            sum = Integer.parseInt(P1Sum.getText().toString());
 
+            if (sum >= 63){
+                bonus = 35;
+            }
+        }
+        if (P1TOAKSC){
+            toak = Integer.parseInt(P1ThreeOfAKind.getText().toString());
+        }
+        if (P1FOAKSC){
+            foak = Integer.parseInt(P1FourOfAKind.getText().toString());
+        }
+        if (P1FHSC){
+            fh = Integer.parseInt(P1FullHouse.getText().toString());
+        }
+        if (P1SSSC){
+            ss = Integer.parseInt(P1SmallStraight.getText().toString());
+        }
+        if (P1LSSC){
+            ls = Integer.parseInt(P1LargeStraight.getText().toString());
+        }
+        if (P1ChanceSC){
+            chance = Integer.parseInt(P1Chance.getText().toString());
+        }
+        if (P1YACHTSC){
+            yacht = Integer.parseInt(P1YACHT.getText().toString());
+        }
+        P1totalScore.setText(ace + two + three + four + five + six + bonus + sum + toak + foak + fh + ss + ls + chance + yacht);
+
+        if (P2AceSC){
+            ace_2 = Integer.parseInt(P2Ace.getText().toString());
+        }
+        if (P2TwoSC){
+            two_2 = Integer.parseInt(P2Two.getText().toString());
+        }
+        if (P2ThreeSC){
+            three_2 = Integer.parseInt(P2Three.getText().toString());
+        }
+        if (P2FourSC){
+            four_2 = Integer.parseInt(P2Four.getText().toString());
+        }
+        if (P2FiveSC){
+            five_2 = Integer.parseInt(P2Five.getText().toString());
+        }
+        if (P2SixSC){
+            six_2 = Integer.parseInt(P2Six.getText().toString());
+        }
+        if (P2AceSC && P2TwoSC && P2ThreeSC && P2FourSC && P2FiveSC && P2SixSC){
+            sum_2 = Integer.parseInt(P2Sum.getText().toString());
+
+            if (sum_2 >= 63){
+                bonus_2 = 35;
+            }
+        }
+        if (P2TOAKSC){
+            toak_2 = Integer.parseInt(P2ThreeOfAKind.getText().toString());
+        }
+        if (P2FOAKSC){
+            foak_2 = Integer.parseInt(P2FourOfAKind.getText().toString());
+        }
+        if (P2FHSC){
+            fh_2 = Integer.parseInt(P2FullHouse.getText().toString());
+        }
+        if (P2SSSC){
+            ss_2 = Integer.parseInt(P2SmallStraight.getText().toString());
+        }
+        if (P2LSSC){
+            ls_2 = Integer.parseInt(P2LargeStraight.getText().toString());
+        }
+        if (P2ChanceSC){
+            chance_2 = Integer.parseInt(P2Chance.getText().toString());
+        }
+        if (P2YACHTSC){
+            yacht_2 = Integer.parseInt(P2YACHT.getText().toString());
+        }
+        P2totalScore.setText(ace_2 + two_2 + three_2 + four_2 + five_2 + six_2 + bonus_2 + sum_2 + toak_2 + foak_2 + fh_2 + ss_2 + ls_2 + chance_2 + yacht_2);
     }
 }

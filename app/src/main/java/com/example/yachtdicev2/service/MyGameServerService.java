@@ -63,7 +63,7 @@ public class MyGameServerService extends Service {
             try {
                 gameSock = new Socket(getIp.currentIP(),9000);
 
-                RRM.RRMsg(gameSock,serverList,adapter);
+//                RRM.RRMsg(gameSock,serverList,adapter);
 
                 Log.e(TAG,"게임서버와 연결되었습니다.");
             }catch (SocketException e){

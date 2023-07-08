@@ -169,7 +169,7 @@ public class Select_Activity extends AppCompatActivity {
                                                                      roomNum.setText(0);
                                                                  }
 
-                                                                 gss.sendMessage(useJson.createRoom(Integer.parseInt(roomNum.getText().toString()),loginUserNickname));
+//                                                                 gss.sendMessage(useJson.createRoom(Integer.parseInt(roomNum.getText().toString()),loginUserNickname));
                                                                  Intent intent = new Intent(Select_Activity.this, VsRoomList.class);
                                                                  startActivity(intent);
                                                                  dialog.dismiss();
