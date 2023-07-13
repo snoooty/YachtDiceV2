@@ -170,7 +170,7 @@ public class VsUserInGame extends AppCompatActivity {
         bindService(serverIntent, gsConn, Context.BIND_AUTO_CREATE);
 
                 // 닉네임 가져오기
-                Intent intentNick = getIntent();
+        Intent intentNick = getIntent();
         loginUserNickName = intentNick.getStringExtra("loginUserNickName");
         Log.e(TAG,"loginUserNickName : " + loginUserNickName);
 
@@ -409,7 +409,6 @@ public class VsUserInGame extends AppCompatActivity {
         if (start){
             new Thread(() -> {
                 try {
-//                    gameSock = new Socket(getIP.currentIP(),9000);
 
                     receiveMessage = new ReceiveMessage(rollDice,vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5
                             ,dice1Keep_move,dice2Keep_move,dice3Keep_move,dice4Keep_move,dice5Keep_move,vsRolldice_1

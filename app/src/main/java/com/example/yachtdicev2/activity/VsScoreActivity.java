@@ -1438,7 +1438,7 @@ public class VsScoreActivity extends AppCompatActivity {
         if (P1YACHTSC){
             yacht = Integer.parseInt(P1YACHT.getText().toString());
         }
-        P1totalScore.setText(ace + two + three + four + five + six + bonus + sum + toak + foak + fh + ss + ls + chance + yacht);
+        P1totalScore.setText(String.valueOf(ace + two + three + four + five + six + bonus + sum + toak + foak + fh + ss + ls + chance + yacht));
 
         if (P2AceSC){
             ace_2 = Integer.parseInt(P2Ace.getText().toString());
@@ -1486,6 +1486,6 @@ public class VsScoreActivity extends AppCompatActivity {
         if (P2YACHTSC){
             yacht_2 = Integer.parseInt(P2YACHT.getText().toString());
         }
-        P2totalScore.setText(ace_2 + two_2 + three_2 + four_2 + five_2 + six_2 + bonus_2 + sum_2 + toak_2 + foak_2 + fh_2 + ss_2 + ls_2 + chance_2 + yacht_2);
+        P2totalScore.setText(String.valueOf(ace_2 + two_2 + three_2 + four_2 + five_2 + six_2 + bonus_2 + sum_2 + toak_2 + foak_2 + fh_2 + ss_2 + ls_2 + chance_2 + yacht_2));
     }
 }

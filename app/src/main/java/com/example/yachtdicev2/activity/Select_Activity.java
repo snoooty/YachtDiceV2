@@ -12,8 +12,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -21,10 +24,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.yachtdicev2.room.room_item;
 import com.example.yachtdicev2.service.MyGameServerService;
 import com.example.yachtdicev2.service.MySocketService;
 import com.example.yachtdicev2.R;
 import com.example.yachtdicev2.useJson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Select_Activity extends AppCompatActivity {
 
@@ -35,6 +47,10 @@ public class Select_Activity extends AppCompatActivity {
     boolean isMSS = false;
     boolean isGSS = false;
     useJson useJson = new useJson();
+    BufferedReader in = null;
+    JSONObject jsonObject;
+    boolean roomStatus;
+    boolean getList = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +80,69 @@ public class Select_Activity extends AppCompatActivity {
         ServiceConnection gsConn = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                Log.e(TAG,"gss 실행되나?");
                 MyGameServerService.GameServerBind gsb = (MyGameServerService.GameServerBind) service;
                 gss = gsb.getService();
                 isGSS = true;
+                Log.e(TAG,"gss 실행되나?");
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+                new Thread(() -> {
+
+                    try {
+
+                        while (getList){
+                            in = new BufferedReader(new InputStreamReader(gss.gameSock.getInputStream()));
+                            String msg = in.readLine();
+                            jsonObject = new JSONObject(msg);
+                            if (!getList){
+                                break;
+                            }
+                            JSONArray jsonArray = jsonObject.getJSONArray("List");
+                            Log.e(TAG,"msg : " + msg);
+                            Log.e(TAG,"json 값 : " + jsonObject);
+
+                            String category = jsonObject.getString("category");
+
+                            if (category.equals("getRoomList")){
+
+                                String roomList = jsonObject.getString("List");
+
+                                if (roomList.equals("[]")){
+                                    roomStatus = false;
+                                }else {
+                                    roomStatus = true;
+                                    JSONObject object;
+                                    for (int i = 0; i < jsonArray.length(); i++){
+                                        object = (JSONObject) jsonArray.opt(i);
+                                        String roomName = object.optString("roomName");
+                                        int roomNum = object.optInt("roomNum");
+                                        int personner = object.optInt("personner");
+
+                                        if (gss.serverList.contains(new room_item(roomName,0,0))){
+
+                                        }else {
+                                            Log.e(TAG,"방 리스트 추가되나?");
+                                            gss.serverList.add(new room_item(roomName,roomNum,personner));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }).start();
+
+                gss.sendMessage(useJson.getRoomList());
             }
             @Override
             public void onServiceDisconnected(ComponentName name) {
@@ -108,20 +183,55 @@ public class Select_Activity extends AppCompatActivity {
                 Log.e(TAG,"1:1 대전 클릭되나?");
 
                 new Thread(() -> {
-
+                    Handler handler = new Handler(Looper.getMainLooper());
                     if (mss.getSockBind()){
                         Log.e(TAG,"닉네임 보내기 : " + loginUserNickname);
                         mss.outNickName(loginUserNickname);
                     }
 
-                    // 액티비티 전환
-                    if (mss.getSockBind()) {
-                        Log.e(TAG,"액티비티 옮겨지나?");
-                        Intent intent = new Intent(Select_Activity.this, VsUserInGame.class);
-                        intent.putExtra("loginUserNickName",loginUserNickname);
-                        startActivity(intent);
+                    gss.sendMessage(useJson.getRoomList());
+
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    if (!roomStatus){
+                        handler.post(new Runnable() {
+                                         @Override
+                                         public void run() {
+                                             AlertDialog.Builder builder = new AlertDialog.Builder(Select_Activity.this);
+                                             builder.setTitle("방이 없거나 서버에 문제가 있습니다.");
+                                             builder.setMessage("방을 생성하거나 재시도 해주십시오.");
+                                             builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                 @Override
+                                                 public void onClick(DialogInterface dialog, int which) {
+                                                     dialog.dismiss();
+                                                 }
+                                             }).setCancelable(false);
+                                             builder.show();
+                                         }
+                                     });
                     }else {
-                        Log.e(TAG,"서버와 연결이 되지 않았습니다.");
+                        // 액티비티 전환
+                        if (mss.getSockBind()) {
+                            Log.e(TAG,"액티비티 옮겨지나?");
+
+                            getList = false;
+
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            Intent intent = new Intent(Select_Activity.this, VsRoomList.class);
+                            intent.putExtra("loginUserNickName",loginUserNickname);
+                            startActivity(intent);
+                        }else {
+                            Log.e(TAG,"서버와 연결이 되지 않았습니다.");
+                        }
                     }
 
                 }).start();
@@ -157,6 +267,7 @@ public class Select_Activity extends AppCompatActivity {
                                                                                     @Override
                                                                                     public void afterTextChanged(Editable s) {
 
+
                                                                                     }
                                                                                 });
                                                          builder.setView(roomNum);
@@ -169,13 +280,36 @@ public class Select_Activity extends AppCompatActivity {
                                                                      roomNum.setText(0);
                                                                  }
 
-//                                                                 gss.sendMessage(useJson.createRoom(Integer.parseInt(roomNum.getText().toString()),loginUserNickname));
-                                                                 Intent intent = new Intent(Select_Activity.this, VsRoomList.class);
-                                                                 startActivity(intent);
-                                                                 dialog.dismiss();
+                                                                 for (int i = 0; i < gss.serverList.size(); i++){
+                                                                     Log.e(TAG,"방리스트 들어가있나? : " + gss.serverList.get(i).getRoom_Num());
+                                                                 }
 
+                                                                 if (gss.serverList.contains(new room_item("",Integer.parseInt(roomNum.getText().toString()),0))){
+
+                                                                     AlertDialog.Builder builder1 = new AlertDialog.Builder(Select_Activity.this);
+                                                                     builder1.setTitle("이미 존재하는 방번호입니다.");
+                                                                     builder1.setMessage("방번호를 새로 입력해주세요.");
+                                                                     builder1.show();
+
+                                                                 }else {
+                                                                     getList = false;
+
+                                                                     try {
+                                                                         Thread.sleep(500);
+                                                                     } catch (InterruptedException e) {
+                                                                         throw new RuntimeException(e);
+                                                                     }
+
+                                                                     gss.sendMessage(useJson.createRoom(Integer.parseInt(roomNum.getText().toString()),loginUserNickname));
+
+                                                                     Intent intent = new Intent(Select_Activity.this, VsUserInGame.class);
+                                                                     intent.putExtra("loginUserNickName", loginUserNickname);
+                                                                     startActivity(intent);
+                                                                     dialog.dismiss();
+                                                                 }
                                                              }
                                                          }).setCancelable(false);
+
                                                  builder.setNeutralButton("취소", new DialogInterface.OnClickListener() {
                                                              @Override
                                                              public void onClick(DialogInterface dialog, int which) {
@@ -186,9 +320,6 @@ public class Select_Activity extends AppCompatActivity {
                                                          }).setCancelable(false);
 
                                                          builder.show();
-
-
-
                                              }
                                          });
 

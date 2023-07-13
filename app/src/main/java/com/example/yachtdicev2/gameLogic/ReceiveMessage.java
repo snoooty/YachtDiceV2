@@ -140,7 +140,7 @@ public class ReceiveMessage {
                     msg = in.readLine();
                     jsonObject = new JSONObject(msg);
                     Log.e(TAG,"받은 메세지 : " + jsonObject.toString());
-                    String receiveName = (String) jsonObject.get("clickName");
+                    String receiveName = (String) jsonObject.optString("clickName","값이없음");
 
                     // 처음에 유저의 턴 배분
                     if (receiveName.equals("current")){

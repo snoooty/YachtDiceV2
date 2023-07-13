@@ -49,21 +49,21 @@ public class MyGameServerService extends Service {
     @Override
     public void onCreate(){
         super.onCreate();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
 
         getIp = new GetIP();
         serverList = new ArrayList<>();
         adapter = new roomAdapter(serverList);
 
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
         new Thread(() -> {
 
             try {
-                gameSock = new Socket(getIp.currentIP(),9000);
 
-//                RRM.RRMsg(gameSock,serverList,adapter);
+                gameSock = new Socket(getIp.currentIP(),9000);
 
                 Log.e(TAG,"게임서버와 연결되었습니다.");
             }catch (SocketException e){
@@ -81,6 +81,7 @@ public class MyGameServerService extends Service {
     public void sendMessage(String s) {
 
         Log.e(TAG, "서버로 메세지 보내기");
+        Log.e(TAG,"보내는 메세지 : " + s);
         new Thread(() -> {
             try {
                 out = new PrintWriter(new OutputStreamWriter(gameSock.getOutputStream()));
@@ -91,21 +92,5 @@ public class MyGameServerService extends Service {
             }
         }).start();
     }
-
-    public void createRoom(String s){
-
-        Log.e(TAG, "서버로 방 만든다고 알림 보내기");
-        new Thread(() -> {
-            try {
-                out = new PrintWriter(new OutputStreamWriter(gameSock.getOutputStream()));
-                out.println(s);
-                out.flush();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-        }).start();
-    }
-
 
 }

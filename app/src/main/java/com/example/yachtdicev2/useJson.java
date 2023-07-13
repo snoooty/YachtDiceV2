@@ -84,4 +84,27 @@ public class useJson {
 
         return jsonObject.toString();
     }
+
+    public String getRoomList(){
+
+        try{
+            jsonObject.put("category","getRoomList");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        return jsonObject.toString();
+    }
+
+    public String enterRoom(int roomNum){
+
+        try {
+            jsonObject.put("category","enterRoom");
+            jsonObject.put("roomNum",roomNum);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        return jsonObject.toString();
+    }
 }

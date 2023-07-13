@@ -14,12 +14,14 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.example.yachtdicev2.R;
 import com.example.yachtdicev2.room.roomAdapter;
 import com.example.yachtdicev2.room.room_item;
 import com.example.yachtdicev2.service.MyGameServerService;
+import com.example.yachtdicev2.useJson;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,9 @@ public class VsRoomList extends AppCompatActivity {
     MyGameServerService gss;
     boolean isMSS = false;
     boolean isGSS = false;
+    useJson useJson = new useJson();
+    String loginUserNickName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,10 @@ public class VsRoomList extends AppCompatActivity {
 
         RecyclerView roomView = findViewById(R.id.roomList);
 
+        Intent intentNick = getIntent();
+        loginUserNickName = intentNick.getStringExtra("loginUserNickName");
+        Log.e(TAG,"loginUserNickName : " + loginUserNickName);
+
         Intent serverIntent = new Intent(VsRoomList.this,MyGameServerService.class);
 
         ServiceConnection gsConn = new ServiceConnection() {
@@ -61,9 +70,31 @@ public class VsRoomList extends AppCompatActivity {
                 gss = gsb.getService();
                 isGSS = true;
 
-                gss.serverList.add(new room_item("asd",1234,1));
-                gss.serverList.add(new room_item("asdqwe",238798,1));
                 roomView.setAdapter(gss.adapter);
+
+                gss.adapter.setOnItemClickListener(new roomAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+
+                        Log.e(TAG,"아이템 클릭되나?");
+                        Log.e(TAG,"아이템 포지션 : " + position);
+
+                        int roomNum = gss.serverList.get(position).getRoom_Num();
+
+                        if (gss.serverList.get(position).getPersonnel() == 2){
+
+                            Log.e(TAG,"방이 찼습니다.");
+
+                        }else {
+                            gss.sendMessage(useJson.enterRoom(roomNum));
+
+                            Intent startIntent = new Intent(VsRoomList.this, VsUserInGame.class);
+                            startIntent.putExtra("loginUserNickName",loginUserNickName);
+                            startActivity(startIntent);
+                            finish();
+                        }
+                    }
+                });
             }
             @Override
             public void onServiceDisconnected(ComponentName name) {
@@ -71,6 +102,7 @@ public class VsRoomList extends AppCompatActivity {
                 isGSS = false;
             }
         };
+
         bindService(serverIntent, gsConn, Context.BIND_AUTO_CREATE);
 
         roomView.setLayoutManager(new LinearLayoutManager(this));

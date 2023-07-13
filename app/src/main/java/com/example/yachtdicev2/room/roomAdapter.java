@@ -12,13 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yachtdicev2.R;
 import com.example.yachtdicev2.chating.user_chat_item;
+import com.example.yachtdicev2.service.MyGameServerService;
+import com.example.yachtdicev2.useJson;
 
 import java.util.ArrayList;
 
 public class roomAdapter extends RecyclerView.Adapter<roomAdapter.ViewHolder>{
 
     private ArrayList<room_item> roomItemArrayList = null;
+    MyGameServerService gss;
     String TAG = "roomAdapter";
+    useJson useJson = new useJson();
 
     public roomAdapter(){
 
@@ -27,6 +31,17 @@ public class roomAdapter extends RecyclerView.Adapter<roomAdapter.ViewHolder>{
     public roomAdapter(ArrayList<room_item> list){
         roomItemArrayList = list;
     }
+
+    public interface OnItemClickListener{
+        void onItemClick(View v, int position);
+    }
+
+    private OnItemClickListener mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mListener = listener;
+    }
+
 
     @NonNull
     @Override
@@ -58,12 +73,25 @@ public class roomAdapter extends RecyclerView.Adapter<roomAdapter.ViewHolder>{
         return roomItemArrayList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView roomNum,mainUser,personnel;
 
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            itemView.setOnClickListener (new View.OnClickListener () {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition ();
+                    if (position!=RecyclerView.NO_POSITION){
+                        if (mListener!=null){
+                            mListener.onItemClick (view,position);
+                        }
+                    }
+                }
+            });
         }
 
         void onBind(room_item item){
@@ -76,7 +104,6 @@ public class roomAdapter extends RecyclerView.Adapter<roomAdapter.ViewHolder>{
             personnel.setText(String.valueOf(item.getPersonnel()));
         }
     }
-
 }
 
 
