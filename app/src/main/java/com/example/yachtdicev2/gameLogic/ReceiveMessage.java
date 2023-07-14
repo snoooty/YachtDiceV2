@@ -60,8 +60,8 @@ public class ReceiveMessage {
     String diceSum;
     public String myStatus;
     public SharedPreferences sharedPreferences,sharedPreferences2;
-
     public VsUserInGame vsUserInGame;
+    public String player1Name,player2Name;
 
     public ReceiveMessage(RollDice rollDice, ImageView vs_dice1, ImageView vs_dice2, ImageView vs_dice3, ImageView vs_dice4
     , ImageView vs_dice5, boolean dice1Keep_move, boolean dice2Keep_move, boolean dice3Keep_move, boolean dice4Keep_move
@@ -152,6 +152,9 @@ public class ReceiveMessage {
                             public void run() {
                                 user1.setText((String) jsonObject.optString("player1","대기중"));
                                 user2.setText((String) jsonObject.optString("player2","대기중"));
+
+                                player1Name = (String) jsonObject.optString("player1","대기중");
+                                player2Name = (String) jsonObject.optString("player2","대기중");
                             }
                         });
                     }else if (receiveName.equals("wait")){
@@ -162,6 +165,8 @@ public class ReceiveMessage {
                             public void run() {
                                 user1.setText((String) jsonObject.optString("player2","대기중"));
                                 user2.setText((String) jsonObject.optString("player1","대기중"));
+                                player1Name = (String) jsonObject.optString("player1","대기중");
+                                player2Name = (String) jsonObject.optString("player2","대기중");
                             }
                         });
                     }

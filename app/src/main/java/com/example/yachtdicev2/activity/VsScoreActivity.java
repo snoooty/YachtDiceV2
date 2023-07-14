@@ -26,6 +26,7 @@ import com.example.yachtdicev2.gameLogic.ScoreCalculation;
 
 public class VsScoreActivity extends AppCompatActivity {
 
+    TextView player1,player2;
     TextView P1Ace,P1Two,P1Three,P1Four,P1Five,P1Six,P1Sum,P1Bonus;
     TextView P1ThreeOfAKind,P1FourOfAKind,P1FullHouse;
     TextView P1SmallStraight,P1LargeStraight,P1Chance;
@@ -44,6 +45,7 @@ public class VsScoreActivity extends AppCompatActivity {
     public SharedPreferences sharedPreferences,sharedPreferences2;
     String status;
     String TAG = "VsScoreActivity";
+    String player1Name,player2Name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,8 +114,16 @@ public class VsScoreActivity extends AppCompatActivity {
         dice3eye = getIntent().getIntExtra("dice3eye",0);
         dice4eye = getIntent().getIntExtra("dice4eye",0);
         dice5eye = getIntent().getIntExtra("dice5eye",0);
+        player1Name = getIntent().getStringExtra("player1Name");
+        player2Name = getIntent().getStringExtra("player2Name");
         Log.e(TAG,"status : " + status);
         Log.e(TAG,"userTurn : " + userTurn);
+
+        player1 = findViewById(R.id.player_1_score_vs);
+        player2 = findViewById(R.id.player_2_score_vs);
+
+        player1.setText(player1Name);
+        player2.setText(player2Name);
 
         getScore();
         totalScore();

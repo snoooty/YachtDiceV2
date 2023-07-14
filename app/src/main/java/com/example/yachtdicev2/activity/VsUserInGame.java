@@ -69,9 +69,6 @@ public class VsUserInGame extends AppCompatActivity {
     RollDice rollDice = new RollDice();
     AnimationDrawable vsRolldice_1,vsRolldice_2,vsRolldice_3,vsRolldice_4,vsRolldice_5;
     boolean dice1Keep_move = true,dice2Keep_move = true,dice3Keep_move = true,dice4Keep_move = true,dice5Keep_move = true;
-    int dice1eye,dice2eye,dice3eye,dice4eye,dice5eye;
-    String diceSum;
-    Socket gameSock;
     PrintWriter out = null;
     com.example.yachtdicev2.useJson useJson;
     GetIP getIP = new GetIP();
@@ -362,6 +359,8 @@ public class VsUserInGame extends AppCompatActivity {
                 intent.putExtra("dice3eye",receiveMessage.dice3eye);
                 intent.putExtra("dice4eye",receiveMessage.dice4eye);
                 intent.putExtra("dice5eye",receiveMessage.dice5eye);
+                intent.putExtra("player1Name",receiveMessage.player1Name);
+                intent.putExtra("player2Name",receiveMessage.player2Name);
                 getResult.launch(intent);
             }
         });
