@@ -86,17 +86,16 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/vs_PLAYER_2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.55"/>
+        app:layout_constraintVertical_bias="0.05"/>
 
     <ImageView
         android:id="@+id/vs_keep_Dice_player1_4"
         android:layout_width="51dp"
         android:layout_height="51dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.67"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -108,7 +107,7 @@
         android:layout_width="51dp"
         android:layout_height="51dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintHorizontal_bias="0.84"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -120,7 +119,7 @@
         android:layout_width="51dp"
         android:layout_height="51dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.44"
+        app:layout_constraintHorizontal_bias="0.33"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -132,7 +131,7 @@
         android:layout_width="51dp"
         android:layout_height="51dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.26"
+        app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -148,7 +147,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.43"
-        app:layout_constraintHorizontal_bias="0.62"
+
         app:srcCompat="@android:drawable/gallery_thumb" />
 
     <View
@@ -163,15 +162,14 @@
         app:layout_constraintVertical_bias="0.5"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/vs_player_1_rollDice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/signup_button"
-        android:text="Roll Dice"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/diceroll"
+        android:contentDescription="diceRoll"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/vs_PLAYER_1"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.05" />
 
@@ -186,8 +184,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.43"
-        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0.55"
+        app:layout_constraintHorizontal_bias="0.8"
         />
 
     <TextView

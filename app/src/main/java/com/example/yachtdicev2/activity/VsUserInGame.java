@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,7 +61,8 @@ public class VsUserInGame extends AppCompatActivity {
     ImageView vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5;
     ImageView vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5;
     TextView user1,user2;
-    Button vsGetScore,vsRollDice;
+    Button vsGetScore;
+    ImageButton vsRollDice;
     ImageView vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5;
     ImageView vs_P2Dice1,vs_P2Dice2,vs_P2Dice3,vs_P2Dice4,vs_P2Dice5;
     Drawable vs_dice_1,vs_dice_2,vs_dice_3,vs_dice_4,vs_dice_5,vs_dice_6;
