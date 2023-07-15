@@ -37,6 +37,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class Select_Activity extends AppCompatActivity {
 
@@ -111,6 +112,8 @@ public class Select_Activity extends AppCompatActivity {
                             if (category.equals("getRoomList")){
 
                                 String roomList = jsonObject.getString("List");
+
+                                gss.serverList.clear();
 
                                 if (roomList.equals("[]")){
                                     roomStatus = false;

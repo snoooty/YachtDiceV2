@@ -46,6 +46,7 @@ public class ReceiveMessage {
     ImageView vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5;
     ImageView vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5;
     ImageView vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5;
+    ImageView playerTurn;
     TextView user1,user2;
     RollDice rollDice;
     AnimatorSet vsAnimatorSet;
@@ -73,7 +74,7 @@ public class ReceiveMessage {
     , ImageView vsP1KeepDice2, ImageView vsP1KeepDice3, ImageView vsP1KeepDice4, ImageView vsP1KeepDice5, TextView user1
     , TextView user2, int vsP2ViewTop, ImageView vsP2KeepDice1, ImageView vsP2KeepDice2, ImageView vsP2KeepDice3
     , ImageView vsP2KeepDice4, ImageView vsP2KeepDice5,int vs_roll, boolean vs_rollTurn, SharedPreferences sharedPreferences
-    , SharedPreferences sharedPreferences2,Activity activity){
+    , SharedPreferences sharedPreferences2,Activity activity,ImageView playerTurn){
 
         this.rollDice = rollDice;
         this.vs_dice1 = vs_dice1;
@@ -126,6 +127,7 @@ public class ReceiveMessage {
         this.sharedPreferences = sharedPreferences;
         this.sharedPreferences2 = sharedPreferences2;
         this.vsUserInGame = (VsUserInGame) activity;
+        this.playerTurn = playerTurn;
     }
 
     public void receiveMsg(Socket gameSock){
@@ -147,6 +149,8 @@ public class ReceiveMessage {
                         userTurn = true;
                         myStatus = "player1";
 
+
+
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
@@ -155,18 +159,49 @@ public class ReceiveMessage {
 
                                 player1Name = (String) jsonObject.optString("player1","대기중");
                                 player2Name = (String) jsonObject.optString("player2","대기중");
+
+                                playerTurn.setVisibility(View.VISIBLE);
+
+                                vsAnimatorSet = new AnimatorSet();
+
+                                ObjectAnimator animaX_turn = ObjectAnimator.ofFloat(playerTurn, "translationX", user1.getLeft());
+                                ObjectAnimator animaY_turn = ObjectAnimator.ofFloat(playerTurn, "translationY", user1.getTop());
+                                animaX_turn.setDuration(1000);
+                                animaY_turn.setDuration(1000);
+
+                                vsAnimatorSet.play(animaX_turn);
+                                vsAnimatorSet.play(animaY_turn);
+
+                                vsAnimatorSet.start();
                             }
                         });
                     }else if (receiveName.equals("wait")){
+
                         userTurn = false;
                         myStatus = "player2";
+
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
                                 user1.setText((String) jsonObject.optString("player2","대기중"));
                                 user2.setText((String) jsonObject.optString("player1","대기중"));
+
                                 player1Name = (String) jsonObject.optString("player1","대기중");
                                 player2Name = (String) jsonObject.optString("player2","대기중");
+
+                                playerTurn.setVisibility(View.VISIBLE);
+
+                                vsAnimatorSet = new AnimatorSet();
+
+                                ObjectAnimator animaX_turn = ObjectAnimator.ofFloat(playerTurn, "translationX", user2.getLeft());
+                                ObjectAnimator animaY_turn = ObjectAnimator.ofFloat(playerTurn, "translationY", user2.getTop());
+                                animaX_turn.setDuration(1000);
+                                animaY_turn.setDuration(1000);
+
+                                vsAnimatorSet.play(animaX_turn);
+                                vsAnimatorSet.play(animaY_turn);
+
+                                vsAnimatorSet.start();
                             }
                         });
                     }
@@ -340,10 +375,40 @@ public class ReceiveMessage {
                                                 }).setCancelable(false);
                                         builder.show();
 
+                                        vsAnimatorSet = new AnimatorSet();
+
+                                        ObjectAnimator animaX_turn = ObjectAnimator.ofFloat(playerTurn, "translationX", user1.getLeft());
+                                        ObjectAnimator animaY_turn = ObjectAnimator.ofFloat(playerTurn, "translationY", user1.getTop());
+                                        animaX_turn.setDuration(1000);
+                                        animaY_turn.setDuration(1000);
+
+                                        vsAnimatorSet.play(animaX_turn);
+                                        vsAnimatorSet.play(animaY_turn);
+
+                                        vsAnimatorSet.start();
                                     }
                                 });
 
                                 Thread.sleep(500);
+                            }else {
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        vsAnimatorSet = new AnimatorSet();
+
+                                        ObjectAnimator animaX_turn = ObjectAnimator.ofFloat(playerTurn, "translationX", user2.getLeft());
+                                        ObjectAnimator animaY_turn = ObjectAnimator.ofFloat(playerTurn, "translationY", user2.getTop());
+                                        animaX_turn.setDuration(1000);
+                                        animaY_turn.setDuration(1000);
+
+                                        vsAnimatorSet.play(animaX_turn);
+                                        vsAnimatorSet.play(animaY_turn);
+
+                                        vsAnimatorSet.start();
+
+                                    }
+                                });
                             }
                         }
 

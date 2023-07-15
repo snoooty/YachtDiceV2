@@ -65,6 +65,7 @@ public class VsUserInGame extends AppCompatActivity {
     ImageButton vsRollDice;
     ImageView vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5;
     ImageView vs_P2Dice1,vs_P2Dice2,vs_P2Dice3,vs_P2Dice4,vs_P2Dice5;
+    ImageView playerTurn;
     Drawable vs_dice_1,vs_dice_2,vs_dice_3,vs_dice_4,vs_dice_5,vs_dice_6;
     Drawable vs_rolldice_1xml,vs_rolldice_2xml,vs_rolldice_3xml,vs_rolldice_4xml,vs_rolldice_5xml;
     TextView player1_name,player2_name;
@@ -127,9 +128,12 @@ public class VsUserInGame extends AppCompatActivity {
         vs_rolldice_3xml = (Drawable) getResources().getDrawable(R.drawable.rolldice_3);
         vs_rolldice_4xml = (Drawable) getResources().getDrawable(R.drawable.rolldice_4);
         vs_rolldice_5xml = (Drawable) getResources().getDrawable(R.drawable.rolldice_5);
+        playerTurn = findViewById(R.id.playerTurn);
         user1 = findViewById(R.id.vs_PLAYER_1);
         user2 = findViewById(R.id.vs_PLAYER_2);
         activity = this;
+
+        playerTurn.setVisibility(View.GONE);
 
         getResult = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -418,7 +422,7 @@ public class VsUserInGame extends AppCompatActivity {
                             ,vs_dice_5,vs_dice_6,vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight,diceSize,userTurn
                             ,vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5,user1,user2,vsP2ViewTop
                             ,vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5,vs_roll,vs_rollTurn
-                            ,sharedPreferences,sharedPreferences2,activity);
+                            ,sharedPreferences,sharedPreferences2,activity,playerTurn);
 
                     receiveMessage.receiveMsg(gss.gameSock);
                     gss.sendMessage(useJson.startUser(loginUserNickName));
