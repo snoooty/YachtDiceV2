@@ -65,7 +65,7 @@ public class VsUserInGame extends AppCompatActivity {
     ImageButton vsRollDice;
     ImageView vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5;
     ImageView vs_P2Dice1,vs_P2Dice2,vs_P2Dice3,vs_P2Dice4,vs_P2Dice5;
-    ImageView playerTurn;
+    ImageView playerTurn,diceBox;
     Drawable vs_dice_1,vs_dice_2,vs_dice_3,vs_dice_4,vs_dice_5,vs_dice_6;
     Drawable vs_rolldice_1xml,vs_rolldice_2xml,vs_rolldice_3xml,vs_rolldice_4xml,vs_rolldice_5xml;
     TextView player1_name,player2_name;
@@ -108,10 +108,15 @@ public class VsUserInGame extends AppCompatActivity {
         vsGetScore = findViewById(R.id.vs_getScore);
         vsRollDice = findViewById(R.id.vs_player_1_rollDice);
         vs_dice1 = (ImageView) findViewById(R.id.vs_player_1_dice_1);
+        vs_dice1.bringToFront();
         vs_dice2 = (ImageView) findViewById(R.id.vs_player_1_dice_2);
+        vs_dice2.bringToFront();
         vs_dice3 = (ImageView) findViewById(R.id.vs_player_1_dice_3);
+        vs_dice3.bringToFront();
         vs_dice4 = (ImageView) findViewById(R.id.vs_player_1_dice_4);
+        vs_dice4.bringToFront();
         vs_dice5 = (ImageView) findViewById(R.id.vs_player_1_dice_5);
+        vs_dice5.bringToFront();
         vs_P2Dice1 = (ImageView) findViewById(R.id.vs_player_2_dice_1);
         vs_P2Dice2 = (ImageView) findViewById(R.id.vs_player_2_dice_2);
         vs_P2Dice3 = (ImageView) findViewById(R.id.vs_player_2_dice_3);
@@ -129,6 +134,7 @@ public class VsUserInGame extends AppCompatActivity {
         vs_rolldice_4xml = (Drawable) getResources().getDrawable(R.drawable.rolldice_4);
         vs_rolldice_5xml = (Drawable) getResources().getDrawable(R.drawable.rolldice_5);
         playerTurn = findViewById(R.id.playerTurn);
+        diceBox = findViewById(R.id.diceBox);
         user1 = findViewById(R.id.vs_PLAYER_1);
         user2 = findViewById(R.id.vs_PLAYER_2);
         activity = this;
@@ -422,7 +428,7 @@ public class VsUserInGame extends AppCompatActivity {
                             ,vs_dice_5,vs_dice_6,vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight,diceSize,userTurn
                             ,vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5,user1,user2,vsP2ViewTop
                             ,vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5,vs_roll,vs_rollTurn
-                            ,sharedPreferences,sharedPreferences2,activity,playerTurn);
+                            ,sharedPreferences,sharedPreferences2,activity,playerTurn,diceBox);
 
                     receiveMessage.receiveMsg(gss.gameSock);
                     gss.sendMessage(useJson.startUser(loginUserNickName));

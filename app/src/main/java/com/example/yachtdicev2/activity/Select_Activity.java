@@ -279,15 +279,23 @@ public class Select_Activity extends AppCompatActivity {
                                                              @Override
                                                              public void onClick(DialogInterface dialog, int which) {
 
-                                                                 if (roomNum.getText() == null){
-                                                                     roomNum.setText(0);
+                                                                 Log.e(TAG,"roomNum getText() : " + roomNum.getText());
+                                                                 if (roomNum.getText() != null){
+                                                                     roomNum.setText(String.valueOf(0));
+                                                                 }
+                                                                 Log.e(TAG,"roomNum getText() : " + roomNum.getText());
+
+                                                                 try {
+                                                                     Thread.sleep(500);
+                                                                 } catch (InterruptedException e) {
+                                                                     throw new RuntimeException(e);
                                                                  }
 
                                                                  for (int i = 0; i < gss.serverList.size(); i++){
                                                                      Log.e(TAG,"방리스트 들어가있나? : " + gss.serverList.get(i).getRoom_Num());
                                                                  }
 
-                                                                 if (gss.serverList.contains(new room_item("",Integer.parseInt(roomNum.getText().toString()),0))){
+                                                                 if (!gss.serverList.isEmpty() && gss.serverList.contains(new room_item("",Integer.parseInt(roomNum.getText().toString()),0))){
 
                                                                      AlertDialog.Builder builder1 = new AlertDialog.Builder(Select_Activity.this);
                                                                      builder1.setTitle("이미 존재하는 방번호입니다.");

@@ -46,7 +46,7 @@ public class ReceiveMessage {
     ImageView vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5;
     ImageView vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5;
     ImageView vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5;
-    ImageView playerTurn;
+    ImageView playerTurn,diceBox;
     TextView user1,user2;
     RollDice rollDice;
     AnimatorSet vsAnimatorSet;
@@ -74,7 +74,7 @@ public class ReceiveMessage {
     , ImageView vsP1KeepDice2, ImageView vsP1KeepDice3, ImageView vsP1KeepDice4, ImageView vsP1KeepDice5, TextView user1
     , TextView user2, int vsP2ViewTop, ImageView vsP2KeepDice1, ImageView vsP2KeepDice2, ImageView vsP2KeepDice3
     , ImageView vsP2KeepDice4, ImageView vsP2KeepDice5,int vs_roll, boolean vs_rollTurn, SharedPreferences sharedPreferences
-    , SharedPreferences sharedPreferences2,Activity activity,ImageView playerTurn){
+    , SharedPreferences sharedPreferences2,Activity activity,ImageView playerTurn,ImageView diceBox){
 
         this.rollDice = rollDice;
         this.vs_dice1 = vs_dice1;
@@ -128,6 +128,7 @@ public class ReceiveMessage {
         this.sharedPreferences2 = sharedPreferences2;
         this.vsUserInGame = (VsUserInGame) activity;
         this.playerTurn = playerTurn;
+        this.diceBox = diceBox;
     }
 
     public void receiveMsg(Socket gameSock){
@@ -361,6 +362,8 @@ public class ReceiveMessage {
 
                                     vsAnimatorSet.start();
 
+                                    diceReset();
+
                                 }
                             });
                         }else {
@@ -405,6 +408,8 @@ public class ReceiveMessage {
                                         vsAnimatorSet.play(animaY_turn);
 
                                         vsAnimatorSet.start();
+
+                                        diceReset();
                                     }
                                 });
 
@@ -929,5 +934,46 @@ public class ReceiveMessage {
 
             vsAnimatorSet.start();
         }
+    }
+
+    public void diceReset(){
+
+        vsAnimatorSet = new AnimatorSet();
+
+        ObjectAnimator anima_dice1X = ObjectAnimator.ofFloat(vs_dice1, "translationX", diceBox.getLeft() + 50);
+        ObjectAnimator anima_dice1Y = ObjectAnimator.ofFloat(vs_dice1, "translationY", diceBox.getTop() + 50);
+        ObjectAnimator anima_dice2X = ObjectAnimator.ofFloat(vs_dice2, "translationX", diceBox.getLeft() + 50);
+        ObjectAnimator anima_dice2Y = ObjectAnimator.ofFloat(vs_dice2, "translationY", diceBox.getTop() + 50);
+        ObjectAnimator anima_dice3X = ObjectAnimator.ofFloat(vs_dice3, "translationX", diceBox.getLeft() + 50);
+        ObjectAnimator anima_dice3Y = ObjectAnimator.ofFloat(vs_dice3, "translationY", diceBox.getTop() + 50);
+        ObjectAnimator anima_dice4X = ObjectAnimator.ofFloat(vs_dice4, "translationX", diceBox.getLeft() + 50);
+        ObjectAnimator anima_dice4Y = ObjectAnimator.ofFloat(vs_dice4, "translationY", diceBox.getTop() + 50);
+        ObjectAnimator anima_dice5X = ObjectAnimator.ofFloat(vs_dice5, "translationX", diceBox.getLeft() + 50);
+        ObjectAnimator anima_dice5Y = ObjectAnimator.ofFloat(vs_dice5, "translationY", diceBox.getTop() + 50);
+
+        anima_dice1X.setDuration(600);
+        anima_dice1Y.setDuration(600);
+        anima_dice2X.setDuration(600);
+        anima_dice2Y.setDuration(600);
+        anima_dice3X.setDuration(600);
+        anima_dice3Y.setDuration(600);
+        anima_dice4X.setDuration(600);
+        anima_dice4Y.setDuration(600);
+        anima_dice5X.setDuration(600);
+        anima_dice5Y.setDuration(600);
+
+        vsAnimatorSet.play(anima_dice1X);
+        vsAnimatorSet.play(anima_dice1Y);
+        vsAnimatorSet.play(anima_dice2X);
+        vsAnimatorSet.play(anima_dice2Y);
+        vsAnimatorSet.play(anima_dice3X);
+        vsAnimatorSet.play(anima_dice3Y);
+        vsAnimatorSet.play(anima_dice4X);
+        vsAnimatorSet.play(anima_dice4Y);
+        vsAnimatorSet.play(anima_dice5X);
+        vsAnimatorSet.play(anima_dice5Y);
+
+        vsAnimatorSet.start();
+
     }
 }
