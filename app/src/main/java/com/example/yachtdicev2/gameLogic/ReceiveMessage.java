@@ -344,6 +344,25 @@ public class ReceiveMessage {
                             dice3Keep_move = true;
                             dice4Keep_move = true;
                             dice5Keep_move = true;
+
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    vsAnimatorSet = new AnimatorSet();
+
+                                    ObjectAnimator animaX_turn = ObjectAnimator.ofFloat(playerTurn, "translationX", user2.getLeft());
+                                    ObjectAnimator animaY_turn = ObjectAnimator.ofFloat(playerTurn, "translationY", user2.getTop());
+                                    animaX_turn.setDuration(1000);
+                                    animaY_turn.setDuration(1000);
+
+                                    vsAnimatorSet.play(animaX_turn);
+                                    vsAnimatorSet.play(animaY_turn);
+
+                                    vsAnimatorSet.start();
+
+                                }
+                            });
                         }else {
                             userTurn = true;
                             vs_roll = 0;
@@ -390,28 +409,8 @@ public class ReceiveMessage {
                                 });
 
                                 Thread.sleep(500);
-                            }else {
-                                handler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        vsAnimatorSet = new AnimatorSet();
-
-                                        ObjectAnimator animaX_turn = ObjectAnimator.ofFloat(playerTurn, "translationX", user2.getLeft());
-                                        ObjectAnimator animaY_turn = ObjectAnimator.ofFloat(playerTurn, "translationY", user2.getTop());
-                                        animaX_turn.setDuration(1000);
-                                        animaY_turn.setDuration(1000);
-
-                                        vsAnimatorSet.play(animaX_turn);
-                                        vsAnimatorSet.play(animaY_turn);
-
-                                        vsAnimatorSet.start();
-
-                                    }
-                                });
                             }
                         }
-
                     }
                 }
             } catch (IOException e) {
