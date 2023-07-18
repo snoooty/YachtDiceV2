@@ -251,8 +251,8 @@ public class ReceiveMessage {
 
                                             userTurn = true;
                                             AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
-                                            builder.setTitle("당신이 이겼습니다.");
-                                            builder.setMessage("선입니다.");
+                                            builder.setTitle("당신은 이겼습니다. 선 입니다.");
+                                            builder.setMessage("당신은 : " + my_RPS + ", 상대는 : " + opponent_RPS);
                                             builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
@@ -287,8 +287,8 @@ public class ReceiveMessage {
                                         public void run() {
 
                                             AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
-                                            builder.setTitle("당신은 비겼습니다.");
-                                            builder.setMessage("재경기를 해주십시오.");
+                                            builder.setTitle("당신은 비겼습니다. 재경기를 해주십시오.");
+                                            builder.setMessage("당신은 : " + my_RPS + ", 상대는 : " + opponent_RPS);
                                             builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
@@ -299,6 +299,8 @@ public class ReceiveMessage {
                                             }).setCancelable(false);
                                             builder.show();
 
+                                            my_RPS = null;
+                                            opponent_RPS = null;
                                         }
                                     });
                                 }
@@ -313,8 +315,8 @@ public class ReceiveMessage {
 
                                             userTurn = false;
                                             AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
-                                            builder.setTitle("당신이 졌습니다.");
-                                            builder.setMessage("후입니다.");
+                                            builder.setTitle("당신은 졌습니다. 후 입니다.");
+                                            builder.setMessage("당신은 : " + my_RPS + ", 상대는 : " + opponent_RPS);
                                             builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
@@ -359,6 +361,9 @@ public class ReceiveMessage {
                                     AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
                                     builder.setTitle("재경기를 진행합니다.");
 
+                                    my_RPS = null;
+                                    opponent_RPS = null;
+
                                     builder.setPositiveButton("보", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -402,8 +407,8 @@ public class ReceiveMessage {
 
                                         userTurn = false;
                                         AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
-                                        builder.setTitle("당신이 졌습니다.");
-                                        builder.setMessage("후입니다.");
+                                        builder.setTitle("당신은 졌습니다. 후 입니다.");
+                                        builder.setMessage("당신은 : " + my_RPS + ", 상대는 : " + opponent_RPS);
                                         builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
@@ -440,8 +445,8 @@ public class ReceiveMessage {
 
                                         userTurn = true;
                                         AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
-                                        builder.setTitle("당신이 이겼습니다.");
-                                        builder.setMessage("선입니다.");
+                                        builder.setTitle("당신은 이겼습니다. 선 입니다.");
+                                        builder.setMessage("당신은 : " + my_RPS + ", 상대는 : " + opponent_RPS);
                                         builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
