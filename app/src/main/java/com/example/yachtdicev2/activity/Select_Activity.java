@@ -280,7 +280,7 @@ public class Select_Activity extends AppCompatActivity {
                                                              public void onClick(DialogInterface dialog, int which) {
 
                                                                  Log.e(TAG,"roomNum getText() : " + roomNum.getText());
-                                                                 if (roomNum.getText() != null){
+                                                                 if (roomNum.getText() == null){
                                                                      roomNum.setText(String.valueOf(0));
                                                                  }
                                                                  Log.e(TAG,"roomNum getText() : " + roomNum.getText());

@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
@@ -19,8 +18,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.yachtdicev2.activity.VsScoreActivity;
 import com.example.yachtdicev2.activity.VsUserInGame;
+import com.example.yachtdicev2.service.MyGameServerService;
+import com.example.yachtdicev2.useJson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Random;
 
 public class ReceiveMessage {
 
@@ -63,6 +62,10 @@ public class ReceiveMessage {
     public SharedPreferences sharedPreferences,sharedPreferences2;
     public VsUserInGame vsUserInGame;
     public String player1Name,player2Name;
+    String loginUserNickName;
+    String my_RPS,opponent_RPS,opponent;
+    MyGameServerService gss;
+    useJson useJson = new useJson();
 
     public ReceiveMessage(RollDice rollDice, ImageView vs_dice1, ImageView vs_dice2, ImageView vs_dice3, ImageView vs_dice4
     , ImageView vs_dice5, boolean dice1Keep_move, boolean dice2Keep_move, boolean dice3Keep_move, boolean dice4Keep_move
@@ -73,8 +76,9 @@ public class ReceiveMessage {
     , int vsP1ViewBottom, int vsP1ViewLeft, int vsP1ViewRight, int diceSize, boolean userTurn, ImageView vsP1KeepDice1
     , ImageView vsP1KeepDice2, ImageView vsP1KeepDice3, ImageView vsP1KeepDice4, ImageView vsP1KeepDice5, TextView user1
     , TextView user2, int vsP2ViewTop, ImageView vsP2KeepDice1, ImageView vsP2KeepDice2, ImageView vsP2KeepDice3
-    , ImageView vsP2KeepDice4, ImageView vsP2KeepDice5,int vs_roll, boolean vs_rollTurn, SharedPreferences sharedPreferences
-    , SharedPreferences sharedPreferences2,Activity activity,ImageView playerTurn,ImageView diceBox){
+    , ImageView vsP2KeepDice4, ImageView vsP2KeepDice5, int vs_roll, boolean vs_rollTurn, SharedPreferences sharedPreferences
+    , SharedPreferences sharedPreferences2, Activity activity, ImageView playerTurn, ImageView diceBox, MyGameServerService gss
+    , String loginUserNickName){
 
         this.rollDice = rollDice;
         this.vs_dice1 = vs_dice1;
@@ -129,6 +133,8 @@ public class ReceiveMessage {
         this.vsUserInGame = (VsUserInGame) activity;
         this.playerTurn = playerTurn;
         this.diceBox = diceBox;
+        this.gss = gss;
+        this.loginUserNickName = loginUserNickName;
     }
 
     public void receiveMsg(Socket gameSock){
@@ -146,8 +152,8 @@ public class ReceiveMessage {
                     String receiveName = (String) jsonObject.optString("clickName","값이없음");
 
                     // 처음에 유저의 턴 배분
-                    if (receiveName.equals("current")){
-                        userTurn = true;
+                    if (receiveName.equals("대기")){
+                        userTurn = false;
                         myStatus = "player1";
 
 
@@ -160,23 +166,9 @@ public class ReceiveMessage {
 
                                 player1Name = (String) jsonObject.optString("player1","대기중");
                                 player2Name = (String) jsonObject.optString("player2","대기중");
-
-                                playerTurn.setVisibility(View.VISIBLE);
-
-                                vsAnimatorSet = new AnimatorSet();
-
-                                ObjectAnimator animaX_turn = ObjectAnimator.ofFloat(playerTurn, "translationX", user1.getLeft());
-                                ObjectAnimator animaY_turn = ObjectAnimator.ofFloat(playerTurn, "translationY", user1.getTop());
-                                animaX_turn.setDuration(1000);
-                                animaY_turn.setDuration(1000);
-
-                                vsAnimatorSet.play(animaX_turn);
-                                vsAnimatorSet.play(animaY_turn);
-
-                                vsAnimatorSet.start();
                             }
                         });
-                    }else if (receiveName.equals("wait")){
+                    }else if (receiveName.equals("입장완료")){
 
                         userTurn = false;
                         myStatus = "player2";
@@ -189,22 +181,294 @@ public class ReceiveMessage {
 
                                 player1Name = (String) jsonObject.optString("player1","대기중");
                                 player2Name = (String) jsonObject.optString("player2","대기중");
-
-                                playerTurn.setVisibility(View.VISIBLE);
-
-                                vsAnimatorSet = new AnimatorSet();
-
-                                ObjectAnimator animaX_turn = ObjectAnimator.ofFloat(playerTurn, "translationX", user2.getLeft());
-                                ObjectAnimator animaY_turn = ObjectAnimator.ofFloat(playerTurn, "translationY", user2.getTop());
-                                animaX_turn.setDuration(1000);
-                                animaY_turn.setDuration(1000);
-
-                                vsAnimatorSet.play(animaX_turn);
-                                vsAnimatorSet.play(animaY_turn);
-
-                                vsAnimatorSet.start();
                             }
                         });
+                    }
+
+                    if (receiveName.equals("RPSstart")){
+                        Log.e(TAG,"가위바위보 대결 시작");
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
+                                builder.setTitle("가위바위보로 선을 정합니다.");
+
+                                builder.setPositiveButton("보", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        my_RPS = "보";
+                                        gss.sendMessage(useJson.useRPS("보",loginUserNickName));
+                                        dialog.dismiss();
+                                    }
+                                }).setCancelable(false);
+
+                                builder.setNeutralButton("바위", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        my_RPS = "바위";
+                                        gss.sendMessage(useJson.useRPS("바위",loginUserNickName));
+                                        dialog.dismiss();
+                                    }
+                                }).setCancelable(false);
+
+                                builder.setNegativeButton("가위", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        my_RPS = "가위";
+                                        gss.sendMessage(useJson.useRPS("가위",loginUserNickName));
+                                        dialog.dismiss();
+                                    }
+                                }).setCancelable(false);
+                                builder.show();
+                            }
+                        });
+                    }
+
+                    if (receiveName.equals("가위바위보대결")){
+
+                        if (my_RPS != null){
+
+                            opponent = jsonObject.getString("userName");
+
+                            if (!loginUserNickName.equals(opponent)){
+
+                                Log.e(TAG,"승패계산 들어왓나?");
+
+                                opponent_RPS = jsonObject.getString("RPS");
+
+                                if (my_RPS.equals("바위") && opponent_RPS.equals("가위") ||
+                                        my_RPS.equals("가위") && opponent_RPS.equals("보") ||
+                                        my_RPS.equals("보") && opponent_RPS.equals("바위")){
+
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            userTurn = true;
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
+                                            builder.setTitle("당신이 이겼습니다.");
+                                            builder.setMessage("선입니다.");
+                                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                    gss.sendMessage(useJson.youWin(loginUserNickName));
+                                                    dialog.dismiss();
+                                                }
+                                            }).setCancelable(false);
+                                            builder.show();
+
+                                            playerTurn.setVisibility(View.VISIBLE);
+
+                                            vsAnimatorSet = new AnimatorSet();
+
+                                            ObjectAnimator animaX_turn = ObjectAnimator.ofFloat(playerTurn, "translationX", user1.getLeft());
+                                            ObjectAnimator animaY_turn = ObjectAnimator.ofFloat(playerTurn, "translationY", user1.getTop());
+                                            animaX_turn.setDuration(1000);
+                                            animaY_turn.setDuration(1000);
+
+                                            vsAnimatorSet.play(animaX_turn);
+                                            vsAnimatorSet.play(animaY_turn);
+
+                                            vsAnimatorSet.start();
+                                        }
+                                    });
+                                }
+
+                                if (my_RPS.equals(opponent_RPS)){
+
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
+                                            builder.setTitle("당신은 비겼습니다.");
+                                            builder.setMessage("재경기를 해주십시오.");
+                                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                    gss.sendMessage(useJson.youTie(loginUserNickName));
+                                                    dialog.dismiss();
+                                                }
+                                            }).setCancelable(false);
+                                            builder.show();
+
+                                        }
+                                    });
+                                }
+
+                                if (my_RPS.equals("바위") && opponent_RPS.equals("보") ||
+                                        my_RPS.equals("가위") && opponent_RPS.equals("바위") ||
+                                        my_RPS.equals("보") && opponent_RPS.equals("가위")){
+
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            userTurn = false;
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
+                                            builder.setTitle("당신이 졌습니다.");
+                                            builder.setMessage("후입니다.");
+                                            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                    gss.sendMessage(useJson.youLose(loginUserNickName));
+                                                    dialog.dismiss();
+                                                }
+                                            }).setCancelable(false);
+                                            builder.show();
+
+                                            playerTurn.setVisibility(View.VISIBLE);
+
+                                            vsAnimatorSet = new AnimatorSet();
+
+                                            ObjectAnimator animaX_turn = ObjectAnimator.ofFloat(playerTurn, "translationX", user2.getLeft());
+                                            ObjectAnimator animaY_turn = ObjectAnimator.ofFloat(playerTurn, "translationY", user2.getTop());
+                                            animaX_turn.setDuration(1000);
+                                            animaY_turn.setDuration(1000);
+
+                                            vsAnimatorSet.play(animaX_turn);
+                                            vsAnimatorSet.play(animaY_turn);
+
+                                            vsAnimatorSet.start();
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    if (receiveName.equals("가위바위보승패")){
+
+                        String RPSres = jsonObject.getString("result");
+                        String resUser = jsonObject.getString("userName");
+
+                        if (RPSres.equals("tie")){
+
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
+                                    builder.setTitle("재경기를 진행합니다.");
+
+                                    builder.setPositiveButton("보", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            my_RPS = "보";
+                                            gss.sendMessage(useJson.useRPS("보",loginUserNickName));
+                                            dialog.dismiss();
+                                        }
+                                    }).setCancelable(false);
+
+                                    builder.setNeutralButton("바위", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            my_RPS = "바위";
+                                            gss.sendMessage(useJson.useRPS("바위",loginUserNickName));
+                                            dialog.dismiss();
+                                        }
+                                    }).setCancelable(false);
+
+                                    builder.setNegativeButton("가위", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            my_RPS = "가위";
+                                            gss.sendMessage(useJson.useRPS("가위",loginUserNickName));
+                                            dialog.dismiss();
+                                        }
+                                    }).setCancelable(false);
+                                    builder.show();
+                                }
+                            });
+
+                        }else if (RPSres.equals("win")){
+
+                            if (!resUser.equals(loginUserNickName)){
+
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        userTurn = false;
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
+                                        builder.setTitle("당신이 졌습니다.");
+                                        builder.setMessage("후입니다.");
+                                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                dialog.dismiss();
+                                            }
+                                        }).setCancelable(false);
+                                        builder.show();
+
+                                        playerTurn.setVisibility(View.VISIBLE);
+
+                                        vsAnimatorSet = new AnimatorSet();
+
+                                        ObjectAnimator animaX_turn = ObjectAnimator.ofFloat(playerTurn, "translationX", user2.getLeft());
+                                        ObjectAnimator animaY_turn = ObjectAnimator.ofFloat(playerTurn, "translationY", user2.getTop());
+                                        animaX_turn.setDuration(1000);
+                                        animaY_turn.setDuration(1000);
+
+                                        vsAnimatorSet.play(animaX_turn);
+                                        vsAnimatorSet.play(animaY_turn);
+
+                                        vsAnimatorSet.start();
+                                    }
+                                });
+                            }
+
+                        }else if (RPSres.equals("lose")){
+
+                            if (!resUser.equals(loginUserNickName)){
+
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        userTurn = true;
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
+                                        builder.setTitle("당신이 이겼습니다.");
+                                        builder.setMessage("선입니다.");
+                                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                dialog.dismiss();
+                                            }
+                                        }).setCancelable(false);
+                                        builder.show();
+
+                                        playerTurn.setVisibility(View.VISIBLE);
+
+                                        vsAnimatorSet = new AnimatorSet();
+
+                                        ObjectAnimator animaX_turn = ObjectAnimator.ofFloat(playerTurn, "translationX", user1.getLeft());
+                                        ObjectAnimator animaY_turn = ObjectAnimator.ofFloat(playerTurn, "translationY", user1.getTop());
+                                        animaX_turn.setDuration(1000);
+                                        animaY_turn.setDuration(1000);
+
+                                        vsAnimatorSet.play(animaX_turn);
+                                        vsAnimatorSet.play(animaY_turn);
+
+                                        vsAnimatorSet.start();
+                                    }
+                                });
+                            }
+
+                        }
                     }
 
                     // 주사위 굴리기

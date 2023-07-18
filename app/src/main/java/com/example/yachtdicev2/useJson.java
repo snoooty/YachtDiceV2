@@ -12,6 +12,7 @@ public class useJson {
             ,boolean dice1Keep,boolean dice2Keep,boolean dice3Keep,boolean dice4Keep,boolean dice5Keep){
 
         try {
+            jsonObject = new JSONObject();
 
             jsonObject.put("clickName",clickName);
             jsonObject.put("userName",userName);
@@ -32,6 +33,8 @@ public class useJson {
     public String diceKeepClick(String clickName,String userName,int keepDice,boolean booleanKeep1,
                                 boolean booleanKeep2,boolean booleanKeep3,boolean booleanKeep4,boolean booleanKeep5){
         try{
+            jsonObject = new JSONObject();
+
             jsonObject.put("clickName",clickName);
             jsonObject.put("userName",userName);
             jsonObject.put("keepDice",keepDice);
@@ -50,6 +53,7 @@ public class useJson {
 
     public String scoreClick(String clickName,String player,String scoreName,int score){
         try {
+            jsonObject = new JSONObject();
             jsonObject.put("clickName",clickName);
             jsonObject.put("player",player);
             jsonObject.put("scoreName",scoreName);
@@ -64,6 +68,7 @@ public class useJson {
     public String startUser(String userName){
 
         try{
+            jsonObject = new JSONObject();
             jsonObject.put("clickName","currentUser");
             jsonObject.put("userName",userName);
         } catch (JSONException e) {
@@ -73,8 +78,77 @@ public class useJson {
         return jsonObject.toString();
     }
 
+    public String userRPS(String category,String player1,String player2){
+
+        try{
+            jsonObject = new JSONObject();
+            jsonObject.put("category",category);
+            jsonObject.put("player1",player1);
+            jsonObject.put("player2",player2);
+        }catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        return jsonObject.toString();
+    }
+
+    public String useRPS(String RPS,String userName){
+
+        try{
+            jsonObject = new JSONObject();
+            jsonObject.put("category","가위바위보대결");
+            jsonObject.put("RPS",RPS);
+            jsonObject.put("userName",userName);
+        }catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        return jsonObject.toString();
+    }
+
+    public String youWin(String userName){
+
+        try{
+            jsonObject = new JSONObject();
+            jsonObject.put("category","가위바위보승패");
+            jsonObject.put("result","win");
+            jsonObject.put("userName",userName);
+        }catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        return jsonObject.toString();
+    }
+
+    public String youLose(String userName){
+
+        try{
+            jsonObject = new JSONObject();
+            jsonObject.put("category","가위바위보승패");
+            jsonObject.put("result","lose");
+            jsonObject.put("userName",userName);
+        }catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return jsonObject.toString();
+    }
+
+    public String youTie(String userName){
+
+        try{
+            jsonObject = new JSONObject();
+            jsonObject.put("category","가위바위보승패");
+            jsonObject.put("result","tie");
+            jsonObject.put("userName",userName);
+        }catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return jsonObject.toString();
+    }
+
     public String createRoom(int num,String userName){
         try {
+            jsonObject = new JSONObject();
             jsonObject.put("category","createRoom");
             jsonObject.put("roomNum",num);
             jsonObject.put("userName",userName);
@@ -88,6 +162,7 @@ public class useJson {
     public String getRoomList(){
 
         try{
+            jsonObject = new JSONObject();
             jsonObject.put("category","getRoomList");
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -99,6 +174,7 @@ public class useJson {
     public String enterRoom(int roomNum){
 
         try {
+            jsonObject = new JSONObject();
             jsonObject.put("category","enterRoom");
             jsonObject.put("roomNum",roomNum);
         } catch (JSONException e) {
