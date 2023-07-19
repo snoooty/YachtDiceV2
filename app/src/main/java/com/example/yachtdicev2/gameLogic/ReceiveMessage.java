@@ -66,6 +66,7 @@ public class ReceiveMessage {
     String my_RPS,opponent_RPS,opponent;
     MyGameServerService gss;
     useJson useJson = new useJson();
+    public int player1totalScore,player2totalScore;
 
     public ReceiveMessage(RollDice rollDice, ImageView vs_dice1, ImageView vs_dice2, ImageView vs_dice3, ImageView vs_dice4
     , ImageView vs_dice5, boolean dice1Keep_move, boolean dice2Keep_move, boolean dice3Keep_move, boolean dice4Keep_move
@@ -78,7 +79,7 @@ public class ReceiveMessage {
     , TextView user2, int vsP2ViewTop, ImageView vsP2KeepDice1, ImageView vsP2KeepDice2, ImageView vsP2KeepDice3
     , ImageView vsP2KeepDice4, ImageView vsP2KeepDice5, int vs_roll, boolean vs_rollTurn, SharedPreferences sharedPreferences
     , SharedPreferences sharedPreferences2, Activity activity, ImageView playerTurn, ImageView diceBox, MyGameServerService gss
-    , String loginUserNickName){
+    , String loginUserNickName,int player1totalScore,int player2totalScore){
 
         this.rollDice = rollDice;
         this.vs_dice1 = vs_dice1;
@@ -135,6 +136,8 @@ public class ReceiveMessage {
         this.diceBox = diceBox;
         this.gss = gss;
         this.loginUserNickName = loginUserNickName;
+        this.player1totalScore = player1totalScore;
+        this.player2totalScore = player2totalScore;
     }
 
     public void receiveMsg(Socket gameSock){
@@ -650,7 +653,9 @@ public class ReceiveMessage {
                             dice4Keep_move = true;
                             dice5Keep_move = true;
 
-                            if (userTurn){
+                            Log.e(TAG,"gameEnd() : " + gameEnd());
+
+                            if (userTurn && gameEnd() == false){
 
                                 handler.post(new Runnable() {
                                     @Override
@@ -683,9 +688,101 @@ public class ReceiveMessage {
                                 });
 
                                 Thread.sleep(500);
+                            }else if (gameEnd() == true){
+
+                                Log.e(TAG,"게임 끝남");
+                                gss.sendMessage(useJson.gameEnd(player1totalScore,player2totalScore));
+
                             }
                         }
                     }
+
+                    if (receiveName.equals("End")){
+                        String gameResult;
+                        String resultMsg;
+
+                        player1totalScore = jsonObject.getInt("player1totalScore");
+                        player2totalScore = jsonObject.getInt("player2totalScore");
+
+                        if (player1totalScore > player2totalScore){
+
+                            gameResult = player1Name + " 승리!";
+                            resultMsg = player1Name + " 점수 : " + String.valueOf(player1totalScore) + " " + player2Name + " 점수 : " + String.valueOf(player2totalScore);
+
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
+                                    builder.setTitle(gameResult);
+                                    builder.setMessage(resultMsg);
+                                    builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            dialog.dismiss();
+                                            vsUserInGame.finish();
+                                        }
+                                    }).setCancelable(false);
+
+                                    builder.show();
+                                }
+                            });
+
+                        }else if (player1totalScore == player2totalScore){
+
+                            gameResult = "비겼습니다.";
+                            resultMsg = player1Name + " 점수 : " + String.valueOf(player1totalScore) + " " + player2Name + " 점수 : " + String.valueOf(player2totalScore);
+
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
+                                    builder.setTitle(gameResult);
+                                    builder.setMessage(resultMsg);
+                                    builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            dialog.dismiss();
+                                            vsUserInGame.finish();
+                                        }
+                                    }).setCancelable(false);
+
+                                    builder.show();
+                                }
+                            });
+
+                        }else if (player2totalScore > player1totalScore){
+
+                            gameResult = player2Name + " 승리!";
+                            resultMsg = player1Name + " 점수 : " + String.valueOf(player1totalScore) + " " + player2Name + " 점수 : " + String.valueOf(player2totalScore);
+
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
+                                    builder.setTitle(gameResult);
+                                    builder.setMessage(resultMsg);
+                                    builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            dialog.dismiss();
+                                            vsUserInGame.finish();
+                                        }
+                                    }).setCancelable(false);
+
+                                    builder.show();
+                                }
+                            });
+
+                        }
+                    }
+
+
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -1244,5 +1341,39 @@ public class ReceiveMessage {
 
         vsAnimatorSet.start();
 
+    }
+
+    public boolean gameEnd(){
+
+        if (sharedPreferences.getString("P1Aces","") != ""
+        &&  sharedPreferences.getString("P1Twos","") != ""
+        &&  sharedPreferences.getString("P1Threes","") != ""
+        &&  sharedPreferences.getString("P1Fours","") != ""
+        &&  sharedPreferences.getString("P1Fives","") != ""
+        &&  sharedPreferences.getString("P1Sixes","") != ""
+        &&  sharedPreferences.getString("P1TOAK","") != ""
+        &&  sharedPreferences.getString("P1FOAK","") != ""
+        &&  sharedPreferences.getString("P1FH","") != ""
+        &&  sharedPreferences.getString("P1SS","") != ""
+        &&  sharedPreferences.getString("P1LS","") != ""
+        &&  sharedPreferences.getString("P1Chance","") != ""
+        &&  sharedPreferences.getString("P1YACHT","") != ""
+        &&  sharedPreferences.getString("P2Aces","") != ""
+        &&  sharedPreferences.getString("P2Twos","") != ""
+        &&  sharedPreferences.getString("P2Threes","") != ""
+        &&  sharedPreferences.getString("P2Fours","") != ""
+        &&  sharedPreferences.getString("P2Fives","") != ""
+        &&  sharedPreferences.getString("P2Sixes","") != ""
+        &&  sharedPreferences.getString("P2TOAK","") != ""
+        &&  sharedPreferences.getString("P2FOAK","") != ""
+        &&  sharedPreferences.getString("P2FH","") != ""
+        &&  sharedPreferences.getString("P2SS","") != ""
+        &&  sharedPreferences.getString("P2LS","") != ""
+        &&  sharedPreferences.getString("P2Chance","") != ""
+        &&  sharedPreferences.getString("P2YACHT","") != ""){
+            return true;
+        }
+
+        return false;
     }
 }

@@ -224,6 +224,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P1Aces");
                                     intent.putExtra("score",scoreCalc.calcAce(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -258,6 +260,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P1Twos");
                                     intent.putExtra("score",scoreCalc.calcTwo(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -293,6 +297,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P1Threes");
                                     intent.putExtra("score",scoreCalc.calcThree(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -327,6 +333,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P1Fours");
                                     intent.putExtra("score",scoreCalc.calcFour(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -361,6 +369,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P1Fives");
                                     intent.putExtra("score",scoreCalc.calcFive(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -395,6 +405,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P1Sixes");
                                     intent.putExtra("score",scoreCalc.calcSix(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -428,6 +440,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P1TOAK");
                                     intent.putExtra("score",scoreCalc.calcThreeOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -462,6 +476,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P1FOAK");
                                     intent.putExtra("score",scoreCalc.calcFourOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -496,6 +512,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P1FH");
                                     intent.putExtra("score",scoreCalc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -530,6 +548,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P1SS");
                                     intent.putExtra("score",scoreCalc.calcSmallStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -564,6 +584,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P1LS");
                                     intent.putExtra("score",scoreCalc.calcLargeStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -598,6 +620,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P1Chance");
                                     intent.putExtra("score",scoreCalc.calcChance(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -632,6 +656,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P1YACHT");
                                     intent.putExtra("score",scoreCalc.calcYACHT(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -737,6 +763,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P2Aces");
                                     intent.putExtra("score",scoreCalc.calcAce(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -772,6 +800,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P2Twos");
                                     intent.putExtra("score",scoreCalc.calcTwo(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -807,6 +837,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P2Threes");
                                     intent.putExtra("score",scoreCalc.calcThree(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -842,6 +874,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P2Fours");
                                     intent.putExtra("score",scoreCalc.calcFour(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -877,6 +911,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P2Fives");
                                     intent.putExtra("score",scoreCalc.calcFive(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -912,6 +948,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P2Sixes");
                                     intent.putExtra("score",scoreCalc.calcSix(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -947,6 +985,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P2TOAK");
                                     intent.putExtra("score",scoreCalc.calcThreeOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -982,6 +1022,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P2FOAK");
                                     intent.putExtra("score",scoreCalc.calcFourOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -1017,6 +1059,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P2FH");
                                     intent.putExtra("score",scoreCalc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -1052,6 +1096,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P2SS");
                                     intent.putExtra("score",scoreCalc.calcSmallStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -1087,6 +1133,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P2LS");
                                     intent.putExtra("score",scoreCalc.calcLargeStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -1122,6 +1170,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P2Chance");
                                     intent.putExtra("score",scoreCalc.calcChance(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -1157,6 +1207,8 @@ public class VsScoreActivity extends AppCompatActivity {
                                     intent.putExtra("status",status);
                                     intent.putExtra("name","P2YACHT");
                                     intent.putExtra("score",scoreCalc.calcYACHT(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye));
+                                    intent.putExtra("player1totalScore",P1totalScore.getText().toString());
+                                    intent.putExtra("player2totalScore",P2totalScore.getText().toString());
                                     setResult(RESULT_OK,intent);
                                     dialog.dismiss();
                                     finish();
@@ -1450,6 +1502,7 @@ public class VsScoreActivity extends AppCompatActivity {
         }
         P1totalScore.setText(String.valueOf(ace + two + three + four + five + six + bonus + toak + foak + fh + ss + ls + chance + yacht));
 
+
         if (P2AceSC){
             ace_2 = Integer.parseInt(P2Ace.getText().toString());
         }
@@ -1496,6 +1549,7 @@ public class VsScoreActivity extends AppCompatActivity {
         if (P2YACHTSC){
             yacht_2 = Integer.parseInt(P2YACHT.getText().toString());
         }
+
         P2totalScore.setText(String.valueOf(ace_2 + two_2 + three_2 + four_2 + five_2 + six_2 + bonus_2 + toak_2 + foak_2 + fh_2 + ss_2 + ls_2 + chance_2 + yacht_2));
     }
 }

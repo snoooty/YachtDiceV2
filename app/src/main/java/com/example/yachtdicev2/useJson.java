@@ -183,4 +183,19 @@ public class useJson {
 
         return jsonObject.toString();
     }
+
+    public String gameEnd(int player1totalScore,int player2totalScore){
+
+        try{
+            jsonObject = new JSONObject();
+            jsonObject.put("category","End");
+            jsonObject.put("player1totalScore",player1totalScore);
+            jsonObject.put("player2totalScore",player2totalScore);
+
+        }catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        return jsonObject.toString();
+    }
 }

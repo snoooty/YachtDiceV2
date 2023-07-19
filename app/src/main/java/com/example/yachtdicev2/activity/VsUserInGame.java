@@ -55,6 +55,7 @@ public class VsUserInGame extends AppCompatActivity {
     boolean userTurn = true;
     boolean start = true;
     int vs_roll;
+    int player1totalScore,player2totalScore;
     View vsPlayer1View,vsPlayer2View;
     int vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight;
     int vsP2ViewTop,vsP2ViewBottom,vsP2ViewLeft,vsP2ViewRight;
@@ -152,9 +153,13 @@ public class VsUserInGame extends AppCompatActivity {
                                 Log.e(TAG,"status : " + result.getData().getStringExtra("status"));
                                 Log.e(TAG,"이름 : " + result.getData().getStringExtra("name"));
                                 Log.e(TAG,"score : " + result.getData().getIntExtra("score",0));
+                                Log.e(TAG,"player1totalScore : " + result.getData().getStringExtra("player1totalScore"));
+                                Log.e(TAG,"player2totalScore : " + result.getData().getStringExtra("player2totalScore"));
 
                                 String player = result.getData().getStringExtra("status");
                                 String scoreName = result.getData().getStringExtra("name");
+                                player1totalScore = Integer.parseInt(result.getData().getStringExtra("player1totalScore"));
+                                player2totalScore = Integer.parseInt(result.getData().getStringExtra("player2totalScore"));
                                 int score = result.getData().getIntExtra("score",0);
 
                                 sendMessage(useJson.scoreClick("ScoreClick",player,scoreName,score));
@@ -429,7 +434,8 @@ public class VsUserInGame extends AppCompatActivity {
                             ,vs_dice_5,vs_dice_6,vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight,diceSize,userTurn
                             ,vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5,user1,user2,vsP2ViewTop
                             ,vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5,vs_roll,vs_rollTurn
-                            ,sharedPreferences,sharedPreferences2,activity,playerTurn,diceBox,gss,loginUserNickName);
+                            ,sharedPreferences,sharedPreferences2,activity,playerTurn,diceBox,gss,loginUserNickName
+                            ,player1totalScore,player2totalScore);
 
                     receiveMessage.receiveMsg(gss.gameSock);
                     gss.sendMessage(useJson.startUser(loginUserNickName));
