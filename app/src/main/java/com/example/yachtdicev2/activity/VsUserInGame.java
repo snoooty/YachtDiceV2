@@ -158,8 +158,8 @@ public class VsUserInGame extends AppCompatActivity {
 
                                 String player = result.getData().getStringExtra("status");
                                 String scoreName = result.getData().getStringExtra("name");
-                                player1totalScore = Integer.parseInt(result.getData().getStringExtra("player1totalScore"));
-                                player2totalScore = Integer.parseInt(result.getData().getStringExtra("player2totalScore"));
+                                receiveMessage.player1totalScore = result.getData().getIntExtra("player1totalScore",0);
+                                receiveMessage.player2totalScore = result.getData().getIntExtra("player2totalScore",0);
                                 int score = result.getData().getIntExtra("score",0);
 
                                 sendMessage(useJson.scoreClick("ScoreClick",player,scoreName,score));

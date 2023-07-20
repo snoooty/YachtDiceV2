@@ -255,7 +255,6 @@ public class ReceiveMessage {
                                             userTurn = true;
                                             AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
                                             builder.setTitle("당신은 이겼습니다. 선 입니다.");
-                                            builder.setMessage("당신은 : " + my_RPS + ", 상대는 : " + opponent_RPS);
                                             builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
@@ -319,7 +318,6 @@ public class ReceiveMessage {
                                             userTurn = false;
                                             AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
                                             builder.setTitle("당신은 졌습니다. 후 입니다.");
-                                            builder.setMessage("당신은 : " + my_RPS + ", 상대는 : " + opponent_RPS);
                                             builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
@@ -411,7 +409,6 @@ public class ReceiveMessage {
                                         userTurn = false;
                                         AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
                                         builder.setTitle("당신은 졌습니다. 후 입니다.");
-                                        builder.setMessage("당신은 : " + my_RPS + ", 상대는 : " + opponent_RPS);
                                         builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
@@ -449,7 +446,6 @@ public class ReceiveMessage {
                                         userTurn = true;
                                         AlertDialog.Builder builder = new AlertDialog.Builder(vsUserInGame);
                                         builder.setTitle("당신은 이겼습니다. 선 입니다.");
-                                        builder.setMessage("당신은 : " + my_RPS + ", 상대는 : " + opponent_RPS);
                                         builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
@@ -1358,19 +1354,19 @@ public class ReceiveMessage {
         &&  sharedPreferences.getString("P1LS","") != ""
         &&  sharedPreferences.getString("P1Chance","") != ""
         &&  sharedPreferences.getString("P1YACHT","") != ""
-        &&  sharedPreferences.getString("P2Aces","") != ""
-        &&  sharedPreferences.getString("P2Twos","") != ""
-        &&  sharedPreferences.getString("P2Threes","") != ""
-        &&  sharedPreferences.getString("P2Fours","") != ""
-        &&  sharedPreferences.getString("P2Fives","") != ""
-        &&  sharedPreferences.getString("P2Sixes","") != ""
-        &&  sharedPreferences.getString("P2TOAK","") != ""
-        &&  sharedPreferences.getString("P2FOAK","") != ""
-        &&  sharedPreferences.getString("P2FH","") != ""
-        &&  sharedPreferences.getString("P2SS","") != ""
-        &&  sharedPreferences.getString("P2LS","") != ""
-        &&  sharedPreferences.getString("P2Chance","") != ""
-        &&  sharedPreferences.getString("P2YACHT","") != ""){
+        &&  sharedPreferences2.getString("P2Aces","") != ""
+        &&  sharedPreferences2.getString("P2Twos","") != ""
+        &&  sharedPreferences2.getString("P2Threes","") != ""
+        &&  sharedPreferences2.getString("P2Fours","") != ""
+        &&  sharedPreferences2.getString("P2Fives","") != ""
+        &&  sharedPreferences2.getString("P2Sixes","") != ""
+        &&  sharedPreferences2.getString("P2TOAK","") != ""
+        &&  sharedPreferences2.getString("P2FOAK","") != ""
+        &&  sharedPreferences2.getString("P2FH","") != ""
+        &&  sharedPreferences2.getString("P2SS","") != ""
+        &&  sharedPreferences2.getString("P2LS","") != ""
+        &&  sharedPreferences2.getString("P2Chance","") != ""
+        &&  sharedPreferences2.getString("P2YACHT","") != ""){
             return true;
         }
 
