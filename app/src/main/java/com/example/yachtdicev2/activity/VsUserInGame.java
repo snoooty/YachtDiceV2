@@ -153,8 +153,8 @@ public class VsUserInGame extends AppCompatActivity {
                                 Log.e(TAG,"status : " + result.getData().getStringExtra("status"));
                                 Log.e(TAG,"이름 : " + result.getData().getStringExtra("name"));
                                 Log.e(TAG,"score : " + result.getData().getIntExtra("score",0));
-                                Log.e(TAG,"player1totalScore : " + result.getData().getStringExtra("player1totalScore"));
-                                Log.e(TAG,"player2totalScore : " + result.getData().getStringExtra("player2totalScore"));
+                                Log.e(TAG,"player1totalScore : " + result.getData().getIntExtra("player1totalScore",0));
+                                Log.e(TAG,"player2totalScore : " + result.getData().getIntExtra("player2totalScore",0));
 
                                 String player = result.getData().getStringExtra("status");
                                 String scoreName = result.getData().getStringExtra("name");
