@@ -330,7 +330,7 @@ public class RollDice {
             }
         }
         if (!userTurn){
-            dice1Top = dice1Top + range_vs;
+            dice5Top = dice5Top + range_vs;
         }
         Log.e(TAG,"dice5Top : " + dice5Top);
         Log.e(TAG,"dice5Left : " + dice5Left);

@@ -33,8 +33,6 @@ import java.net.URL;
 
 public class Login_Activity extends AppCompatActivity {
 
-    HttpCheck httpCheck = new HttpCheck();
-
     String TAG = "Login_Activity";
     String idCheck,loginUserNickname;
 //    GoogleSignInAccount currentUser;
