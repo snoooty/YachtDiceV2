@@ -1,11 +1,15 @@
 package com.example.yachtdicev2.activity;
 
+import static android.graphics.Color.GRAY;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.animation.AnimatorSet;
 import android.app.Activity;
@@ -32,6 +36,7 @@ import android.widget.TextView;
 import com.example.yachtdicev2.R;
 import com.example.yachtdicev2.gameLogic.ReceiveMessage;
 import com.example.yachtdicev2.gameLogic.RollDice;
+import com.example.yachtdicev2.gameLogic.TimerData;
 import com.example.yachtdicev2.gameLogic.gameData;
 import com.example.yachtdicev2.ip.GetIP;
 import com.example.yachtdicev2.service.MyGameServerService;
@@ -56,7 +61,7 @@ public class VsUserInGame extends AppCompatActivity {
     boolean start = true;
     int vs_roll;
     int player1totalScore,player2totalScore;
-    View vsPlayer1View,vsPlayer2View;
+    TextView vsPlayer1View,vsPlayer2View;
     int vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight;
     int vsP2ViewTop,vsP2ViewBottom,vsP2ViewLeft,vsP2ViewRight;
     int diceTop,diceBottom,diceLeft,diceRight,diceSize;
@@ -83,6 +88,7 @@ public class VsUserInGame extends AppCompatActivity {
     Activity activity;
     MyGameServerService gss;
     boolean isGSS = false;
+    TimerData timerData;
 
 
     @Override
@@ -142,6 +148,23 @@ public class VsUserInGame extends AppCompatActivity {
         activity = this;
 
         playerTurn.setVisibility(View.GONE);
+
+        vsPlayer1View.setText(String.valueOf(0));
+        vsPlayer1View.setTextSize(150);
+        vsPlayer1View.setTextColor(GRAY);
+        vsPlayer1View.setGravity(View.TEXT_ALIGNMENT_CENTER);
+        vsPlayer1View.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        timerData = new ViewModelProvider(this).get(TimerData.class);
+        final Observer<Integer> timerObserver = new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                vsPlayer1View.setText(String.valueOf(integer));
+            }
+        };
+        timerData.getTimer().observe(this,timerObserver);
+
+
 
         getResult = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -435,7 +458,7 @@ public class VsUserInGame extends AppCompatActivity {
                             ,vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5,user1,user2,vsP2ViewTop
                             ,vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5,vs_roll,vs_rollTurn
                             ,sharedPreferences,sharedPreferences2,activity,playerTurn,diceBox,gss,loginUserNickName
-                            ,player1totalScore,player2totalScore);
+                            ,player1totalScore,player2totalScore,vsPlayer1View,vsPlayer2View, timerData);
 
                     receiveMessage.receiveMsg(gss.gameSock);
                     gss.sendMessage(useJson.startUser(loginUserNickName));

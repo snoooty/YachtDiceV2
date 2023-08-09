@@ -1,5 +1,7 @@
 package com.example.yachtdicev2.gameLogic;
 
+import static android.graphics.Color.GRAY;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -17,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.yachtdicev2.activity.VsUserInGame;
 import com.example.yachtdicev2.service.MyGameServerService;
@@ -42,11 +46,13 @@ public class ReceiveMessage {
     int dice1,dice2,dice3,dice4,dice5;
     int vsP1ViewTop,vsP1ViewBottom,vsP1ViewLeft,vsP1ViewRight,diceSize;
     int vsP2ViewTop;
+    public int turnTimer = 30;
     ImageView vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5;
     ImageView vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5;
     ImageView vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5;
     ImageView playerTurn,diceBox;
     TextView user1,user2;
+    TextView vsPlayer1View,vsPlayer2View;
     RollDice rollDice;
     AnimatorSet vsAnimatorSet;
     AnimationDrawable vsRolldice_1,vsRolldice_2,vsRolldice_3,vsRolldice_4,vsRolldice_5;
@@ -67,6 +73,7 @@ public class ReceiveMessage {
     MyGameServerService gss;
     useJson useJson = new useJson();
     public int player1totalScore,player2totalScore;
+    private TimerData timerData;
 
     public ReceiveMessage(RollDice rollDice, ImageView vs_dice1, ImageView vs_dice2, ImageView vs_dice3, ImageView vs_dice4
     , ImageView vs_dice5, boolean dice1Keep_move, boolean dice2Keep_move, boolean dice3Keep_move, boolean dice4Keep_move
@@ -79,7 +86,8 @@ public class ReceiveMessage {
     , TextView user2, int vsP2ViewTop, ImageView vsP2KeepDice1, ImageView vsP2KeepDice2, ImageView vsP2KeepDice3
     , ImageView vsP2KeepDice4, ImageView vsP2KeepDice5, int vs_roll, boolean vs_rollTurn, SharedPreferences sharedPreferences
     , SharedPreferences sharedPreferences2, Activity activity, ImageView playerTurn, ImageView diceBox, MyGameServerService gss
-    , String loginUserNickName,int player1totalScore,int player2totalScore){
+    , String loginUserNickName,int player1totalScore,int player2totalScore, TextView vsPlayer1View, TextView vsPlayer2View
+    , TimerData timerData){
 
         this.rollDice = rollDice;
         this.vs_dice1 = vs_dice1;
@@ -138,14 +146,17 @@ public class ReceiveMessage {
         this.loginUserNickName = loginUserNickName;
         this.player1totalScore = player1totalScore;
         this.player2totalScore = player2totalScore;
+        this.vsPlayer1View = vsPlayer1View;
+        this.vsPlayer2View = vsPlayer2View;
+        this.timerData = timerData;
     }
 
     public void receiveMsg(Socket gameSock){
             Log.e(TAG,"receiveMsg 실행됨?");
+
         new Thread(() -> {
-            Log.e(TAG,"핸들러되냐?");
             Handler handler = new Handler(Looper.getMainLooper());
-            Log.e(TAG,"핸들러 넘어가냐?");
+            Log.e(TAG,"핸들러되냐?");
             try{
                 while (true){
                     in = new BufferedReader(new InputStreamReader(gameSock.getInputStream()));
@@ -158,8 +169,6 @@ public class ReceiveMessage {
                     if (receiveName.equals("대기")){
                         userTurn = false;
                         myStatus = "player1";
-
-
 
                         handler.post(new Runnable() {
                             @Override
@@ -261,6 +270,8 @@ public class ReceiveMessage {
 
                                                     gss.sendMessage(useJson.youWin(loginUserNickName));
                                                     dialog.dismiss();
+
+                                                    turnTimerStart();
                                                 }
                                             }).setCancelable(false);
                                             builder.show();
@@ -280,6 +291,7 @@ public class ReceiveMessage {
                                             vsAnimatorSet.start();
                                         }
                                     });
+//                                    turnTimerStart();
                                 }
 
                                 if (my_RPS.equals(opponent_RPS)){
@@ -451,6 +463,8 @@ public class ReceiveMessage {
                                             public void onClick(DialogInterface dialog, int which) {
 
                                                 dialog.dismiss();
+
+                                                turnTimerStart();
                                             }
                                         }).setCancelable(false);
                                         builder.show();
@@ -470,6 +484,7 @@ public class ReceiveMessage {
                                         vsAnimatorSet.start();
                                     }
                                 });
+//                                turnTimerStart();
                             }
 
                         }
@@ -663,6 +678,8 @@ public class ReceiveMessage {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
                                                         dialog.dismiss();
+
+                                                        turnTimerStart();
                                                     }
                                                 }).setCancelable(false);
                                         builder.show();
@@ -682,6 +699,7 @@ public class ReceiveMessage {
                                         diceReset();
                                     }
                                 });
+//                                turnTimerStart();
 
                                 Thread.sleep(500);
                             }else if (gameEnd() == true){
@@ -1371,5 +1389,62 @@ public class ReceiveMessage {
         }
 
         return false;
+    }
+
+    public void timeOver(){
+
+        ScoreCalculation sc = new ScoreCalculation();
+        int score = 0;
+        String scoreName = null;
+
+        if(userTurn && turnTimer <= 0){
+
+            if (loginUserNickName.equals(player1Name)){
+
+                if (sharedPreferences.getString("P1YACHT","") == ""){
+                    score = sc.calcYACHT(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P1YACHT";
+                }
+
+            }else if (loginUserNickName.equals(player2Name)){
+
+                if (sharedPreferences2.getString("P2YACHT","") == ""){
+                    score = sc.calcYACHT(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P2YACHT";
+                }
+
+            }
+
+            gss.sendMessage(useJson.scoreClick("ScoreClick",myStatus,scoreName,score));
+
+        }
+    }
+
+    public void turnTimerStart(){
+
+        turnTimer = 30;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                       while (userTurn && turnTimer > 0){
+
+                           timerData.getTimer().postValue(turnTimer);
+
+                           try {
+                               Thread.sleep(1000);
+                           } catch (InterruptedException e) {
+                               throw new RuntimeException(e);
+                           }
+                           turnTimer--;
+                       }
+
+                       timeOver();
+
+                       turnTimer = 0;
+                       timerData.getTimer().postValue(turnTimer);
+                   }
+        }).start();
     }
 }
