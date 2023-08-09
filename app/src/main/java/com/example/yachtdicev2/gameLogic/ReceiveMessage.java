@@ -1404,6 +1404,42 @@ public class ReceiveMessage {
                 if (sharedPreferences.getString("P1YACHT","") == ""){
                     score = sc.calcYACHT(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
                     scoreName = "P1YACHT";
+                }else if (sharedPreferences.getString("P1Chance","") == ""){
+                    score = sc.calcChance(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P1Chance";
+                }else if (sharedPreferences.getString("P1LS","") == ""){
+                    score = sc.calcLargeStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P1LS";
+                }else if (sharedPreferences.getString("P1SS","") == ""){
+                    score = sc.calcSmallStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P1SS";
+                }else if (sharedPreferences.getString("P1FH","") == ""){
+                    score = sc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P1FH";
+                }else if (sharedPreferences.getString("P1FOAK","") == ""){
+                    score = sc.calcFourOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P1FOAK";
+                }else if (sharedPreferences.getString("P1TOAK","") == ""){
+                    score = sc.calcThreeOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P1TOAK";
+                }else if (sharedPreferences.getString("P1Sixes","") == ""){
+                    score = sc.calcSix(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P1Sixes";
+                }else if (sharedPreferences.getString("P1Fives","") == ""){
+                    score = sc.calcFive(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P1Fives";
+                }else if (sharedPreferences.getString("P1Fours","") == ""){
+                    score = sc.calcFour(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P1Fours";
+                }else if (sharedPreferences.getString("P1Threes","") == ""){
+                    score = sc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P1Threes";
+                }else if (sharedPreferences.getString("P1Twos","") == ""){
+                    score = sc.calcTwo(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P1Twos";
+                }else if (sharedPreferences.getString("P1Aces","") == ""){
+                    score = sc.calcAce(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P1Aces";
                 }
 
             }else if (loginUserNickName.equals(player2Name)){
@@ -1411,6 +1447,42 @@ public class ReceiveMessage {
                 if (sharedPreferences2.getString("P2YACHT","") == ""){
                     score = sc.calcYACHT(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
                     scoreName = "P2YACHT";
+                }else if (sharedPreferences2.getString("P2Chance","") == ""){
+                    score = sc.calcChance(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P2Chance";
+                }else if (sharedPreferences2.getString("P2LS","") == ""){
+                    score = sc.calcLargeStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P2LS";
+                }else if (sharedPreferences2.getString("P2SS","") == ""){
+                    score = sc.calcSmallStraight(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P2SS";
+                }else if (sharedPreferences2.getString("P2FH","") == ""){
+                    score = sc.calcFullHouse(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P2FH";
+                }else if (sharedPreferences2.getString("P2FOAK","") == ""){
+                    score = sc.calcFourOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P2FOAK";
+                }else if (sharedPreferences2.getString("P2TOAK","") == ""){
+                    score = sc.calcThreeOfAKind(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P2TOAK";
+                }else if (sharedPreferences2.getString("P2Sixes","") == ""){
+                    score = sc.calcSix(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P2Sixes";
+                }else if (sharedPreferences2.getString("P2Fives","") == ""){
+                    score = sc.calcFive(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P2Fives";
+                }else if (sharedPreferences2.getString("P2Fours","") == ""){
+                    score = sc.calcFour(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P2Fours";
+                }else if (sharedPreferences2.getString("P2Threes","") == ""){
+                    score = sc.calcThree(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P2Threes";
+                }else if (sharedPreferences2.getString("P2Twos","") == ""){
+                    score = sc.calcTwo(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P2Twos";
+                }else if (sharedPreferences2.getString("P2Aces","") == ""){
+                    score = sc.calcAce(dice1eye,dice2eye,dice3eye,dice4eye,dice5eye);
+                    scoreName = "P2Aces";
                 }
 
             }
