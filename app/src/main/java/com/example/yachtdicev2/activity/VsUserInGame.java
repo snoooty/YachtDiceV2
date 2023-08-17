@@ -43,6 +43,8 @@ import com.example.yachtdicev2.service.MyGameServerService;
 import com.example.yachtdicev2.service.MySocketService;
 import com.example.yachtdicev2.useJson;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -68,6 +70,7 @@ public class VsUserInGame extends AppCompatActivity {
     ImageView vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5;
     ImageView vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5;
     TextView user1,user2;
+    TextView imoji;
     Button vsGetScore;
     ImageButton vsRollDice;
     ImageView vs_dice1,vs_dice2,vs_dice3,vs_dice4,vs_dice5;
@@ -76,6 +79,7 @@ public class VsUserInGame extends AppCompatActivity {
     Drawable vs_dice_1,vs_dice_2,vs_dice_3,vs_dice_4,vs_dice_5,vs_dice_6;
     Drawable vs_rolldice_1xml,vs_rolldice_2xml,vs_rolldice_3xml,vs_rolldice_4xml,vs_rolldice_5xml;
     TextView player1_name,player2_name;
+    TextView player1imoji,player2imoji;
     RollDice rollDice = new RollDice();
     AnimationDrawable vsRolldice_1,vsRolldice_2,vsRolldice_3,vsRolldice_4,vsRolldice_5;
     boolean dice1Keep_move = true,dice2Keep_move = true,dice3Keep_move = true,dice4Keep_move = true,dice5Keep_move = true;
@@ -98,6 +102,11 @@ public class VsUserInGame extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         Intent serverIntent = new Intent(VsUserInGame.this,MyGameServerService.class);
+
+        // 닉네임 가져오기
+        Intent intentNick = getIntent();
+        loginUserNickName = intentNick.getStringExtra("loginUserNickName");
+        Log.e(TAG,"loginUserNickName : " + loginUserNickName);
 
         vsPlayer1View = findViewById(R.id.vs_player1_view);
         vsPlayer2View = findViewById(R.id.vs_player2_view);
@@ -145,9 +154,28 @@ public class VsUserInGame extends AppCompatActivity {
         diceBox = findViewById(R.id.diceBox);
         user1 = findViewById(R.id.vs_PLAYER_1);
         user2 = findViewById(R.id.vs_PLAYER_2);
+        imoji = findViewById(R.id.imoji);
+        player1imoji = findViewById(R.id.player1imoji);
+        player1imoji.setTextSize(150);
+        player1imoji.setVisibility(View.INVISIBLE);
+        player2imoji = findViewById(R.id.player2imoji);
+        player2imoji.setTextSize(150);
+        player2imoji.setVisibility(View.INVISIBLE);
         activity = this;
 
-        playerTurn.setVisibility(View.GONE);
+        imoji.setText(new String(Character.toChars(0x1F600)));
+        imoji.setTextSize(25);
+
+        imoji.setOnClickListener(new View.OnClickListener() {
+                                     @Override
+                                     public void onClick(View v) {
+                                         Intent intent = new Intent(VsUserInGame.this, Imoji_Activity.class);
+                                         intent.putExtra("loginUserNickName",loginUserNickName);
+                                         startActivity(intent);
+                                     }
+                                 });
+
+                playerTurn.setVisibility(View.GONE);
 
         vsPlayer1View.setText(String.valueOf(0));
         vsPlayer1View.setTextSize(150);
@@ -206,11 +234,6 @@ public class VsUserInGame extends AppCompatActivity {
         };
 
         bindService(serverIntent, gsConn, Context.BIND_AUTO_CREATE);
-
-                // 닉네임 가져오기
-        Intent intentNick = getIntent();
-        loginUserNickName = intentNick.getStringExtra("loginUserNickName");
-        Log.e(TAG,"loginUserNickName : " + loginUserNickName);
 
         useJson = new useJson();
 
@@ -458,7 +481,8 @@ public class VsUserInGame extends AppCompatActivity {
                             ,vsP1KeepDice1,vsP1KeepDice2,vsP1KeepDice3,vsP1KeepDice4,vsP1KeepDice5,user1,user2,vsP2ViewTop
                             ,vsP2KeepDice1,vsP2KeepDice2,vsP2KeepDice3,vsP2KeepDice4,vsP2KeepDice5,vs_roll,vs_rollTurn
                             ,sharedPreferences,sharedPreferences2,activity,playerTurn,diceBox,gss,loginUserNickName
-                            ,player1totalScore,player2totalScore,vsPlayer1View,vsPlayer2View, timerData);
+                            ,player1totalScore,player2totalScore,vsPlayer1View,vsPlayer2View, timerData
+                            ,player1imoji, player2imoji);
 
                     receiveMessage.receiveMsg(gss.gameSock);
                     gss.sendMessage(useJson.startUser(loginUserNickName));

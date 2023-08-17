@@ -198,4 +198,19 @@ public class useJson {
 
         return jsonObject.toString();
     }
+
+    public String imoji(int unicode,String userName){
+
+        try{
+            jsonObject = new JSONObject();
+            jsonObject.put("category","Imoji");
+            jsonObject.put("unicode",unicode);
+            jsonObject.put("userName",userName);
+
+        }catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        return jsonObject.toString();
+    }
 }

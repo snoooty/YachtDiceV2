@@ -11,6 +11,8 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.audiofx.AudioEffect;
+import android.media.audiofx.LoudnessEnhancer;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -53,6 +55,7 @@ public class ReceiveMessage {
     ImageView playerTurn,diceBox;
     TextView user1,user2;
     TextView vsPlayer1View,vsPlayer2View;
+    TextView player1imoji,player2imoji;
     RollDice rollDice;
     AnimatorSet vsAnimatorSet;
     AnimationDrawable vsRolldice_1,vsRolldice_2,vsRolldice_3,vsRolldice_4,vsRolldice_5;
@@ -87,7 +90,7 @@ public class ReceiveMessage {
     , ImageView vsP2KeepDice4, ImageView vsP2KeepDice5, int vs_roll, boolean vs_rollTurn, SharedPreferences sharedPreferences
     , SharedPreferences sharedPreferences2, Activity activity, ImageView playerTurn, ImageView diceBox, MyGameServerService gss
     , String loginUserNickName,int player1totalScore,int player2totalScore, TextView vsPlayer1View, TextView vsPlayer2View
-    , TimerData timerData){
+    , TimerData timerData, TextView player1imoji, TextView player2imoji){
 
         this.rollDice = rollDice;
         this.vs_dice1 = vs_dice1;
@@ -149,6 +152,8 @@ public class ReceiveMessage {
         this.vsPlayer1View = vsPlayer1View;
         this.vsPlayer2View = vsPlayer2View;
         this.timerData = timerData;
+        this.player1imoji = player1imoji;
+        this.player2imoji = player2imoji;
     }
 
     public void receiveMsg(Socket gameSock){
@@ -484,7 +489,6 @@ public class ReceiveMessage {
                                         vsAnimatorSet.start();
                                     }
                                 });
-//                                turnTimerStart();
                             }
 
                         }
@@ -709,6 +713,47 @@ public class ReceiveMessage {
 
                             }
                         }
+                    }
+
+                    if(receiveName.equals("imoji")){
+
+                        String imojiUserName = jsonObject.getString("userName");
+                        int unicode = jsonObject.getInt("unicode");
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Log.e(TAG,"이모지 나타내기");
+
+                                if(loginUserNickName.equals(imojiUserName)){
+                                    Log.e(TAG,"player1 이모지 확인");
+
+                                    player1imoji.setVisibility(View.VISIBLE);
+                                    player1imoji.setText(new String(Character.toChars(unicode)));
+                                    player1imoji.bringToFront();
+
+                                }else {
+                                    Log.e(TAG,"player2 이모지 확인");
+
+                                    player2imoji.setVisibility(View.VISIBLE);
+                                    player2imoji.setText(new String(Character.toChars(unicode)));
+                                    player2imoji.bringToFront();
+
+                                }
+                            }
+                        });
+
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                player1imoji.setVisibility(View.GONE);
+                                player2imoji.setVisibility(View.GONE);
+
+                            }
+                        },2000);
+
                     }
 
                     if (receiveName.equals("End")){

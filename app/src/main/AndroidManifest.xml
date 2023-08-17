@@ -21,9 +21,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.VsRoomList"
+            android:name=".activity.Imoji_Activity"
             android:exported="false"
             android:theme="@style/Theme.MyDialog"/>
+        <activity
+            android:name=".activity.VsRoomList"
+            android:exported="false"
+            android:theme="@style/Theme.MyDialog" />
 
         <service
             android:name=".service.MyGameServerService"
