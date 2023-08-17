@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <dimen name="title_text">12sp</dimen>
+    <dimen name="button_text">9sp</dimen>
+    <dimen name="login_text">5sp</dimen>
+    <dimen name="signUp_text">5sp</dimen>
+    <dimen name="userName_text">9sp</dimen>
+    <dimen name="inGameBt_text">6sp</dimen>
+</resources>
