@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="title_text">48sp</dimen>
+    <dimen name="title_text">45sp</dimen>
     <dimen name="button_text">34sp</dimen>
     <dimen name="login_text">18sp</dimen>
     <dimen name="signUp_text">20sp</dimen>

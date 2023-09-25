@@ -130,9 +130,9 @@
         android:layout_width="100dp"
         android:layout_height="70dp"
         android:background="@drawable/signup_button"
-        android:text="ID 중복 체크"
+        android:text="중복 체크"
         android:textAlignment="center"
-        android:textSize="16sp"
+        android:textSize="13sp"
         app:layout_constraintLeft_toRightOf="@+id/INPUT_signup_id"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Space2" />
@@ -142,9 +142,9 @@
         android:layout_width="100dp"
         android:layout_height="70dp"
         android:background="@drawable/signup_button"
-        android:text="NICKNAME 중복 체크"
+        android:text="중복 체크"
         android:textAlignment="center"
-        android:textSize="16sp"
+        android:textSize="13sp"
         app:layout_constraintLeft_toRightOf="@+id/INPUT_signup_id"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Space3" />

@@ -296,7 +296,6 @@ public class ReceiveMessage {
                                             vsAnimatorSet.start();
                                         }
                                     });
-//                                    turnTimerStart();
                                 }
 
                                 if (my_RPS.equals(opponent_RPS)){
@@ -703,7 +702,6 @@ public class ReceiveMessage {
                                         diceReset();
                                     }
                                 });
-//                                turnTimerStart();
 
                                 Thread.sleep(500);
                             }else if (gameEnd() == true){

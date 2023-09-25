@@ -15,9 +15,9 @@ public class GetIP {
 
     public String currentIP(){
 
-        return academyWifi;
+//        return academyWifi;
 //        return homeWifi;
-//        return yeppiWifi;
+        return yeppiWifi;
 
     }
 
